@@ -1,12 +1,13 @@
-import { supabaseConfig, supabaseReady } from "./supabase-config.js?v=20260215v11";
+import { supabaseConfig, supabaseReady } from "./supabase-config.js?v=20260215v12";
 import {
   defaultPortfolioContent,
   normalizePortfolioContent
-} from "./portfolio-content.js?v=20260215v11";
+} from "./portfolio-content.js?v=20260215v12";
 
 const CONTENT_TABLE = "portfolio_content";
 const CONTENT_ROW_ID = 1;
 const FETCH_TIMEOUT_MS = 12000;
+const APP_BASE_PATH = new URL(".", import.meta.url).pathname;
 
 function wait(ms) {
   return new Promise((resolve) => {
@@ -75,14 +76,25 @@ function normalizeTel(phone, fallback) {
 }
 
 function normalizeLocalPath(path, fallback) {
-  const value = String(path || "").trim();
+  const value = String(path || "").trim() || String(fallback || "").trim();
   if (!value) {
     return fallback;
   }
-  if (value.startsWith("http://") || value.startsWith("https://")) {
+  if (
+    value.startsWith("http://") ||
+    value.startsWith("https://") ||
+    value.startsWith("mailto:") ||
+    value.startsWith("tel:")
+  ) {
     return value;
   }
-  return value.replace(/^\/+/, "");
+
+  if (value.startsWith("/")) {
+    return encodeURI(value);
+  }
+
+  const relativePath = encodeURI(value.replace(/^\/+/, ""));
+  return `${APP_BASE_PATH}${relativePath}`;
 }
 
 function createCard(title, body, meta = "") {
@@ -255,7 +267,7 @@ function renderPortfolioContent(content) {
   const tel = normalizeTel(profile.phone, "tel:+447721445027");
   const linkedin = normalizeExternalHttps(profile.linkedin, "https://linkedin.com/in/adarshmalayath");
   const github = normalizeExternalHttps(profile.github, "https://github.com/adarshmalayath");
-  const cv = normalizeLocalPath(profile.cvUrl, "CV%20IT.pdf");
+  const cv = normalizeLocalPath(profile.cvUrl, "CV IT.pdf");
 
   setLink("contactEmailButton", mailto);
   setLink("contactEmail", mailto, profile.email || "adarshmalayath@gmail.com");

@@ -2,12 +2,12 @@ import { createClient } from "https://esm.sh/@supabase/supabase-js@2?bundle";
 import {
   defaultPortfolioContent,
   normalizePortfolioContent
-} from "./portfolio-content.js?v=20260215v11";
+} from "./portfolio-content.js?v=20260215v12";
 import {
   supabaseAdmin,
   supabaseConfig,
   supabaseReady
-} from "./supabase-config.js?v=20260215v11";
+} from "./supabase-config.js?v=20260215v12";
 
 const TABLE = "portfolio_content";
 const ROW_ID = 1;
