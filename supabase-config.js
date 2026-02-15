@@ -13,7 +13,7 @@ export const supabaseConfig = {
   Keep only your private admin email here.
 */
 export const supabaseAdmin = {
-  allowedEmails: ["adarshmalayath@gmail.com", "adarshmalayath@icloud.com"],
+  allowedEmails: ["adarshmalayath@gmail.com"],
   allowedIds: []
 };
 

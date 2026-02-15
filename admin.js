@@ -2,12 +2,12 @@ import { createClient } from "https://esm.sh/@supabase/supabase-js@2?bundle";
 import {
   defaultPortfolioContent,
   normalizePortfolioContent
-} from "./portfolio-content.js?v=20260215v8";
+} from "./portfolio-content.js?v=20260215v11";
 import {
   supabaseAdmin,
   supabaseConfig,
   supabaseReady
-} from "./supabase-config.js?v=20260215v8";
+} from "./supabase-config.js?v=20260215v11";
 
 const TABLE = "portfolio_content";
 const ROW_ID = 1;
@@ -622,8 +622,7 @@ async function saveToDatabase() {
 
   const startedAt = performance.now();
   const writePayload = {
-    content,
-    updated_by: currentUser?.id || null
+    content
   };
 
   let updatedAt = "";
@@ -706,7 +705,10 @@ async function handleSession(session, options = {}) {
     stopKeepAlive();
     loadedUserId = "";
     const usedEmail = user.email || "unknown";
-    setStatus("error", `This Google account is not authorized: ${usedEmail}`);
+    setStatus(
+      "error",
+      `This Google account is not authorized: ${usedEmail}. Use adarshmalayath@gmail.com.`
+    );
     setEditorView(false);
     userText.textContent = "";
     return;
