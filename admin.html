@@ -82,25 +82,7 @@
 	          </section>
 
 	          <section class="form-section">
-	            <h2>Section Names</h2>
-	            <div class="form-grid">
-	              <label for="sectionTitleExperience">Experience Section Title</label>
-	              <input id="sectionTitleExperience" type="text" />
-	              <label for="sectionTitleSkills">Skills Section Title</label>
-	              <input id="sectionTitleSkills" type="text" />
-	              <label for="sectionTitleProjects">Projects Section Title</label>
-	              <input id="sectionTitleProjects" type="text" />
-	              <label for="sectionTitleEducation">Education Section Title</label>
-	              <input id="sectionTitleEducation" type="text" />
-	              <label for="sectionTitleCertifications">Certifications Section Title</label>
-	              <input id="sectionTitleCertifications" type="text" />
-	              <label for="sectionTitleProfile">Profile Section Title</label>
-	              <input id="sectionTitleProfile" type="text" />
-	            </div>
-	          </section>
-
-          <section class="form-section">
-            <h2>Stats (4)</h2>
+	            <h2>Stats (4)</h2>
             <div class="form-grid">
               <label for="stat0Value">Stat 1 Value</label>
               <input id="stat0Value" type="text" />
@@ -124,10 +106,26 @@
             </div>
           </section>
 
-          <section class="form-section">
-            <h2>Experience</h2>
-            <div class="form-grid">
-              <label for="experienceRoleInput">Role</label>
+	          <section class="form-section">
+	            <div class="section-header-row">
+	              <h2>Experience</h2>
+	              <button
+	                class="section-title-toggle btn btn-ghost"
+	                type="button"
+	                data-target="sectionTitleExperienceWrap"
+	                aria-label="Edit Experience section title"
+	                aria-expanded="false"
+	                title="Edit section title"
+	              >
+	                ✎
+	              </button>
+	            </div>
+	            <div class="section-title-editor hidden" id="sectionTitleExperienceWrap">
+	              <label for="sectionTitleExperience">Section Title</label>
+	              <input id="sectionTitleExperience" type="text" />
+	            </div>
+	            <div class="form-grid">
+	              <label for="experienceRoleInput">Role</label>
               <input id="experienceRoleInput" type="text" />
               <label for="experienceMetaInput">Meta</label>
               <input id="experienceMetaInput" type="text" />
@@ -138,9 +136,25 @@
             </div>
           </section>
 
-          <section class="form-section">
-            <h2>Skills (6)</h2>
-            <div class="form-grid">
+	          <section class="form-section">
+	            <div class="section-header-row">
+	              <h2>Skills (6)</h2>
+	              <button
+	                class="section-title-toggle btn btn-ghost"
+	                type="button"
+	                data-target="sectionTitleSkillsWrap"
+	                aria-label="Edit Skills section title"
+	                aria-expanded="false"
+	                title="Edit section title"
+	              >
+	                ✎
+	              </button>
+	            </div>
+	            <div class="section-title-editor hidden" id="sectionTitleSkillsWrap">
+	              <label for="sectionTitleSkills">Section Title</label>
+	              <input id="sectionTitleSkills" type="text" />
+	            </div>
+	            <div class="form-grid">
               <label for="skill0Title">Skill 1 Title</label>
               <input id="skill0Title" type="text" />
               <label for="skill0Description">Skill 1 Description</label>
@@ -173,9 +187,25 @@
             </div>
           </section>
 
-          <section class="form-section">
-            <h2>Projects (4)</h2>
-            <div class="form-grid">
+	          <section class="form-section">
+	            <div class="section-header-row">
+	              <h2>Projects (4)</h2>
+	              <button
+	                class="section-title-toggle btn btn-ghost"
+	                type="button"
+	                data-target="sectionTitleProjectsWrap"
+	                aria-label="Edit Projects section title"
+	                aria-expanded="false"
+	                title="Edit section title"
+	              >
+	                ✎
+	              </button>
+	            </div>
+	            <div class="section-title-editor hidden" id="sectionTitleProjectsWrap">
+	              <label for="sectionTitleProjects">Section Title</label>
+	              <input id="sectionTitleProjects" type="text" />
+	            </div>
+	            <div class="form-grid">
               <label for="project0Title">Project 1 Title</label>
               <input id="project0Title" type="text" />
               <label for="project0Tech">Project 1 Tech</label>
@@ -206,9 +236,25 @@
             </div>
           </section>
 
-          <section class="form-section">
-            <h2>Education (2)</h2>
-            <div class="form-grid">
+	          <section class="form-section">
+	            <div class="section-header-row">
+	              <h2>Education (2)</h2>
+	              <button
+	                class="section-title-toggle btn btn-ghost"
+	                type="button"
+	                data-target="sectionTitleEducationWrap"
+	                aria-label="Edit Education section title"
+	                aria-expanded="false"
+	                title="Edit section title"
+	              >
+	                ✎
+	              </button>
+	            </div>
+	            <div class="section-title-editor hidden" id="sectionTitleEducationWrap">
+	              <label for="sectionTitleEducation">Section Title</label>
+	              <input id="sectionTitleEducation" type="text" />
+	            </div>
+	            <div class="form-grid">
               <label for="education0Title">Education 1 Title</label>
               <input id="education0Title" type="text" />
               <label for="education0Meta">Education 1 Meta</label>
@@ -225,9 +271,25 @@
             </div>
           </section>
 
-          <section class="form-section">
-            <h2>Certifications</h2>
-            <div class="form-grid">
+	          <section class="form-section">
+	            <div class="section-header-row">
+	              <h2>Certifications</h2>
+	              <button
+	                class="section-title-toggle btn btn-ghost"
+	                type="button"
+	                data-target="sectionTitleCertificationsWrap"
+	                aria-label="Edit Certifications section title"
+	                aria-expanded="false"
+	                title="Edit section title"
+	              >
+	                ✎
+	              </button>
+	            </div>
+	            <div class="section-title-editor hidden" id="sectionTitleCertificationsWrap">
+	              <label for="sectionTitleCertifications">Section Title</label>
+	              <input id="sectionTitleCertifications" type="text" />
+	            </div>
+	            <div class="form-grid">
               <label for="certificationsInput"
                 >One certification per line</label
               >
@@ -236,10 +298,26 @@
           </section>
 
 	          <section class="form-section">
-	            <h2>Profile Details</h2>
+	            <div class="section-header-row">
+	              <h2>Profile Details</h2>
+	              <button
+	                class="section-title-toggle btn btn-ghost"
+	                type="button"
+	                data-target="sectionTitleProfileWrap"
+	                aria-label="Edit Profile section title"
+	                aria-expanded="false"
+	                title="Edit section title"
+	              >
+	                ✎
+	              </button>
+	            </div>
+	            <div class="section-title-editor hidden" id="sectionTitleProfileWrap">
+	              <label for="sectionTitleProfile">Section Title</label>
+	              <input id="sectionTitleProfile" type="text" />
+	            </div>
 	            <div class="form-grid">
-              <label for="profileDetailsInput"
-                >One detail line per row</label
+	              <label for="profileDetailsInput"
+	                >One detail line per row</label
               >
               <textarea id="profileDetailsInput" rows="6"></textarea>
 	            </div>
@@ -276,6 +354,6 @@
       </p>
     </main>
 
-    <script type="module" src="admin.js?v=20260215v8"></script>
+    <script type="module" src="admin.js?v=20260215v10"></script>
   </body>
 </html>

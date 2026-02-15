@@ -240,6 +240,34 @@ function fillSectionTitles(sectionTitles) {
   );
 }
 
+function bindSectionTitleToggles() {
+  const toggles = Array.from(document.querySelectorAll(".section-title-toggle"));
+  toggles.forEach((toggle) => {
+    const targetId = toggle.getAttribute("data-target");
+    if (!targetId) {
+      return;
+    }
+
+    const wrapper = document.getElementById(targetId);
+    if (!wrapper) {
+      return;
+    }
+
+    toggle.addEventListener("click", () => {
+      const isHidden = wrapper.classList.contains("hidden");
+      wrapper.classList.toggle("hidden", !isHidden);
+      toggle.setAttribute("aria-expanded", String(isHidden));
+      if (isHidden) {
+        const input = wrapper.querySelector("input");
+        if (input) {
+          input.focus();
+          input.select();
+        }
+      }
+    });
+  });
+}
+
 function refreshCustomSectionOrder() {
   if (!customSectionsContainer) {
     return;
@@ -705,6 +733,8 @@ async function handleSession(session, options = {}) {
 }
 
 function bindUi() {
+  bindSectionTitleToggles();
+
   googleLoginBtn.addEventListener("click", async () => {
     try {
       setStatus("info", "Redirecting to Google sign-in...");
