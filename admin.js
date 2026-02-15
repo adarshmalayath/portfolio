@@ -2,15 +2,16 @@ import { createClient } from "https://esm.sh/@supabase/supabase-js@2?bundle";
 import {
   defaultPortfolioContent,
   normalizePortfolioContent
-} from "./portfolio-content.js?v=20260215v5";
+} from "./portfolio-content.js?v=20260215v6";
 import {
   supabaseAdmin,
   supabaseConfig,
   supabaseReady
-} from "./supabase-config.js?v=20260215v5";
+} from "./supabase-config.js?v=20260215v6";
 
 const TABLE = "portfolio_content";
 const ROW_ID = 1;
+const QUERY_TIMEOUT_MS = 12000;
 
 const statusBox = document.getElementById("status");
 const loginPanel = document.getElementById("loginPanel");
@@ -39,6 +40,8 @@ let currentUser = null;
 let customSectionCounter = 0;
 let keepAliveTimer = null;
 let lastSavedSnapshot = "";
+let loadedUserId = "";
+let loadRequestSequence = 0;
 
 function getAdminRedirectUrl() {
   const url = new URL(window.location.href);
@@ -50,6 +53,21 @@ function getAdminRedirectUrl() {
 function setStatus(type, message) {
   statusBox.className = `status ${type}`;
   statusBox.textContent = message;
+}
+
+function withTimeout(promise, timeoutMs, label) {
+  let timerId = 0;
+  const timeoutPromise = new Promise((_resolve, reject) => {
+    timerId = window.setTimeout(() => {
+      reject(new Error(`${label} timed out after ${Math.round(timeoutMs / 1000)}s`));
+    }, timeoutMs);
+  });
+
+  return Promise.race([promise, timeoutPromise]).finally(() => {
+    if (timerId) {
+      window.clearTimeout(timerId);
+    }
+  });
 }
 
 function contentSnapshot(content) {
@@ -68,7 +86,11 @@ async function pingDatabase() {
     return;
   }
 
-  await supabase.from(TABLE).select("id").eq("id", ROW_ID).limit(1);
+  await withTimeout(
+    supabase.from(TABLE).select("id").eq("id", ROW_ID).limit(1),
+    5000,
+    "Keep-alive"
+  );
 }
 
 function startKeepAlive() {
@@ -489,16 +511,20 @@ function fillForm(content) {
 }
 
 async function loadFromDatabase() {
-  setStatus("info", "Loading content from SQL database...");
+  const requestId = ++loadRequestSequence;
+  setStatus("info", "Loading content from SQL database (free-tier wake-up may take a few seconds)...");
 
-  const { data, error } = await supabase
-    .from(TABLE)
-    .select("content,updated_at")
-    .eq("id", ROW_ID)
-    .maybeSingle();
+  const { data, error } = await withTimeout(
+    supabase.from(TABLE).select("content,updated_at").eq("id", ROW_ID).maybeSingle(),
+    QUERY_TIMEOUT_MS,
+    "SQL load"
+  );
 
   if (error) {
     throw new Error(error.message);
+  }
+  if (requestId !== loadRequestSequence) {
+    return;
   }
 
   if (!data || !data.content) {
@@ -531,23 +557,22 @@ async function saveToDatabase() {
 
   let updatedAt = "";
 
-  const { data: updatedRow, error: updateError } = await supabase
-    .from(TABLE)
-    .update(writePayload)
-    .eq("id", ROW_ID)
-    .select("updated_at")
-    .maybeSingle();
+  const { data: updatedRow, error: updateError } = await withTimeout(
+    supabase.from(TABLE).update(writePayload).eq("id", ROW_ID).select("updated_at").maybeSingle(),
+    QUERY_TIMEOUT_MS,
+    "SQL save"
+  );
 
   if (updateError) {
     throw new Error(updateError.message);
   }
 
   if (!updatedRow) {
-    const { data: insertedRow, error: insertError } = await supabase
-      .from(TABLE)
-      .insert({ id: ROW_ID, ...writePayload })
-      .select("updated_at")
-      .maybeSingle();
+    const { data: insertedRow, error: insertError } = await withTimeout(
+      supabase.from(TABLE).insert({ id: ROW_ID, ...writePayload }).select("updated_at").maybeSingle(),
+      QUERY_TIMEOUT_MS,
+      "SQL insert"
+    );
 
     if (insertError) {
       throw new Error(insertError.message);
@@ -565,12 +590,14 @@ async function saveToDatabase() {
   setStatus("ok", `Saved in ${elapsedMs} ms at ${updatedText}${perfHint}.`);
 }
 
-async function handleSession(session) {
+async function handleSession(session, options = {}) {
+  const forceLoad = Boolean(options.forceLoad);
   const user = session?.user || null;
 
   if (!user) {
     currentUser = null;
     stopKeepAlive();
+    loadedUserId = "";
     setEditorView(false);
     userText.textContent = "";
     setStatus("info", "Private page. Sign in with your admin Google account.");
@@ -580,6 +607,7 @@ async function handleSession(session) {
   if (!isAllowedUser(user)) {
     await supabase.auth.signOut();
     stopKeepAlive();
+    loadedUserId = "";
     const usedEmail = user.email || "unknown";
     setStatus("error", `This Google account is not authorized: ${usedEmail}`);
     setEditorView(false);
@@ -587,12 +615,21 @@ async function handleSession(session) {
     return;
   }
 
+  const previousUserId = currentUser?.id || "";
   currentUser = user;
   startKeepAlive();
   setEditorView(true);
   userText.textContent = `Signed in as ${user.email || user.id}`;
+
+  const shouldLoad = forceLoad || loadedUserId !== user.id || previousUserId !== user.id;
+  if (!shouldLoad) {
+    setStatus("ok", "Ready. Content loaded.");
+    return;
+  }
+
   try {
     await loadFromDatabase();
+    loadedUserId = user.id;
   } catch (error) {
     setStatus("error", `Could not load from SQL: ${error.message}`);
   }
@@ -677,10 +714,13 @@ async function initAdmin() {
   const {
     data: { session }
   } = await supabase.auth.getSession();
-  await handleSession(session);
+  await handleSession(session, { forceLoad: true });
 
-  supabase.auth.onAuthStateChange(async (_event, sessionUpdate) => {
-    await handleSession(sessionUpdate);
+  supabase.auth.onAuthStateChange(async (event, sessionUpdate) => {
+    if (event === "INITIAL_SESSION" || event === "TOKEN_REFRESHED") {
+      return;
+    }
+    await handleSession(sessionUpdate, { forceLoad: event === "SIGNED_IN" });
   });
 }
 
