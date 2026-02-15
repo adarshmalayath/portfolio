@@ -2,12 +2,12 @@ import { createClient } from "https://esm.sh/@supabase/supabase-js@2?bundle";
 import {
   defaultPortfolioContent,
   normalizePortfolioContent
-} from "./portfolio-content.js?v=20260215v4";
+} from "./portfolio-content.js?v=20260215v5";
 import {
   supabaseAdmin,
   supabaseConfig,
   supabaseReady
-} from "./supabase-config.js?v=20260215v4";
+} from "./supabase-config.js?v=20260215v5";
 
 const TABLE = "portfolio_content";
 const ROW_ID = 1;
@@ -37,6 +37,8 @@ const SECTION_TITLE_INPUTS = {
 let supabase = null;
 let currentUser = null;
 let customSectionCounter = 0;
+let keepAliveTimer = null;
+let lastSavedSnapshot = "";
 
 function getAdminRedirectUrl() {
   const url = new URL(window.location.href);
@@ -48,6 +50,37 @@ function getAdminRedirectUrl() {
 function setStatus(type, message) {
   statusBox.className = `status ${type}`;
   statusBox.textContent = message;
+}
+
+function contentSnapshot(content) {
+  return JSON.stringify(normalizePortfolioContent(content));
+}
+
+function stopKeepAlive() {
+  if (keepAliveTimer) {
+    window.clearInterval(keepAliveTimer);
+    keepAliveTimer = null;
+  }
+}
+
+async function pingDatabase() {
+  if (!supabase || !currentUser) {
+    return;
+  }
+
+  await supabase.from(TABLE).select("id").eq("id", ROW_ID).limit(1);
+}
+
+function startKeepAlive() {
+  stopKeepAlive();
+  pingDatabase().catch(() => {
+    // Ignore keep-alive warm-up failures.
+  });
+  keepAliveTimer = window.setInterval(() => {
+    pingDatabase().catch(() => {
+      // Silent keep-alive ping to reduce free-tier wake-up delays.
+    });
+  }, 120000);
 }
 
 function setEditorView(isAuthenticated) {
@@ -460,7 +493,7 @@ async function loadFromDatabase() {
 
   const { data, error } = await supabase
     .from(TABLE)
-    .select("*")
+    .select("content,updated_at")
     .eq("id", ROW_ID)
     .maybeSingle();
 
@@ -470,28 +503,66 @@ async function loadFromDatabase() {
 
   if (!data || !data.content) {
     fillForm(defaultPortfolioContent);
+    lastSavedSnapshot = contentSnapshot(defaultPortfolioContent);
     setStatus("warn", "No SQL row found yet. Loaded default template.");
     return;
   }
 
-  fillForm(data.content);
+  const normalized = normalizePortfolioContent(data.content);
+  fillForm(normalized);
+  lastSavedSnapshot = contentSnapshot(normalized);
   const updatedAt = data.updated_at ? new Date(data.updated_at).toLocaleString() : "unknown";
   setStatus("ok", `Loaded latest content from SQL (updated: ${updatedAt}).`);
 }
 
 async function saveToDatabase() {
   const content = collectContentFromForm();
-  const payload = {
-    id: ROW_ID,
-    content
-  };
-
-  const { error } = await supabase.from(TABLE).upsert(payload, { onConflict: "id" });
-  if (error) {
-    throw new Error(error.message);
+  const snapshot = contentSnapshot(content);
+  if (snapshot === lastSavedSnapshot) {
+    setStatus("ok", "No changes to save.");
+    return;
   }
 
-  setStatus("ok", "Saved to SQL database successfully.");
+  const startedAt = performance.now();
+  const writePayload = {
+    content,
+    updated_by: currentUser?.id || null
+  };
+
+  let updatedAt = "";
+
+  const { data: updatedRow, error: updateError } = await supabase
+    .from(TABLE)
+    .update(writePayload)
+    .eq("id", ROW_ID)
+    .select("updated_at")
+    .maybeSingle();
+
+  if (updateError) {
+    throw new Error(updateError.message);
+  }
+
+  if (!updatedRow) {
+    const { data: insertedRow, error: insertError } = await supabase
+      .from(TABLE)
+      .insert({ id: ROW_ID, ...writePayload })
+      .select("updated_at")
+      .maybeSingle();
+
+    if (insertError) {
+      throw new Error(insertError.message);
+    }
+
+    updatedAt = insertedRow?.updated_at || "";
+  } else {
+    updatedAt = updatedRow.updated_at || "";
+  }
+
+  lastSavedSnapshot = snapshot;
+  const elapsedMs = Math.round(performance.now() - startedAt);
+  const updatedText = updatedAt ? new Date(updatedAt).toLocaleTimeString() : "now";
+  const perfHint = elapsedMs > 2500 ? " (free-tier wake-up can cause delay)" : "";
+  setStatus("ok", `Saved in ${elapsedMs} ms at ${updatedText}${perfHint}.`);
 }
 
 async function handleSession(session) {
@@ -499,6 +570,7 @@ async function handleSession(session) {
 
   if (!user) {
     currentUser = null;
+    stopKeepAlive();
     setEditorView(false);
     userText.textContent = "";
     setStatus("info", "Private page. Sign in with your admin Google account.");
@@ -507,6 +579,7 @@ async function handleSession(session) {
 
   if (!isAllowedUser(user)) {
     await supabase.auth.signOut();
+    stopKeepAlive();
     const usedEmail = user.email || "unknown";
     setStatus("error", `This Google account is not authorized: ${usedEmail}`);
     setEditorView(false);
@@ -515,6 +588,7 @@ async function handleSession(session) {
   }
 
   currentUser = user;
+  startKeepAlive();
   setEditorView(true);
   userText.textContent = `Signed in as ${user.email || user.id}`;
   try {
@@ -579,6 +653,7 @@ function bindUi() {
 
 async function initAdmin() {
   fillForm(defaultPortfolioContent);
+  lastSavedSnapshot = contentSnapshot(defaultPortfolioContent);
   if (!supabaseReady) {
     setStatus(
       "warn",
