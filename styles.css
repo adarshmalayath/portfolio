@@ -22,7 +22,7 @@ html {
 
 body {
   margin: 0;
-  font-family: "Manrope", "Segoe UI", sans-serif;
+  font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
   background: radial-gradient(circle at 86% 4%, rgba(242, 200, 75, 0.13) 0%, rgba(10, 10, 10, 0) 23%),
     radial-gradient(circle at 20% -20%, #262626 0%, var(--bg) 45%), var(--bg);
   color: var(--text);
@@ -116,7 +116,7 @@ a:hover {
 }
 
 .brand {
-  font-family: "Sora", sans-serif;
+  font-family: "Trebuchet MS", "Segoe UI", Arial, sans-serif;
   font-weight: 600;
   letter-spacing: 0.02em;
   color: #ffffff;
@@ -187,7 +187,7 @@ a:hover {
 
 .hero h1 {
   margin: 0;
-  font-family: "Sora", sans-serif;
+  font-family: "Trebuchet MS", "Segoe UI", Arial, sans-serif;
   font-size: clamp(2rem, 4vw, 3.6rem);
   line-height: 1.16;
 }
@@ -259,7 +259,7 @@ a:hover {
 
 .section h2 {
   margin: 0 0 1.1rem;
-  font-family: "Sora", sans-serif;
+  font-family: "Trebuchet MS", "Segoe UI", Arial, sans-serif;
   font-size: 1.4rem;
   display: flex;
   align-items: center;
