@@ -86,6 +86,8 @@ async function initAdmin() {
       GoogleAuthProvider,
       OAuthProvider,
       signInWithPopup,
+      signInWithRedirect,
+      getRedirectResult,
       signOut,
       onAuthStateChanged
     },
@@ -100,6 +102,31 @@ async function initAdmin() {
   const auth = getAuth(app);
   const db = getFirestore(app);
   const contentRef = doc(db, COLLECTION, DOC_ID);
+
+  function authHint(errorCode) {
+    const hints = {
+      "auth/unauthorized-domain":
+        "Add your site host to Firebase Auth Authorized domains (for this site: adarshmalayath.github.io).",
+      "auth/operation-not-allowed":
+        "Enable this provider in Firebase Authentication -> Sign-in method.",
+      "auth/popup-blocked":
+        "Popup was blocked by your browser. Allow popups and try again.",
+      "auth/internal-error":
+        "Check Firebase Auth authorized domains and admin page CSP settings, then retry."
+    };
+    return hints[errorCode] || "Check browser console and Firebase Auth settings.";
+  }
+
+  async function handleRedirectResult() {
+    try {
+      await getRedirectResult(auth);
+    } catch (error) {
+      const code = error?.code || "unknown";
+      setStatus("error", `Sign-in redirect failed (${code}). ${authHint(code)}`);
+    }
+  }
+
+  await handleRedirectResult();
 
   async function loadContentIntoEditor() {
     setStatus("info", "Loading content from database...");
@@ -133,7 +160,12 @@ async function initAdmin() {
       setStatus("info", "Opening Google sign-in...");
       await signInWithPopup(auth, new GoogleAuthProvider());
     } catch (error) {
-      setStatus("error", `Google sign-in failed: ${error.message}`);
+      const code = error?.code || "unknown";
+      if (code === "auth/popup-blocked") {
+        await signInWithRedirect(auth, new GoogleAuthProvider());
+        return;
+      }
+      setStatus("error", `Google sign-in failed (${code}). ${authHint(code)}`);
     }
   });
 
@@ -145,7 +177,15 @@ async function initAdmin() {
       provider.addScope("name");
       await signInWithPopup(auth, provider);
     } catch (error) {
-      setStatus("error", `Apple sign-in failed: ${error.message}`);
+      const code = error?.code || "unknown";
+      if (code === "auth/popup-blocked") {
+        const provider = new OAuthProvider("apple.com");
+        provider.addScope("email");
+        provider.addScope("name");
+        await signInWithRedirect(auth, provider);
+        return;
+      }
+      setStatus("error", `Apple sign-in failed (${code}). ${authHint(code)}`);
     }
   });
 
