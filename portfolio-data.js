@@ -1,7 +1,7 @@
-import { supabaseConfig, supabaseReady } from "./supabase-config.js?v=20260215v21";
+import { supabaseConfig, supabaseReady } from "./supabase-config.js?v=20260215v22";
 import {
   normalizePortfolioContent
-} from "./portfolio-content.js?v=20260215v21";
+} from "./portfolio-content.js?v=20260215v22";
 
 const CONTENT_TABLE = "portfolio_content";
 const CONTENT_ROW_ID = 1;
