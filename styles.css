@@ -154,35 +154,17 @@ a:hover {
   width: 7.4rem;
   height: 2.2rem;
   margin: 0 0 0.95rem;
-  border: 1px solid rgba(242, 200, 75, 0.6);
   border-radius: 999px;
-  background: radial-gradient(circle, rgba(242, 200, 75, 0.25) 0%, rgba(30, 30, 30, 0.14) 65%);
+  background-image: url("brand-mark.svg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
   position: relative;
   overflow: hidden;
 }
 
 .signal-mark::before {
-  content: "";
-  position: absolute;
-  left: 1.15rem;
-  right: 1.15rem;
-  top: 0.62rem;
-  bottom: 0.42rem;
-  background: #ebebeb;
-  opacity: 0.92;
-  clip-path: polygon(
-    0% 70%,
-    16% 50%,
-    30% 56%,
-    50% 20%,
-    70% 56%,
-    84% 50%,
-    100% 70%,
-    76% 70%,
-    67% 84%,
-    33% 84%,
-    24% 70%
-  );
+  content: none;
 }
 
 .hero h1 {
