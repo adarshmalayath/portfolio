@@ -1,7 +1,7 @@
-import { supabaseConfig, supabaseReady } from "./supabase-config.js?v=20260215v20";
+import { supabaseConfig, supabaseReady } from "./supabase-config.js?v=20260215v21";
 import {
   normalizePortfolioContent
-} from "./portfolio-content.js?v=20260215v20";
+} from "./portfolio-content.js?v=20260215v21";
 
 const CONTENT_TABLE = "portfolio_content";
 const CONTENT_ROW_ID = 1;
@@ -362,7 +362,7 @@ async function fetchRemotePortfolio() {
   for (let attempt = 0; attempt < 3; attempt += 1) {
     const endpoint =
       `${supabaseConfig.url}/rest/v1/${CONTENT_TABLE}` +
-      `?id=eq.${CONTENT_ROW_ID}&select=content,updated_at&_=${Date.now()}`;
+      `?id=eq.${CONTENT_ROW_ID}&select=content,updated_at`;
 
     try {
       const response = await fetchWithTimeout(
