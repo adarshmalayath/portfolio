@@ -156,7 +156,7 @@ function lockDownPage(message) {
           <p class="eyebrow">Access Restricted</p>
           <h1>404</h1>
           <p class="subtext">${message}</p>
-          <p class="back-link"><a href="index.html">Back to Portfolio</a></p>
+          <p class="back-link"><a href="/portfolio">Back to Portfolio</a></p>
         </header>
       </section>
     </main>
