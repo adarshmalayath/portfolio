@@ -4,12 +4,13 @@
   Project settings -> General -> Your apps -> Web app config
 */
 export const firebaseConfig = {
-  apiKey: "REPLACE_ME",
-  authDomain: "REPLACE_ME.firebaseapp.com",
-  projectId: "REPLACE_ME",
-  storageBucket: "REPLACE_ME.appspot.com",
-  messagingSenderId: "REPLACE_ME",
-  appId: "REPLACE_ME"
+  apiKey: "AIzaSyDm9UwhJO7PE4bpb1Xk1fNFpD2yNJIKwsI",
+  authDomain: "portfolio-4e1c6.firebaseapp.com",
+  projectId: "portfolio-4e1c6",
+  storageBucket: "portfolio-4e1c6.firebasestorage.app",
+  messagingSenderId: "620723089488",
+  appId: "1:620723089488:web:02872c61ba6f56ff582155",
+  measurementId: "G-PDE2CQNDC0"
 };
 
 /*
