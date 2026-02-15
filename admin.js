@@ -2,18 +2,19 @@ import { createClient } from "https://esm.sh/@supabase/supabase-js@2?bundle";
 import {
   defaultPortfolioContent,
   normalizePortfolioContent
-} from "./portfolio-content.js?v=20260215v17";
+} from "./portfolio-content.js?v=20260215v18";
 import {
   supabaseAdmin,
   supabaseConfig,
   supabaseReady
-} from "./supabase-config.js?v=20260215v17";
+} from "./supabase-config.js?v=20260215v18";
 
 const TABLE = "portfolio_content";
 const ROW_ID = 1;
 const QUERY_TIMEOUT_MS = 30000;
 const SAVE_QUERY_TIMEOUT_MS = 45000;
 const PREFERRED_CV_URL = "https://adarshmalayath.github.io/portfolio/CV%20IT.pdf";
+const CONTENT_CACHE_KEY = "portfolio_content_cache_v2";
 
 const statusBox = document.getElementById("status");
 const loginPanel = document.getElementById("loginPanel");
@@ -112,6 +113,14 @@ function enrichDatabaseError(error) {
 
 function contentSnapshot(content) {
   return JSON.stringify(normalizePortfolioContent(content));
+}
+
+function writeCachedContent(content) {
+  try {
+    window.localStorage.setItem(CONTENT_CACHE_KEY, JSON.stringify(content));
+  } catch (error) {
+    // Ignore local storage quota/privacy errors.
+  }
 }
 
 function stopKeepAlive() {
@@ -645,6 +654,7 @@ async function loadFromDatabase(options = {}) {
   const normalized = normalizePortfolioContent(row.content);
   fillForm(normalized);
   lastSavedSnapshot = contentSnapshot(normalized);
+  writeCachedContent(normalized);
   if (!suppressStatus) {
     const updatedAt = row.updated_at ? new Date(row.updated_at).toLocaleString() : "unknown";
     setStatus("ok", `Loaded latest content from SQL (updated: ${updatedAt}).`);
@@ -653,6 +663,7 @@ async function loadFromDatabase(options = {}) {
 
 async function saveToDatabase() {
   const content = collectContentFromForm();
+  writeCachedContent(content);
   const snapshot = contentSnapshot(content);
   if (snapshot === lastSavedSnapshot) {
     setStatus("ok", "No changes to save.");
