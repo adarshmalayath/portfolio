@@ -2,12 +2,12 @@ import { createClient } from "https://esm.sh/@supabase/supabase-js@2?bundle";
 import {
   defaultPortfolioContent,
   normalizePortfolioContent
-} from "./portfolio-content.js?v=20260215v3";
+} from "./portfolio-content.js?v=20260215v4";
 import {
   supabaseAdmin,
   supabaseConfig,
   supabaseReady
-} from "./supabase-config.js?v=20260215v3";
+} from "./supabase-config.js?v=20260215v4";
 
 const TABLE = "portfolio_content";
 const ROW_ID = 1;
@@ -37,6 +37,13 @@ const SECTION_TITLE_INPUTS = {
 let supabase = null;
 let currentUser = null;
 let customSectionCounter = 0;
+
+function getAdminRedirectUrl() {
+  const url = new URL(window.location.href);
+  url.search = "";
+  url.hash = "";
+  return url.toString();
+}
 
 function setStatus(type, message) {
   statusBox.className = `status ${type}`;
@@ -500,8 +507,10 @@ async function handleSession(session) {
 
   if (!isAllowedUser(user)) {
     await supabase.auth.signOut();
-    setStatus("error", "This account is not authorized.");
-    lockDownPage("This route is private.");
+    const usedEmail = user.email || "unknown";
+    setStatus("error", `This Google account is not authorized: ${usedEmail}`);
+    setEditorView(false);
+    userText.textContent = "";
     return;
   }
 
@@ -522,7 +531,7 @@ function bindUi() {
       const { error } = await supabase.auth.signInWithOAuth({
         provider: "google",
         options: {
-          redirectTo: window.location.href
+          redirectTo: getAdminRedirectUrl()
         }
       });
       if (error) {
