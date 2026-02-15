@@ -1,8 +1,8 @@
-import { supabaseConfig, supabaseReady } from "./supabase-config.js?v=20260215v18";
+import { supabaseConfig, supabaseReady } from "./supabase-config.js?v=20260215v19";
 import {
   defaultPortfolioContent,
   normalizePortfolioContent
-} from "./portfolio-content.js?v=20260215v18";
+} from "./portfolio-content.js?v=20260215v19";
 
 const CONTENT_TABLE = "portfolio_content";
 const CONTENT_ROW_ID = 1;

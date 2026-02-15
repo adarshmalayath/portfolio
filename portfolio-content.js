@@ -4,7 +4,7 @@ export const defaultPortfolioContent = {
     role: "Full Stack Developer",
     headline: "Building secure, scalable products from backend to frontend.",
     summary:
-      "Full stack developer with 2 years and 10 months of banking technology experience, delivering backend services, frontend interfaces, and production support using Java, PL/SQL, and ReactJS.",
+      "Full stack developer with 2 years 10 months of banking technology experience, delivering backend services, frontend interfaces, and production support using Java, PL/SQL, and ReactJS.",
     location: "Leicester, United Kingdom",
     email: "adarshmalayath@gmail.com",
     phone: "+44 7721 445027",
@@ -90,7 +90,7 @@ export const defaultPortfolioContent = {
     projects: "Selected Projects",
     education: "Education",
     certifications: "Certification Highlights",
-    profile: "Profile"
+    profile: "Additional Details"
   },
   customSections: []
 };
