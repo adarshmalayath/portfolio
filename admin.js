@@ -2,16 +2,17 @@ import { createClient } from "https://esm.sh/@supabase/supabase-js@2?bundle";
 import {
   defaultPortfolioContent,
   normalizePortfolioContent
-} from "./portfolio-content.js?v=20260215v6";
+} from "./portfolio-content.js?v=20260215v8";
 import {
   supabaseAdmin,
   supabaseConfig,
   supabaseReady
-} from "./supabase-config.js?v=20260215v6";
+} from "./supabase-config.js?v=20260215v8";
 
 const TABLE = "portfolio_content";
 const ROW_ID = 1;
 const QUERY_TIMEOUT_MS = 12000;
+const SAVE_QUERY_TIMEOUT_MS = 18000;
 
 const statusBox = document.getElementById("status");
 const loginPanel = document.getElementById("loginPanel");
@@ -68,6 +69,43 @@ function withTimeout(promise, timeoutMs, label) {
       window.clearTimeout(timerId);
     }
   });
+}
+
+async function withRetry(action, retries = 1, pauseMs = 700) {
+  let lastError = null;
+  for (let attempt = 0; attempt <= retries; attempt += 1) {
+    try {
+      return await action();
+    } catch (error) {
+      lastError = error;
+      if (attempt === retries) {
+        throw error;
+      }
+      await new Promise((resolve) => {
+        window.setTimeout(resolve, pauseMs);
+      });
+    }
+  }
+  throw lastError || new Error("Unknown retry failure");
+}
+
+function enrichDatabaseError(error) {
+  const message = String(error?.message || error || "Unknown database error");
+  const lower = message.toLowerCase();
+
+  if (lower.includes("timed out")) {
+    return `${message}. Supabase free-tier may be cold. Retry once after 10-20 seconds.`;
+  }
+
+  if (
+    lower.includes("row-level security") ||
+    lower.includes("permission denied") ||
+    lower.includes("forbidden")
+  ) {
+    return `${message}. SQL policy is blocking writes for this account. Update RLS policy to allow your Google email.`;
+  }
+
+  return message;
 }
 
 function contentSnapshot(content) {
@@ -514,10 +552,15 @@ async function loadFromDatabase() {
   const requestId = ++loadRequestSequence;
   setStatus("info", "Loading content from SQL database (free-tier wake-up may take a few seconds)...");
 
-  const { data, error } = await withTimeout(
-    supabase.from(TABLE).select("content,updated_at").eq("id", ROW_ID).maybeSingle(),
-    QUERY_TIMEOUT_MS,
-    "SQL load"
+  const { data, error } = await withRetry(
+    () =>
+      withTimeout(
+        supabase.from(TABLE).select("content,updated_at").eq("id", ROW_ID).maybeSingle(),
+        QUERY_TIMEOUT_MS,
+        "SQL load"
+      ),
+    1,
+    900
   );
 
   if (error) {
@@ -557,10 +600,15 @@ async function saveToDatabase() {
 
   let updatedAt = "";
 
-  const { data: updatedRow, error: updateError } = await withTimeout(
-    supabase.from(TABLE).update(writePayload).eq("id", ROW_ID).select("updated_at").maybeSingle(),
-    QUERY_TIMEOUT_MS,
-    "SQL save"
+  const { data: updatedRow, error: updateError } = await withRetry(
+    () =>
+      withTimeout(
+        supabase.from(TABLE).update(writePayload).eq("id", ROW_ID).select("updated_at").maybeSingle(),
+        SAVE_QUERY_TIMEOUT_MS,
+        "SQL save"
+      ),
+    1,
+    900
   );
 
   if (updateError) {
@@ -568,10 +616,31 @@ async function saveToDatabase() {
   }
 
   if (!updatedRow) {
-    const { data: insertedRow, error: insertError } = await withTimeout(
-      supabase.from(TABLE).insert({ id: ROW_ID, ...writePayload }).select("updated_at").maybeSingle(),
+    const { data: rowCheck, error: rowCheckError } = await withTimeout(
+      supabase.from(TABLE).select("id").eq("id", ROW_ID).maybeSingle(),
       QUERY_TIMEOUT_MS,
-      "SQL insert"
+      "SQL row check"
+    );
+
+    if (rowCheckError) {
+      throw new Error(rowCheckError.message);
+    }
+
+    if (rowCheck?.id) {
+      throw new Error(
+        "Write blocked by SQL policy for the signed-in user (row exists but cannot be updated)."
+      );
+    }
+
+    const { data: insertedRow, error: insertError } = await withRetry(
+      () =>
+        withTimeout(
+          supabase.from(TABLE).insert({ id: ROW_ID, ...writePayload }).select("updated_at").maybeSingle(),
+          SAVE_QUERY_TIMEOUT_MS,
+          "SQL insert"
+        ),
+      1,
+      900
     );
 
     if (insertError) {
@@ -631,7 +700,7 @@ async function handleSession(session, options = {}) {
     await loadFromDatabase();
     loadedUserId = user.id;
   } catch (error) {
-    setStatus("error", `Could not load from SQL: ${error.message}`);
+    setStatus("error", `Could not load from SQL: ${enrichDatabaseError(error)}`);
   }
 }
 
@@ -662,7 +731,7 @@ function bindUi() {
     try {
       await loadFromDatabase();
     } catch (error) {
-      setStatus("error", `Reload failed: ${error.message}`);
+      setStatus("error", `Reload failed: ${enrichDatabaseError(error)}`);
     }
   });
 
@@ -681,7 +750,7 @@ function bindUi() {
       setStatus("info", "Saving to SQL database...");
       await saveToDatabase();
     } catch (error) {
-      setStatus("error", `Save failed: ${error.message}`);
+      setStatus("error", `Save failed: ${enrichDatabaseError(error)}`);
     } finally {
       saveBtn.disabled = false;
     }
@@ -726,5 +795,5 @@ async function initAdmin() {
 
 initAdmin().catch((error) => {
   console.error(error);
-  setStatus("error", `Initialization failed: ${error.message}`);
+  setStatus("error", `Initialization failed: ${enrichDatabaseError(error)}`);
 });

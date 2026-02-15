@@ -40,14 +40,14 @@ create policy "admin_insert_portfolio_content"
 on public.portfolio_content
 for insert
 to authenticated
-with check ((auth.jwt() ->> 'email') = 'adarshmalayath@gmail.com');
+with check ((auth.jwt() ->> 'email') in ('adarshmalayath@gmail.com', 'adarshmalayath@icloud.com'));
 
 create policy "admin_update_portfolio_content"
 on public.portfolio_content
 for update
 to authenticated
-using ((auth.jwt() ->> 'email') = 'adarshmalayath@gmail.com')
-with check ((auth.jwt() ->> 'email') = 'adarshmalayath@gmail.com');
+using ((auth.jwt() ->> 'email') in ('adarshmalayath@gmail.com', 'adarshmalayath@icloud.com'))
+with check ((auth.jwt() ->> 'email') in ('adarshmalayath@gmail.com', 'adarshmalayath@icloud.com'));
 
 insert into public.portfolio_content (id, content)
 values (1, '{}'::jsonb)
@@ -59,7 +59,7 @@ Set allowed admin in:
 - `/Users/adarsh/Documents/Portfolio/supabase-config.js`
 
 ```js
-supabaseAdmin.allowedEmails = ["adarshmalayath@gmail.com"];
+supabaseAdmin.allowedEmails = ["adarshmalayath@gmail.com", "adarshmalayath@icloud.com"];
 ```
 
 ## 5) Deploy

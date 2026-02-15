@@ -1,11 +1,31 @@
-import { supabaseConfig, supabaseReady } from "./supabase-config.js?v=20260215v3";
+import { supabaseConfig, supabaseReady } from "./supabase-config.js?v=20260215v8";
 import {
   defaultPortfolioContent,
   normalizePortfolioContent
-} from "./portfolio-content.js?v=20260215v3";
+} from "./portfolio-content.js?v=20260215v8";
 
 const CONTENT_TABLE = "portfolio_content";
 const CONTENT_ROW_ID = 1;
+const FETCH_TIMEOUT_MS = 12000;
+
+function wait(ms) {
+  return new Promise((resolve) => {
+    window.setTimeout(resolve, ms);
+  });
+}
+
+async function fetchWithTimeout(url, options, timeoutMs) {
+  const controller = new AbortController();
+  const timerId = window.setTimeout(() => controller.abort(), timeoutMs);
+  try {
+    return await fetch(url, {
+      ...options,
+      signal: controller.signal
+    });
+  } finally {
+    window.clearTimeout(timerId);
+  }
+}
 
 function textById(id, value) {
   const element = document.getElementById(id);
@@ -260,37 +280,48 @@ async function fetchRemotePortfolio() {
     return defaultPortfolioContent;
   }
 
-  const endpoint =
-    `${supabaseConfig.url}/rest/v1/${CONTENT_TABLE}` +
-    `?id=eq.${CONTENT_ROW_ID}&select=content,updated_at&_=${Date.now()}`;
+  for (let attempt = 0; attempt < 2; attempt += 1) {
+    const endpoint =
+      `${supabaseConfig.url}/rest/v1/${CONTENT_TABLE}` +
+      `?id=eq.${CONTENT_ROW_ID}&select=content,updated_at&_=${Date.now()}`;
 
-  try {
-    const response = await fetch(endpoint, {
-      method: "GET",
-      cache: "no-store",
-      headers: {
-        apikey: supabaseConfig.anonKey,
-        "Cache-Control": "no-cache",
-        Pragma: "no-cache",
-        Accept: "application/json"
+    try {
+      const response = await fetchWithTimeout(
+        endpoint,
+        {
+          method: "GET",
+          cache: "no-store",
+          headers: {
+            apikey: supabaseConfig.anonKey,
+            "Cache-Control": "no-cache",
+            Pragma: "no-cache",
+            Accept: "application/json"
+          }
+        },
+        FETCH_TIMEOUT_MS
+      );
+
+      if (!response.ok) {
+        const body = await response.text();
+        throw new Error(`SQL read failed (${response.status}): ${body}`);
       }
-    });
 
-    if (!response.ok) {
-      const body = await response.text();
-      throw new Error(`SQL read failed (${response.status}): ${body}`);
+      const rows = await response.json();
+      if (!Array.isArray(rows) || rows.length === 0 || !rows[0].content) {
+        return defaultPortfolioContent;
+      }
+
+      return rows[0].content;
+    } catch (error) {
+      if (attempt === 1) {
+        console.warn("SQL content fetch failed; using local default.", error);
+        return defaultPortfolioContent;
+      }
+      await wait(900);
     }
-
-    const rows = await response.json();
-    if (!Array.isArray(rows) || rows.length === 0 || !rows[0].content) {
-      return defaultPortfolioContent;
-    }
-
-    return rows[0].content;
-  } catch (error) {
-    console.warn("SQL content fetch failed; using local default.", error);
-    return defaultPortfolioContent;
   }
+
+  return defaultPortfolioContent;
 }
 
 async function initPortfolio() {
