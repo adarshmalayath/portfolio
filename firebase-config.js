@@ -18,8 +18,8 @@ export const firebaseConfig = {
   Use UID allowlist for strongest control.
 */
 export const adminAccess = {
-  allowedEmails: ["adarshmalayath@gmail.com"],
-  allowedUids: []
+  allowedEmails: [],
+  allowedUids: ["ouORpXylcFRmbJNlJ4IKL3ycT8A2"]
 };
 
 export const firebaseReady = Object.values(firebaseConfig).every(
