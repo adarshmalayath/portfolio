@@ -105,6 +105,8 @@ async function initAdmin() {
 
   function authHint(errorCode) {
     const hints = {
+      "auth/configuration-not-found":
+        "Firebase Authentication is not fully configured. In Firebase Console, open Authentication, click Get started, then enable Google provider.",
       "auth/unauthorized-domain":
         "Add your site host to Firebase Auth Authorized domains (for this site: adarshmalayath.github.io).",
       "auth/operation-not-allowed":
