@@ -2,17 +2,17 @@ import { createClient } from "https://esm.sh/@supabase/supabase-js@2?bundle";
 import {
   defaultPortfolioContent,
   normalizePortfolioContent
-} from "./portfolio-content.js?v=20260215v15";
+} from "./portfolio-content.js?v=20260215v16";
 import {
   supabaseAdmin,
   supabaseConfig,
   supabaseReady
-} from "./supabase-config.js?v=20260215v15";
+} from "./supabase-config.js?v=20260215v16";
 
 const TABLE = "portfolio_content";
 const ROW_ID = 1;
-const QUERY_TIMEOUT_MS = 12000;
-const SAVE_QUERY_TIMEOUT_MS = 18000;
+const QUERY_TIMEOUT_MS = 30000;
+const SAVE_QUERY_TIMEOUT_MS = 45000;
 const PREFERRED_CV_URL = "https://adarshmalayath.github.io/portfolio/CV%20IT.pdf";
 
 const statusBox = document.getElementById("status");
@@ -72,7 +72,7 @@ function withTimeout(promise, timeoutMs, label) {
   });
 }
 
-async function withRetry(action, retries = 1, pauseMs = 700) {
+async function withRetry(action, retries = 2, pauseMs = 1200) {
   let lastError = null;
   for (let attempt = 0; attempt <= retries; attempt += 1) {
     try {
@@ -82,8 +82,9 @@ async function withRetry(action, retries = 1, pauseMs = 700) {
       if (attempt === retries) {
         throw error;
       }
+      const delay = pauseMs * (attempt + 1);
       await new Promise((resolve) => {
-        window.setTimeout(resolve, pauseMs);
+        window.setTimeout(resolve, delay);
       });
     }
   }
@@ -599,19 +600,29 @@ function fillForm(content) {
   fillCustomSections(normalized.customSections);
 }
 
-async function loadFromDatabase() {
+function getRowFromData(data) {
+  if (Array.isArray(data)) {
+    return data[0] || null;
+  }
+  return data || null;
+}
+
+async function loadFromDatabase(options = {}) {
+  const suppressStatus = Boolean(options.suppressStatus);
   const requestId = ++loadRequestSequence;
-  setStatus("info", "Loading content from SQL database (free-tier wake-up may take a few seconds)...");
+  if (!suppressStatus) {
+    setStatus("info", "Loading content from SQL database (free-tier wake-up may take a few seconds)...");
+  }
 
   const { data, error } = await withRetry(
     () =>
       withTimeout(
-        supabase.from(TABLE).select("content,updated_at").eq("id", ROW_ID).maybeSingle(),
+        supabase.from(TABLE).select("content,updated_at").eq("id", ROW_ID).limit(1),
         QUERY_TIMEOUT_MS,
         "SQL load"
       ),
-    1,
-    900
+    2,
+    1200
   );
 
   if (error) {
@@ -621,18 +632,23 @@ async function loadFromDatabase() {
     return;
   }
 
-  if (!data || !data.content) {
+  const row = getRowFromData(data);
+  if (!row || !row.content) {
     fillForm(defaultPortfolioContent);
     lastSavedSnapshot = contentSnapshot(defaultPortfolioContent);
-    setStatus("warn", "No SQL row found yet. Loaded default template.");
+    if (!suppressStatus) {
+      setStatus("warn", "No SQL row found yet. Loaded default template.");
+    }
     return;
   }
 
-  const normalized = normalizePortfolioContent(data.content);
+  const normalized = normalizePortfolioContent(row.content);
   fillForm(normalized);
   lastSavedSnapshot = contentSnapshot(normalized);
-  const updatedAt = data.updated_at ? new Date(data.updated_at).toLocaleString() : "unknown";
-  setStatus("ok", `Loaded latest content from SQL (updated: ${updatedAt}).`);
+  if (!suppressStatus) {
+    const updatedAt = row.updated_at ? new Date(row.updated_at).toLocaleString() : "unknown";
+    setStatus("ok", `Loaded latest content from SQL (updated: ${updatedAt}).`);
+  }
 }
 
 async function saveToDatabase() {
@@ -650,24 +666,30 @@ async function saveToDatabase() {
 
   let updatedAt = "";
 
-  const { data: updatedRow, error: updateError } = await withRetry(
+  const { data: upsertRows, error: upsertError } = await withRetry(
     () =>
       withTimeout(
-        supabase.from(TABLE).update(writePayload).eq("id", ROW_ID).select("updated_at").maybeSingle(),
+        supabase
+          .from(TABLE)
+          .upsert({ id: ROW_ID, ...writePayload }, { onConflict: "id" })
+          .select("updated_at")
+          .limit(1),
         SAVE_QUERY_TIMEOUT_MS,
         "SQL save"
       ),
-    1,
-    900
+    2,
+    1200
   );
 
-  if (updateError) {
-    throw new Error(updateError.message);
+  if (upsertError) {
+    throw new Error(upsertError.message);
   }
 
-  if (!updatedRow) {
+  const upsertedRow = getRowFromData(upsertRows);
+
+  if (!upsertedRow) {
     const { data: rowCheck, error: rowCheckError } = await withTimeout(
-      supabase.from(TABLE).select("id").eq("id", ROW_ID).maybeSingle(),
+      supabase.from(TABLE).select("id").eq("id", ROW_ID).limit(1),
       QUERY_TIMEOUT_MS,
       "SQL row check"
     );
@@ -676,37 +698,23 @@ async function saveToDatabase() {
       throw new Error(rowCheckError.message);
     }
 
-    if (rowCheck?.id) {
+    const checkedRow = getRowFromData(rowCheck);
+    if (checkedRow?.id) {
       throw new Error(
         "Write blocked by SQL policy for the signed-in user (row exists but cannot be updated)."
       );
     }
-
-    const { data: insertedRow, error: insertError } = await withRetry(
-      () =>
-        withTimeout(
-          supabase.from(TABLE).insert({ id: ROW_ID, ...writePayload }).select("updated_at").maybeSingle(),
-          SAVE_QUERY_TIMEOUT_MS,
-          "SQL insert"
-        ),
-      1,
-      900
-    );
-
-    if (insertError) {
-      throw new Error(insertError.message);
-    }
-
-    updatedAt = insertedRow?.updated_at || "";
+    throw new Error("No row returned from SQL save.");
   } else {
-    updatedAt = updatedRow.updated_at || "";
+    updatedAt = upsertedRow.updated_at || "";
   }
 
   lastSavedSnapshot = snapshot;
+  await loadFromDatabase({ suppressStatus: true });
   const elapsedMs = Math.round(performance.now() - startedAt);
   const updatedText = updatedAt ? new Date(updatedAt).toLocaleTimeString() : "now";
   const perfHint = elapsedMs > 2500 ? " (free-tier wake-up can cause delay)" : "";
-  setStatus("ok", `Saved in ${elapsedMs} ms at ${updatedText}${perfHint}.`);
+  setStatus("ok", `Saved and reloaded from SQL in ${elapsedMs} ms at ${updatedText}${perfHint}.`);
 }
 
 async function handleSession(session, options = {}) {

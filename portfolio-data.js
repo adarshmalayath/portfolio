@@ -1,19 +1,41 @@
-import { supabaseConfig, supabaseReady } from "./supabase-config.js?v=20260215v15";
+import { supabaseConfig, supabaseReady } from "./supabase-config.js?v=20260215v16";
 import {
   defaultPortfolioContent,
   normalizePortfolioContent
-} from "./portfolio-content.js?v=20260215v15";
+} from "./portfolio-content.js?v=20260215v16";
 
 const CONTENT_TABLE = "portfolio_content";
 const CONTENT_ROW_ID = 1;
-const FETCH_TIMEOUT_MS = 12000;
+const FETCH_TIMEOUT_MS = 30000;
 const APP_BASE_PATH = new URL(".", import.meta.url).pathname;
 const PREFERRED_CV_URL = "https://adarshmalayath.github.io/portfolio/CV%20IT.pdf";
+const CONTENT_CACHE_KEY = "portfolio_content_cache_v2";
 
 function wait(ms) {
   return new Promise((resolve) => {
     window.setTimeout(resolve, ms);
   });
+}
+
+function readCachedContent() {
+  try {
+    const raw = window.localStorage.getItem(CONTENT_CACHE_KEY);
+    if (!raw) {
+      return null;
+    }
+    const parsed = JSON.parse(raw);
+    return parsed && typeof parsed === "object" ? parsed : null;
+  } catch (error) {
+    return null;
+  }
+}
+
+function writeCachedContent(content) {
+  try {
+    window.localStorage.setItem(CONTENT_CACHE_KEY, JSON.stringify(content));
+  } catch (error) {
+    // Ignore local storage quota/security errors.
+  }
 }
 
 async function fetchWithTimeout(url, options, timeoutMs) {
@@ -323,7 +345,7 @@ async function fetchRemotePortfolio() {
     return defaultPortfolioContent;
   }
 
-  for (let attempt = 0; attempt < 2; attempt += 1) {
+  for (let attempt = 0; attempt < 3; attempt += 1) {
     const endpoint =
       `${supabaseConfig.url}/rest/v1/${CONTENT_TABLE}` +
       `?id=eq.${CONTENT_ROW_ID}&select=content,updated_at&_=${Date.now()}`;
@@ -352,20 +374,25 @@ async function fetchRemotePortfolio() {
 
       const rows = await response.json();
       if (!Array.isArray(rows) || rows.length === 0 || !rows[0].content) {
-        return defaultPortfolioContent;
+        const cached = readCachedContent();
+        return cached || defaultPortfolioContent;
       }
 
+      writeCachedContent(rows[0].content);
       return rows[0].content;
     } catch (error) {
-      if (attempt === 1) {
+      if (attempt === 2) {
         console.warn("SQL content fetch failed; using local default.", error);
-        return defaultPortfolioContent;
+        const cached = readCachedContent();
+        return cached || defaultPortfolioContent;
       }
-      await wait(900);
+      const retryDelayMs = attempt === 0 ? 1400 : 2600;
+      await wait(retryDelayMs);
     }
   }
 
-  return defaultPortfolioContent;
+  const cached = readCachedContent();
+  return cached || defaultPortfolioContent;
 }
 
 async function initPortfolio() {
