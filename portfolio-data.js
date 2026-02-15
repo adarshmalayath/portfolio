@@ -1,4 +1,4 @@
-import { supabaseConfig, supabaseReady } from "./supabase-config.js";
+import { supabaseConfig, supabaseReady } from "./supabase-config.js?v=20260215";
 import {
   defaultPortfolioContent,
   normalizePortfolioContent
@@ -216,7 +216,7 @@ async function fetchRemotePortfolio() {
 
   const endpoint =
     `${supabaseConfig.url}/rest/v1/${CONTENT_TABLE}` +
-    `?id=eq.${CONTENT_ROW_ID}&select=content,updated_at`;
+    `?id=eq.${CONTENT_ROW_ID}&select=content,updated_at&_=${Date.now()}`;
 
   try {
     const response = await fetch(endpoint, {
@@ -224,13 +224,15 @@ async function fetchRemotePortfolio() {
       cache: "no-store",
       headers: {
         apikey: supabaseConfig.anonKey,
-        Authorization: `Bearer ${supabaseConfig.anonKey}`,
+        "Cache-Control": "no-cache",
+        Pragma: "no-cache",
         Accept: "application/json"
       }
     });
 
     if (!response.ok) {
-      throw new Error(`SQL read failed (${response.status})`);
+      const body = await response.text();
+      throw new Error(`SQL read failed (${response.status}): ${body}`);
     }
 
     const rows = await response.json();

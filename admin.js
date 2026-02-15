@@ -3,7 +3,11 @@ import {
   defaultPortfolioContent,
   normalizePortfolioContent
 } from "./portfolio-content.js";
-import { supabaseAdmin, supabaseConfig, supabaseReady } from "./supabase-config.js";
+import {
+  supabaseAdmin,
+  supabaseConfig,
+  supabaseReady
+} from "./supabase-config.js?v=20260215";
 
 const TABLE = "portfolio_content";
 const ROW_ID = 1;
