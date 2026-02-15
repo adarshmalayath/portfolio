@@ -1,13 +1,12 @@
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2?bundle";
 import {
-  defaultPortfolioContent,
   normalizePortfolioContent
-} from "./portfolio-content.js?v=20260215v19";
+} from "./portfolio-content.js?v=20260215v20";
 import {
   supabaseAdmin,
   supabaseConfig,
   supabaseReady
-} from "./supabase-config.js?v=20260215v19";
+} from "./supabase-config.js?v=20260215v20";
 
 const TABLE = "portfolio_content";
 const ROW_ID = 1;
@@ -222,55 +221,22 @@ function arrayToLines(value) {
 
 function getSectionTitlesFromForm() {
   return {
-    experience: inputValue(
-      SECTION_TITLE_INPUTS.experience,
-      defaultPortfolioContent.sectionTitles.experience
-    ),
-    skills: inputValue(SECTION_TITLE_INPUTS.skills, defaultPortfolioContent.sectionTitles.skills),
-    projects: inputValue(
-      SECTION_TITLE_INPUTS.projects,
-      defaultPortfolioContent.sectionTitles.projects
-    ),
-    education: inputValue(
-      SECTION_TITLE_INPUTS.education,
-      defaultPortfolioContent.sectionTitles.education
-    ),
-    certifications: inputValue(
-      SECTION_TITLE_INPUTS.certifications,
-      defaultPortfolioContent.sectionTitles.certifications
-    ),
-    profile: inputValue(
-      SECTION_TITLE_INPUTS.profile,
-      defaultPortfolioContent.sectionTitles.profile
-    )
+    experience: inputValue(SECTION_TITLE_INPUTS.experience, ""),
+    skills: inputValue(SECTION_TITLE_INPUTS.skills, ""),
+    projects: inputValue(SECTION_TITLE_INPUTS.projects, ""),
+    education: inputValue(SECTION_TITLE_INPUTS.education, ""),
+    certifications: inputValue(SECTION_TITLE_INPUTS.certifications, ""),
+    profile: inputValue(SECTION_TITLE_INPUTS.profile, "")
   };
 }
 
 function fillSectionTitles(sectionTitles) {
-  setInputValue(
-    SECTION_TITLE_INPUTS.experience,
-    sectionTitles.experience || defaultPortfolioContent.sectionTitles.experience
-  );
-  setInputValue(
-    SECTION_TITLE_INPUTS.skills,
-    sectionTitles.skills || defaultPortfolioContent.sectionTitles.skills
-  );
-  setInputValue(
-    SECTION_TITLE_INPUTS.projects,
-    sectionTitles.projects || defaultPortfolioContent.sectionTitles.projects
-  );
-  setInputValue(
-    SECTION_TITLE_INPUTS.education,
-    sectionTitles.education || defaultPortfolioContent.sectionTitles.education
-  );
-  setInputValue(
-    SECTION_TITLE_INPUTS.certifications,
-    sectionTitles.certifications || defaultPortfolioContent.sectionTitles.certifications
-  );
-  setInputValue(
-    SECTION_TITLE_INPUTS.profile,
-    sectionTitles.profile || defaultPortfolioContent.sectionTitles.profile
-  );
+  setInputValue(SECTION_TITLE_INPUTS.experience, sectionTitles.experience || "");
+  setInputValue(SECTION_TITLE_INPUTS.skills, sectionTitles.skills || "");
+  setInputValue(SECTION_TITLE_INPUTS.projects, sectionTitles.projects || "");
+  setInputValue(SECTION_TITLE_INPUTS.education, sectionTitles.education || "");
+  setInputValue(SECTION_TITLE_INPUTS.certifications, sectionTitles.certifications || "");
+  setInputValue(SECTION_TITLE_INPUTS.profile, sectionTitles.profile || "");
 }
 
 function bindSectionTitleToggles() {
@@ -582,6 +548,56 @@ function fillEducation(education) {
   }
 }
 
+function clearFormState() {
+  setInputValue("profileName", "");
+  setInputValue("profileRole", "");
+  setInputValue("profileHeadline", "");
+  setInputValue("profileSummary", "");
+  setInputValue("profileLocation", "");
+  setInputValue("profileEmail", "");
+  setInputValue("profilePhone", "");
+  setInputValue("profileLinkedin", "");
+  setInputValue("profileGithub", "");
+  setInputValue("profileCvUrl", "");
+
+  for (let i = 0; i < 4; i += 1) {
+    setInputValue(`stat${i}Value`, "");
+    setInputValue(`stat${i}Label`, "");
+  }
+
+  setInputValue("experienceRoleInput", "");
+  setInputValue("experienceMetaInput", "");
+  setInputValue("experienceBulletsInput", "");
+
+  for (let i = 0; i < 6; i += 1) {
+    setInputValue(`skill${i}Title`, "");
+    setInputValue(`skill${i}Description`, "");
+  }
+
+  for (let i = 0; i < 4; i += 1) {
+    setInputValue(`project${i}Title`, "");
+    setInputValue(`project${i}Tech`, "");
+    setInputValue(`project${i}Description`, "");
+  }
+
+  for (let i = 0; i < 2; i += 1) {
+    setInputValue(`education${i}Title`, "");
+    setInputValue(`education${i}Meta`, "");
+    setInputValue(`education${i}Detail`, "");
+  }
+
+  setInputValue("certificationsInput", "");
+  setInputValue("profileDetailsInput", "");
+
+  setInputValue(SECTION_TITLE_INPUTS.experience, "");
+  setInputValue(SECTION_TITLE_INPUTS.skills, "");
+  setInputValue(SECTION_TITLE_INPUTS.projects, "");
+  setInputValue(SECTION_TITLE_INPUTS.education, "");
+  setInputValue(SECTION_TITLE_INPUTS.certifications, "");
+  setInputValue(SECTION_TITLE_INPUTS.profile, "");
+  fillCustomSections([]);
+}
+
 function fillForm(content) {
   const normalized = normalizePortfolioContent(content);
 
@@ -643,10 +659,10 @@ async function loadFromDatabase(options = {}) {
 
   const row = getRowFromData(data);
   if (!row || !row.content) {
-    fillForm(defaultPortfolioContent);
-    lastSavedSnapshot = contentSnapshot(defaultPortfolioContent);
+    clearFormState();
+    lastSavedSnapshot = "";
     if (!suppressStatus) {
-      setStatus("warn", "No SQL row found yet. Loaded default template.");
+      setStatus("warn", "No saved SQL row found yet.");
     }
     return;
   }
@@ -816,8 +832,9 @@ function bindUi() {
   });
 
   resetBtn.addEventListener("click", () => {
-    fillForm(defaultPortfolioContent);
-    setStatus("warn", "Editor reset to defaults. Save to persist to SQL.");
+    clearFormState();
+    lastSavedSnapshot = "";
+    setStatus("warn", "Editor cleared. Reload from database or enter values and save.");
   });
 
   saveBtn.addEventListener("click", async () => {
@@ -834,8 +851,8 @@ function bindUi() {
 }
 
 async function initAdmin() {
-  fillForm(defaultPortfolioContent);
-  lastSavedSnapshot = contentSnapshot(defaultPortfolioContent);
+  clearFormState();
+  lastSavedSnapshot = "";
   if (!supabaseReady) {
     setStatus(
       "warn",

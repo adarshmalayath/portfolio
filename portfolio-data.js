@@ -1,41 +1,18 @@
-import { supabaseConfig, supabaseReady } from "./supabase-config.js?v=20260215v19";
+import { supabaseConfig, supabaseReady } from "./supabase-config.js?v=20260215v20";
 import {
-  defaultPortfolioContent,
   normalizePortfolioContent
-} from "./portfolio-content.js?v=20260215v19";
+} from "./portfolio-content.js?v=20260215v20";
 
 const CONTENT_TABLE = "portfolio_content";
 const CONTENT_ROW_ID = 1;
 const FETCH_TIMEOUT_MS = 30000;
 const APP_BASE_PATH = new URL(".", import.meta.url).pathname;
 const PREFERRED_CV_URL = "https://adarshmalayath.github.io/portfolio/CV%20IT.pdf";
-const CONTENT_CACHE_KEY = "portfolio_content_cache_v2";
 
 function wait(ms) {
   return new Promise((resolve) => {
     window.setTimeout(resolve, ms);
   });
-}
-
-function readCachedContent() {
-  try {
-    const raw = window.localStorage.getItem(CONTENT_CACHE_KEY);
-    if (!raw) {
-      return null;
-    }
-    const parsed = JSON.parse(raw);
-    return parsed && typeof parsed === "object" ? parsed : null;
-  } catch (error) {
-    return null;
-  }
-}
-
-function writeCachedContent(content) {
-  try {
-    window.localStorage.setItem(CONTENT_CACHE_KEY, JSON.stringify(content));
-  } catch (error) {
-    // Ignore local storage quota/security errors.
-  }
 }
 
 async function fetchWithTimeout(url, options, timeoutMs) {
@@ -340,9 +317,46 @@ function renderPortfolioContent(content) {
   renderCustomSections(normalized.customSections);
 }
 
+function setSectionsVisible(isVisible) {
+  const sections = document.querySelectorAll("main .stats, main .section, #customSectionsRoot");
+  sections.forEach((element) => {
+    element.style.display = isVisible ? "" : "none";
+  });
+}
+
+function setHeroDetailsVisible(isVisible) {
+  const actions = document.querySelector(".hero-actions");
+  const contact = document.querySelector(".quick-contact");
+  if (actions) {
+    actions.style.display = isVisible ? "" : "none";
+  }
+  if (contact) {
+    contact.style.display = isVisible ? "" : "none";
+  }
+}
+
+function setLoadingState() {
+  textById("brandName", "Portfolio");
+  textById("heroRole", "Loading");
+  textById("heroHeadline", "Loading portfolio data from database...");
+  textById("heroSummary", "Please wait while the latest saved content is fetched.");
+}
+
+function setDatabaseErrorState(error) {
+  const message =
+    error instanceof Error && error.message
+      ? error.message
+      : "Could not load saved portfolio data from database.";
+
+  textById("brandName", "Portfolio");
+  textById("heroRole", "Database Error");
+  textById("heroHeadline", "Saved portfolio data could not be loaded.");
+  textById("heroSummary", message);
+}
+
 async function fetchRemotePortfolio() {
   if (!supabaseReady) {
-    return defaultPortfolioContent;
+    throw new Error("Supabase is not configured. Update supabase-config.js.");
   }
 
   for (let attempt = 0; attempt < 3; attempt += 1) {
@@ -372,30 +386,36 @@ async function fetchRemotePortfolio() {
 
       const rows = await response.json();
       if (!Array.isArray(rows) || rows.length === 0 || !rows[0].content) {
-        const cached = readCachedContent();
-        return cached || defaultPortfolioContent;
+        throw new Error("No saved portfolio content found in database.");
       }
 
-      writeCachedContent(rows[0].content);
       return rows[0].content;
     } catch (error) {
       if (attempt === 2) {
-        console.warn("SQL content fetch failed; using local default.", error);
-        const cached = readCachedContent();
-        return cached || defaultPortfolioContent;
+        throw error;
       }
       const retryDelayMs = attempt === 0 ? 1400 : 2600;
       await wait(retryDelayMs);
     }
   }
 
-  const cached = readCachedContent();
-  return cached || defaultPortfolioContent;
+  throw new Error("Could not load saved portfolio content from database.");
 }
 
 async function initPortfolio() {
-  const content = await fetchRemotePortfolio();
-  renderPortfolioContent(content);
+  setHeroDetailsVisible(false);
+  setSectionsVisible(false);
+  setLoadingState();
+
+  try {
+    const content = await fetchRemotePortfolio();
+    renderPortfolioContent(content);
+    setHeroDetailsVisible(true);
+    setSectionsVisible(true);
+  } catch (error) {
+    console.error("Portfolio load failed:", error);
+    setDatabaseErrorState(error);
+  }
 }
 
 initPortfolio();
