@@ -13,9 +13,7 @@ const editorPanel = document.getElementById("editorPanel");
 const userText = document.getElementById("userText");
 const editor = document.getElementById("contentEditor");
 
-const loginEmailInput = document.getElementById("loginEmail");
-const loginPasswordInput = document.getElementById("loginPassword");
-const passwordLoginBtn = document.getElementById("passwordLoginBtn");
+const googleLoginBtn = document.getElementById("googleLoginBtn");
 const signOutBtn = document.getElementById("signOutBtn");
 const loadBtn = document.getElementById("loadBtn");
 const resetBtn = document.getElementById("resetBtn");
@@ -68,9 +66,7 @@ if (!firebaseReady) {
     "warn",
     "Firebase is not configured. Update firebase-config.js before using login and editing."
   );
-  loginEmailInput.disabled = true;
-  loginPasswordInput.disabled = true;
-  passwordLoginBtn.disabled = true;
+  googleLoginBtn.disabled = true;
   editor.value = prettyPrint(defaultPortfolioContent);
   setEditorView(false);
 } else {
@@ -85,7 +81,10 @@ async function initAdmin() {
     { initializeApp },
     {
       getAuth,
-      signInWithEmailAndPassword,
+      GoogleAuthProvider,
+      signInWithPopup,
+      signInWithRedirect,
+      getRedirectResult,
       signOut,
       onAuthStateChanged,
       setPersistence,
@@ -107,21 +106,34 @@ async function initAdmin() {
 
   function authHint(errorCode) {
     const hints = {
+      "auth/configuration-not-found":
+        "Google Auth configuration missing. In Firebase Console, open Authentication, click Get started, and enable Google provider.",
+      "auth/unauthorized-domain":
+        "Add adarshmalayath.github.io in Firebase Authentication -> Settings -> Authorized domains.",
       "auth/operation-not-allowed":
-        "Enable Email/Password provider in Firebase Authentication -> Sign-in method.",
-      "auth/invalid-login-credentials":
-        "Invalid email or password.",
-      "auth/invalid-email":
-        "Invalid email address format.",
+        "Enable Google provider in Firebase Authentication -> Sign-in method.",
+      "auth/popup-blocked":
+        "Popup blocked by browser. Allow popups and retry.",
       "auth/user-disabled":
         "This account is disabled in Firebase Authentication.",
-      "auth/too-many-requests":
-        "Too many login attempts. Wait a bit and retry.",
+      "auth/internal-error":
+        "Internal auth error. Verify Google provider and authorized domain settings.",
       "auth/network-request-failed":
         "Network error. Check your connection and retry."
     };
     return hints[errorCode] || "Check browser console and Firebase Auth settings.";
   }
+
+  async function handleRedirectResult() {
+    try {
+      await getRedirectResult(auth);
+    } catch (error) {
+      const code = error?.code || "unknown";
+      setStatus("error", `Google sign-in redirect failed (${code}). ${authHint(code)}`);
+    }
+  }
+
+  await handleRedirectResult();
 
   async function loadContentIntoEditor() {
     setStatus("info", "Loading content from database...");
@@ -150,22 +162,17 @@ async function initAdmin() {
     setStatus("ok", "Saved successfully. Portfolio site will reflect changes after refresh.");
   }
 
-  passwordLoginBtn.addEventListener("click", async () => {
-    const email = (loginEmailInput.value || "").trim().toLowerCase();
-    const password = loginPasswordInput.value || "";
-    if (!email || !password) {
-      setStatus("warn", "Enter the admin password to continue.");
-      return;
-    }
-
+  googleLoginBtn.addEventListener("click", async () => {
     try {
-      setStatus("info", "Signing in securely...");
-      await signInWithEmailAndPassword(auth, email, password);
-      loginPasswordInput.value = "";
+      setStatus("info", "Opening Google sign-in...");
+      await signInWithPopup(auth, new GoogleAuthProvider());
     } catch (error) {
       const code = error?.code || "unknown";
-      loginPasswordInput.value = "";
-      setStatus("error", `Sign-in failed (${code}). ${authHint(code)}`);
+      if (code === "auth/popup-blocked") {
+        await signInWithRedirect(auth, new GoogleAuthProvider());
+        return;
+      }
+      setStatus("error", `Google sign-in failed (${code}). ${authHint(code)}`);
     }
   });
 
@@ -204,7 +211,7 @@ async function initAdmin() {
       userText.textContent = "";
       setStatus(
         "info",
-        "Private page. Sign in with your admin email/password. Credentials are handled by Firebase Auth over TLS."
+        "Private page. Sign in with your admin Google account."
       );
       return;
     }
