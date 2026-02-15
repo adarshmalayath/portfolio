@@ -13,8 +13,9 @@ const editorPanel = document.getElementById("editorPanel");
 const userText = document.getElementById("userText");
 const editor = document.getElementById("contentEditor");
 
-const googleLoginBtn = document.getElementById("googleLoginBtn");
-const appleLoginBtn = document.getElementById("appleLoginBtn");
+const loginEmailInput = document.getElementById("loginEmail");
+const loginPasswordInput = document.getElementById("loginPassword");
+const passwordLoginBtn = document.getElementById("passwordLoginBtn");
 const signOutBtn = document.getElementById("signOutBtn");
 const loadBtn = document.getElementById("loadBtn");
 const resetBtn = document.getElementById("resetBtn");
@@ -67,8 +68,9 @@ if (!firebaseReady) {
     "warn",
     "Firebase is not configured. Update firebase-config.js before using login and editing."
   );
-  googleLoginBtn.disabled = true;
-  appleLoginBtn.disabled = true;
+  loginEmailInput.disabled = true;
+  loginPasswordInput.disabled = true;
+  passwordLoginBtn.disabled = true;
   editor.value = prettyPrint(defaultPortfolioContent);
   setEditorView(false);
 } else {
@@ -83,13 +85,11 @@ async function initAdmin() {
     { initializeApp },
     {
       getAuth,
-      GoogleAuthProvider,
-      OAuthProvider,
-      signInWithPopup,
-      signInWithRedirect,
-      getRedirectResult,
+      signInWithEmailAndPassword,
       signOut,
-      onAuthStateChanged
+      onAuthStateChanged,
+      setPersistence,
+      browserSessionPersistence
     },
     { getFirestore, doc, getDoc, setDoc }
   ] = await Promise.all([
@@ -103,32 +103,25 @@ async function initAdmin() {
   const db = getFirestore(app);
   const contentRef = doc(db, COLLECTION, DOC_ID);
 
+  await setPersistence(auth, browserSessionPersistence);
+
   function authHint(errorCode) {
     const hints = {
-      "auth/configuration-not-found":
-        "Firebase Authentication is not fully configured. In Firebase Console, open Authentication, click Get started, then enable Google provider.",
-      "auth/unauthorized-domain":
-        "Add your site host to Firebase Auth Authorized domains (for this site: adarshmalayath.github.io).",
       "auth/operation-not-allowed":
-        "Enable this provider in Firebase Authentication -> Sign-in method.",
-      "auth/popup-blocked":
-        "Popup was blocked by your browser. Allow popups and try again.",
-      "auth/internal-error":
-        "Check Firebase Auth authorized domains and admin page CSP settings, then retry."
+        "Enable Email/Password provider in Firebase Authentication -> Sign-in method.",
+      "auth/invalid-login-credentials":
+        "Invalid email or password.",
+      "auth/invalid-email":
+        "Invalid email address format.",
+      "auth/user-disabled":
+        "This account is disabled in Firebase Authentication.",
+      "auth/too-many-requests":
+        "Too many login attempts. Wait a bit and retry.",
+      "auth/network-request-failed":
+        "Network error. Check your connection and retry."
     };
     return hints[errorCode] || "Check browser console and Firebase Auth settings.";
   }
-
-  async function handleRedirectResult() {
-    try {
-      await getRedirectResult(auth);
-    } catch (error) {
-      const code = error?.code || "unknown";
-      setStatus("error", `Sign-in redirect failed (${code}). ${authHint(code)}`);
-    }
-  }
-
-  await handleRedirectResult();
 
   async function loadContentIntoEditor() {
     setStatus("info", "Loading content from database...");
@@ -157,37 +150,22 @@ async function initAdmin() {
     setStatus("ok", "Saved successfully. Portfolio site will reflect changes after refresh.");
   }
 
-  googleLoginBtn.addEventListener("click", async () => {
-    try {
-      setStatus("info", "Opening Google sign-in...");
-      await signInWithPopup(auth, new GoogleAuthProvider());
-    } catch (error) {
-      const code = error?.code || "unknown";
-      if (code === "auth/popup-blocked") {
-        await signInWithRedirect(auth, new GoogleAuthProvider());
-        return;
-      }
-      setStatus("error", `Google sign-in failed (${code}). ${authHint(code)}`);
+  passwordLoginBtn.addEventListener("click", async () => {
+    const email = (loginEmailInput.value || "").trim().toLowerCase();
+    const password = loginPasswordInput.value || "";
+    if (!email || !password) {
+      setStatus("warn", "Enter the admin password to continue.");
+      return;
     }
-  });
 
-  appleLoginBtn.addEventListener("click", async () => {
     try {
-      setStatus("info", "Opening Apple sign-in...");
-      const provider = new OAuthProvider("apple.com");
-      provider.addScope("email");
-      provider.addScope("name");
-      await signInWithPopup(auth, provider);
+      setStatus("info", "Signing in securely...");
+      await signInWithEmailAndPassword(auth, email, password);
+      loginPasswordInput.value = "";
     } catch (error) {
       const code = error?.code || "unknown";
-      if (code === "auth/popup-blocked") {
-        const provider = new OAuthProvider("apple.com");
-        provider.addScope("email");
-        provider.addScope("name");
-        await signInWithRedirect(auth, provider);
-        return;
-      }
-      setStatus("error", `Apple sign-in failed (${code}). ${authHint(code)}`);
+      loginPasswordInput.value = "";
+      setStatus("error", `Sign-in failed (${code}). ${authHint(code)}`);
     }
   });
 
@@ -224,7 +202,10 @@ async function initAdmin() {
     if (!user) {
       setEditorView(false);
       userText.textContent = "";
-      setStatus("info", "Private page. Sign in only with your approved admin account.");
+      setStatus(
+        "info",
+        "Private page. Sign in with your admin email/password. Credentials are handled by Firebase Auth over TLS."
+      );
       return;
     }
 

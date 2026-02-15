@@ -2,7 +2,7 @@
 
 This portfolio now supports:
 - public read from Firestore (for site content)
-- admin login on `admin.html` with Google or Apple
+- admin login on `admin.html` with Email + Password
 - content editing and saving through Firestore
 
 ## 1. Create Firebase project
@@ -13,9 +13,11 @@ This portfolio now supports:
 
 ## 2. Enable Authentication providers
 In Firebase Console -> Authentication -> Sign-in method:
-1. Enable **Google**.
-2. Enable **Apple**.
-3. For Apple, complete Apple Developer setup (Service ID + redirect settings) as required by Firebase.
+1. Enable **Email/Password**.
+2. In Authentication -> Users, create your admin user:
+   - Email: `adarshmalayath@icloud.com`
+   - Password: choose a strong password
+3. Disable Google/Apple providers if you do not want them.
 
 ## 3. Enable Firestore
 1. Create Firestore database (Production mode).
@@ -57,4 +59,4 @@ Push to GitHub. GitHub Pages will serve:
 
 ## Notes
 - Firebase web API keys are not secrets; rules protect data.
-- If Apple sign-in fails, verify Apple provider configuration in Firebase and Apple Developer portal.
+- Passwords are never stored in this site code. Firebase Auth handles hashing and verification server-side.
