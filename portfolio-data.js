@@ -1,8 +1,8 @@
-import { supabaseConfig, supabaseReady } from "./supabase-config.js?v=20260215";
+import { supabaseConfig, supabaseReady } from "./supabase-config.js?v=20260215v3";
 import {
   defaultPortfolioContent,
   normalizePortfolioContent
-} from "./portfolio-content.js";
+} from "./portfolio-content.js?v=20260215v3";
 
 const CONTENT_TABLE = "portfolio_content";
 const CONTENT_ROW_ID = 1;
@@ -176,6 +176,50 @@ function renderSimpleLines(cardId, lines) {
   });
 }
 
+function renderSectionTitles(sectionTitles) {
+  textById("experienceHeading", sectionTitles.experience);
+  textById("skillsHeading", sectionTitles.skills);
+  textById("projectsHeading", sectionTitles.projects);
+  textById("educationHeading", sectionTitles.education);
+  textById("certificationsHeading", sectionTitles.certifications);
+  textById("profileHeading", sectionTitles.profile);
+
+  textById("navExperience", sectionTitles.experience);
+  textById("navSkills", sectionTitles.skills);
+  textById("navProjects", sectionTitles.projects);
+  textById("navEducation", sectionTitles.education);
+}
+
+function renderCustomSections(customSections) {
+  const root = document.getElementById("customSectionsRoot");
+  if (!root) {
+    return;
+  }
+
+  root.innerHTML = "";
+
+  customSections.forEach((section) => {
+    const sectionElement = document.createElement("section");
+    sectionElement.className = "section";
+
+    const heading = document.createElement("h2");
+    heading.textContent = section.title;
+    sectionElement.appendChild(heading);
+
+    const card = document.createElement("article");
+    card.className = "card";
+
+    section.lines.forEach((line) => {
+      const paragraph = document.createElement("p");
+      paragraph.textContent = line;
+      card.appendChild(paragraph);
+    });
+
+    sectionElement.appendChild(card);
+    root.appendChild(sectionElement);
+  });
+}
+
 function renderPortfolioContent(content) {
   const normalized = normalizePortfolioContent(content);
   const profile = normalized.profile;
@@ -207,6 +251,8 @@ function renderPortfolioContent(content) {
   renderEducation(normalized.education);
   renderSimpleLines("certificationsCard", normalized.certifications);
   renderSimpleLines("profileCard", normalized.profileDetails);
+  renderSectionTitles(normalized.sectionTitles);
+  renderCustomSections(normalized.customSections);
 }
 
 async function fetchRemotePortfolio() {

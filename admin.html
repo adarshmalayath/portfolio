@@ -46,8 +46,8 @@
             </button>
           </div>
 
-          <section class="form-section">
-            <h2>Profile</h2>
+	          <section class="form-section">
+	            <h2>Profile</h2>
             <div class="form-grid">
               <label for="profileName">Name</label>
               <input id="profileName" type="text" />
@@ -69,8 +69,26 @@
               <input id="profileGithub" type="url" />
               <label for="profileCvUrl">CV URL/Path</label>
               <input id="profileCvUrl" type="text" />
-            </div>
-          </section>
+	            </div>
+	          </section>
+
+	          <section class="form-section">
+	            <h2>Section Names</h2>
+	            <div class="form-grid">
+	              <label for="sectionTitleExperience">Experience Section Title</label>
+	              <input id="sectionTitleExperience" type="text" />
+	              <label for="sectionTitleSkills">Skills Section Title</label>
+	              <input id="sectionTitleSkills" type="text" />
+	              <label for="sectionTitleProjects">Projects Section Title</label>
+	              <input id="sectionTitleProjects" type="text" />
+	              <label for="sectionTitleEducation">Education Section Title</label>
+	              <input id="sectionTitleEducation" type="text" />
+	              <label for="sectionTitleCertifications">Certifications Section Title</label>
+	              <input id="sectionTitleCertifications" type="text" />
+	              <label for="sectionTitleProfile">Profile Section Title</label>
+	              <input id="sectionTitleProfile" type="text" />
+	            </div>
+	          </section>
 
           <section class="form-section">
             <h2>Stats (4)</h2>
@@ -208,15 +226,27 @@
             </div>
           </section>
 
-          <section class="form-section">
-            <h2>Profile Details</h2>
-            <div class="form-grid">
+	          <section class="form-section">
+	            <h2>Profile Details</h2>
+	            <div class="form-grid">
               <label for="profileDetailsInput"
                 >One detail line per row</label
               >
               <textarea id="profileDetailsInput" rows="6"></textarea>
-            </div>
-          </section>
+	            </div>
+	          </section>
+
+	          <section class="form-section">
+	            <h2>Custom Sections</h2>
+	            <p class="hint">
+	              Add new sections to your public page. Each line becomes one row
+	              in the section card.
+	            </p>
+	            <div id="customSectionsContainer" class="custom-sections-list"></div>
+	            <button id="addCustomSectionBtn" class="btn btn-secondary" type="button">
+	              Add Section
+	            </button>
+	          </section>
 
           <div class="actions">
             <button id="loadBtn" class="btn btn-secondary" type="button">
@@ -237,6 +267,6 @@
       </p>
     </main>
 
-    <script type="module" src="admin.js?v=20260215"></script>
-  </body>
+	    <script type="module" src="admin.js?v=20260215v3"></script>
+	  </body>
 </html>

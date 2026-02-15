@@ -83,11 +83,25 @@ export const defaultPortfolioContent = {
     "Leadership: IEEE & IEDC Core Member (2018 – 2022)",
     "Work Preference: Open to relocation and remote work",
     "Eligible to work in the UK"
-  ]
+  ],
+  sectionTitles: {
+    experience: "Professional Experience",
+    skills: "Technical Skills",
+    projects: "Selected Projects",
+    education: "Education",
+    certifications: "Certification Highlights",
+    profile: "Profile"
+  },
+  customSections: []
 };
 
 function coerceString(value, fallback = "") {
   return typeof value === "string" ? value : fallback;
+}
+
+function coerceNonEmptyString(value, fallback = "") {
+  const normalized = coerceString(value, "").trim();
+  return normalized || fallback;
 }
 
 function coerceArray(value, fallback = []) {
@@ -96,6 +110,10 @@ function coerceArray(value, fallback = []) {
 
 export function normalizePortfolioContent(input) {
   const source = input && typeof input === "object" ? input : {};
+  const sectionTitleSource =
+    source.sectionTitles && typeof source.sectionTitles === "object"
+      ? source.sectionTitles
+      : {};
 
   return {
     profile: {
@@ -148,6 +166,40 @@ export function normalizePortfolioContent(input) {
       .filter(Boolean),
     profileDetails: coerceArray(source.profileDetails, defaultPortfolioContent.profileDetails)
       .map((item) => coerceString(item))
-      .filter(Boolean)
+      .filter(Boolean),
+    sectionTitles: {
+      experience: coerceNonEmptyString(
+        sectionTitleSource.experience,
+        defaultPortfolioContent.sectionTitles.experience
+      ),
+      skills: coerceNonEmptyString(
+        sectionTitleSource.skills,
+        defaultPortfolioContent.sectionTitles.skills
+      ),
+      projects: coerceNonEmptyString(
+        sectionTitleSource.projects,
+        defaultPortfolioContent.sectionTitles.projects
+      ),
+      education: coerceNonEmptyString(
+        sectionTitleSource.education,
+        defaultPortfolioContent.sectionTitles.education
+      ),
+      certifications: coerceNonEmptyString(
+        sectionTitleSource.certifications,
+        defaultPortfolioContent.sectionTitles.certifications
+      ),
+      profile: coerceNonEmptyString(
+        sectionTitleSource.profile,
+        defaultPortfolioContent.sectionTitles.profile
+      )
+    },
+    customSections: coerceArray(source.customSections, defaultPortfolioContent.customSections)
+      .map((item) => ({
+        title: coerceString(item?.title).trim(),
+        lines: coerceArray(item?.lines, [])
+          .map((line) => coerceString(line).trim())
+          .filter(Boolean)
+      }))
+      .filter((item) => item.title && item.lines.length > 0)
   };
 }

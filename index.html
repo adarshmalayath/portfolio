@@ -25,15 +25,15 @@
     <div class="bg-orb orb-a" aria-hidden="true"></div>
     <div class="bg-orb orb-b" aria-hidden="true"></div>
 
-    <header class="site-header reveal">
-      <a class="brand" href="#top" id="brandName">Adarsh Malayath</a>
-      <nav class="site-nav">
-        <a href="#experience">Experience</a>
-        <a href="#skills">Skills</a>
-        <a href="#projects">Projects</a>
-        <a href="#education">Education</a>
-      </nav>
-    </header>
+	    <header class="site-header reveal">
+	      <a class="brand" href="#top" id="brandName">Adarsh Malayath</a>
+	      <nav class="site-nav">
+	        <a href="#experience" id="navExperience">Experience</a>
+	        <a href="#skills" id="navSkills">Skills</a>
+	        <a href="#projects" id="navProjects">Projects</a>
+	        <a href="#education" id="navEducation">Education</a>
+	      </nav>
+	    </header>
 
     <main id="top" class="container">
       <section class="hero reveal">
@@ -111,8 +111,8 @@
         </article>
       </section>
 
-      <section id="experience" class="section reveal">
-        <h2>Professional Experience</h2>
+	      <section id="experience" class="section reveal">
+	        <h2 id="experienceHeading">Professional Experience</h2>
         <article class="timeline-item">
           <div class="timeline-dot" aria-hidden="true"></div>
           <div class="timeline-content">
@@ -143,8 +143,8 @@
         </article>
       </section>
 
-      <section id="skills" class="section reveal">
-        <h2>Technical Skills</h2>
+	      <section id="skills" class="section reveal">
+	        <h2 id="skillsHeading">Technical Skills</h2>
         <div class="grid" id="skillsGrid">
           <article class="card reveal">
             <h3>Languages</h3>
@@ -173,8 +173,8 @@
         </div>
       </section>
 
-      <section id="projects" class="section reveal">
-        <h2>Selected Projects</h2>
+	      <section id="projects" class="section reveal">
+	        <h2 id="projectsHeading">Selected Projects</h2>
         <div class="grid" id="projectsGrid">
           <article class="card reveal">
             <h3>Core Banking Migration Platform</h3>
@@ -211,9 +211,9 @@
         </div>
       </section>
 
-      <section id="education" class="section split reveal">
-        <div>
-          <h2>Education</h2>
+	      <section id="education" class="section split reveal">
+	        <div>
+	          <h2 id="educationHeading">Education</h2>
           <div id="educationGrid">
             <article class="card reveal">
               <h3>MSc Cloud Computing with Industry</h3>
@@ -229,8 +229,8 @@
             </article>
           </div>
         </div>
-        <div>
-          <h2>Certification Highlights</h2>
+	        <div>
+	          <h2 id="certificationsHeading">Certification Highlights</h2>
           <article class="card reveal" id="certificationsCard">
             <p>Discrete Mathematics — NPTEL, IIT Madras</p>
             <p>Java Full Stack Developer — NIIT, Chennai</p>
@@ -241,9 +241,9 @@
         </div>
       </section>
 
-      <section class="section reveal">
-        <h2>Profile</h2>
-        <article class="card reveal" id="profileCard">
+	      <section class="section reveal">
+	        <h2 id="profileHeading">Profile</h2>
+	        <article class="card reveal" id="profileCard">
           <p>
             Languages: Malayalam (Native), English (Advanced), Hindi, Tamil
             (Upper Intermediate)
@@ -252,14 +252,16 @@
           <p>Work Preference: Open to relocation and remote work</p>
           <p>Eligible to work in the UK</p>
         </article>
-      </section>
-    </main>
+	      </section>
+
+	      <div id="customSectionsRoot"></div>
+	    </main>
 
     <footer class="site-footer reveal">
       <p>© 2026 <span id="footerName">Adarsh Malayath</span></p>
     </footer>
 
-    <script src="script.js?v=20260215"></script>
-    <script type="module" src="portfolio-data.js?v=20260215"></script>
-  </body>
+	    <script src="script.js?v=20260215v3"></script>
+	    <script type="module" src="portfolio-data.js?v=20260215v3"></script>
+	  </body>
 </html>
