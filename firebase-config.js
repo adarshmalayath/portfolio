@@ -14,7 +14,7 @@ export const firebaseConfig = {
 
 /*
   Only these users can access the admin editor.
-  Keep at least one approved email.
+  Use UID allowlist for strongest control.
 */
 export const adminAccess = {
   allowedEmails: ["adarshmalayath@gmail.com"],

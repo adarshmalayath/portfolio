@@ -25,7 +25,7 @@ In Firebase Console -> Authentication -> Sign-in method:
 3. You can leave it empty initially; `admin.html` can save defaults.
 
 ## 4. Firestore security rules
-Use rules like this (replace email if needed):
+Use rules like this (replace with your Firebase Auth UID and email):
 
 ```txt
 rules_version = '2';
@@ -33,6 +33,7 @@ service cloud.firestore {
   match /databases/{database}/documents {
     function isAdmin() {
       return request.auth != null
+        && request.auth.uid in ['REPLACE_WITH_YOUR_UID']
         && request.auth.token.email in ['adarshmalayath@gmail.com'];
     }
 
@@ -47,7 +48,7 @@ service cloud.firestore {
 ## 5. Configure admin allowlist in frontend
 Update `firebase-config.js`:
 - `adminAccess.allowedEmails`
-- optional `adminAccess.allowedUids`
+- `adminAccess.allowedUids` (recommended)
 
 ## 6. Deploy
 Push to GitHub. GitHub Pages will serve:

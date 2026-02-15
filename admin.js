@@ -30,6 +30,21 @@ function setEditorView(isAuthenticated) {
   editorPanel.classList.toggle("hidden", !isAuthenticated);
 }
 
+function lockDownPage(message) {
+  document.body.innerHTML = `
+    <main class="admin-shell">
+      <section class="panel">
+        <header class="panel-header">
+          <p class="eyebrow">Access Restricted</p>
+          <h1>404</h1>
+          <p class="subtext">${message}</p>
+          <p class="back-link"><a href="index.html">Back to Portfolio</a></p>
+        </header>
+      </section>
+    </main>
+  `;
+}
+
 function prettyPrint(content) {
   return JSON.stringify(normalizePortfolioContent(content), null, 2);
 }
@@ -167,16 +182,14 @@ async function initAdmin() {
     if (!user) {
       setEditorView(false);
       userText.textContent = "";
-      setStatus("info", "Sign in with an approved admin account to edit the portfolio.");
+      setStatus("info", "Private page. Sign in only with your approved admin account.");
       return;
     }
 
     if (!isAllowedUser(user)) {
-      setStatus(
-        "error",
-        "Signed in account is not in allowed admin list. Update firebase-config.js and Firestore rules."
-      );
+      setStatus("error", "This account is not authorized.");
       await signOut(auth);
+      lockDownPage("This route is private.");
       return;
     }
 
