@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Portfolio Admin | Adarsh Malayath</title>
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; object-src 'none'; script-src 'self' https://www.gstatic.com; style-src 'self'; img-src 'self' data: https://*.googleusercontent.com; font-src 'self'; connect-src 'self' https://firestore.googleapis.com https://www.googleapis.com https://identitytoolkit.googleapis.com https://securetoken.googleapis.com https://firebaseinstallations.googleapis.com https://appleid.apple.com; frame-src https://accounts.google.com https://appleid.apple.com; upgrade-insecure-requests; block-all-mixed-content"
+    />
+    <meta http-equiv="Referrer-Policy" content="no-referrer" />
+    <meta http-equiv="X-Content-Type-Options" content="nosniff" />
+    <meta
+      http-equiv="Permissions-Policy"
+      content="camera=(), microphone=(), geolocation=()"
+    />
+    <link rel="stylesheet" href="admin.css" />
+  </head>
+  <body>
+    <main class="admin-shell">
+      <section class="panel">
+        <header class="panel-header">
+          <p class="eyebrow">Portfolio Admin</p>
+          <h1>Manage Website Content</h1>
+          <p class="subtext">
+            Sign in with Google or Apple, then edit the portfolio JSON and
+            publish changes live.
+          </p>
+        </header>
+
+        <div id="status" class="status info">Checking configuration...</div>
+
+        <div id="loginPanel" class="stack">
+          <button id="googleLoginBtn" class="btn btn-primary" type="button">
+            Continue with Google
+          </button>
+          <button id="appleLoginBtn" class="btn btn-secondary" type="button">
+            Continue with Apple
+          </button>
+          <p class="hint">
+            Apple Sign-In requires provider configuration in Firebase first.
+          </p>
+        </div>
+
+        <div id="editorPanel" class="stack hidden">
+          <div class="user-row">
+            <p id="userText" class="hint">Signed in</p>
+            <button id="signOutBtn" class="btn btn-ghost" type="button">
+              Sign Out
+            </button>
+          </div>
+
+          <label for="contentEditor">Portfolio Content JSON</label>
+          <textarea
+            id="contentEditor"
+            rows="24"
+            spellcheck="false"
+            aria-label="Portfolio content JSON"
+          ></textarea>
+
+          <div class="actions">
+            <button id="loadBtn" class="btn btn-secondary" type="button">
+              Reload from Database
+            </button>
+            <button id="resetBtn" class="btn btn-secondary" type="button">
+              Reset to Defaults
+            </button>
+            <button id="saveBtn" class="btn btn-primary" type="button">
+              Save Changes
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <p class="back-link">
+        <a href="index.html">Back to Portfolio</a>
+      </p>
+    </main>
+
+    <script type="module" src="admin.js"></script>
+  </body>
+</html>

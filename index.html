@@ -6,7 +6,7 @@
     <title>Adarsh Malayath | Full Stack Developer</title>
     <meta
       http-equiv="Content-Security-Policy"
-      content="default-src 'self'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; object-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self'; upgrade-insecure-requests; block-all-mixed-content"
+      content="default-src 'self'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; object-src 'none'; script-src 'self' https://www.gstatic.com; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self' https://firestore.googleapis.com https://www.googleapis.com https://firebaseinstallations.googleapis.com; upgrade-insecure-requests; block-all-mixed-content"
     />
     <meta http-equiv="Referrer-Policy" content="no-referrer" />
     <meta name="referrer" content="no-referrer" />
@@ -26,48 +26,57 @@
     <div class="bg-orb orb-b" aria-hidden="true"></div>
 
     <header class="site-header reveal">
-      <a class="brand" href="#top">Adarsh Malayath</a>
+      <a class="brand" href="#top" id="brandName">Adarsh Malayath</a>
       <nav class="site-nav">
         <a href="#experience">Experience</a>
         <a href="#skills">Skills</a>
         <a href="#projects">Projects</a>
         <a href="#education">Education</a>
+        <a href="admin.html">Admin</a>
       </nav>
     </header>
 
     <main id="top" class="container">
       <section class="hero reveal">
-        <p class="eyebrow">Full Stack Developer</p>
+        <p class="eyebrow" id="heroRole">Full Stack Developer</p>
         <div class="signal-mark" aria-hidden="true"></div>
-        <h1>Building secure, scalable products from backend to frontend.</h1>
-        <p class="hero-copy">
+        <h1 id="heroHeadline">
+          Building secure, scalable products from backend to frontend.
+        </h1>
+        <p class="hero-copy" id="heroSummary">
           Full stack developer with 2+ years of banking technology experience,
           delivering backend services, frontend interfaces, and production
           support using Java, PL/SQL, and ReactJS.
         </p>
         <div class="hero-actions">
-          <a class="btn btn-primary" href="mailto:adarshmalayath@gmail.com"
+          <a
+            class="btn btn-primary"
+            href="mailto:adarshmalayath@gmail.com"
+            id="contactEmailButton"
             >Contact Me</a
           >
           <a
             class="btn btn-secondary"
             href="CV%20IT.pdf"
+            id="cvButton"
             target="_blank"
             rel="noopener noreferrer"
             >View CV</a
           >
         </div>
         <ul class="quick-contact">
-          <li>Leicester, United Kingdom</li>
+          <li id="contactLocation">Leicester, United Kingdom</li>
           <li>
             <a href="mailto:adarshmalayath@gmail.com"
+              id="contactEmail"
               >adarshmalayath@gmail.com</a
             >
           </li>
-          <li><a href="tel:+447721445027">+44 7721 445027</a></li>
+          <li><a href="tel:+447721445027" id="contactPhone">+44 7721 445027</a></li>
           <li>
             <a
               href="https://linkedin.com/in/adarshmalayath"
+              id="contactLinkedin"
               target="_blank"
               rel="noopener noreferrer"
               >LinkedIn</a
@@ -75,6 +84,7 @@
             /
             <a
               href="https://github.com/adarshmalayath"
+              id="contactGithub"
               target="_blank"
               rel="noopener noreferrer"
               >GitHub</a
@@ -83,7 +93,7 @@
         </ul>
       </section>
 
-      <section class="stats">
+      <section class="stats" id="statsGrid">
         <article class="card reveal">
           <h2>2+ Years</h2>
           <p>Professional full stack development experience</p>
@@ -107,9 +117,11 @@
         <article class="timeline-item">
           <div class="timeline-dot" aria-hidden="true"></div>
           <div class="timeline-content">
-            <h3>Full Stack Developer (Channels Applications)</h3>
-            <p class="meta">CSB Bank Ltd., Chennai, India | Mar 2023 – Dec 2025</p>
-            <ul>
+            <h3 id="experienceRole">Full Stack Developer (Channels Applications)</h3>
+            <p class="meta" id="experienceMeta">
+              CSB Bank Ltd., Chennai, India | Mar 2023 – Dec 2025
+            </p>
+            <ul id="experienceBullets">
               <li>
                 Built and optimized backend SQL modules for fraud detection and
                 transaction processing.
@@ -134,7 +146,7 @@
 
       <section id="skills" class="section reveal">
         <h2>Technical Skills</h2>
-        <div class="grid">
+        <div class="grid" id="skillsGrid">
           <article class="card reveal">
             <h3>Languages</h3>
             <p>Java, JavaScript, Python, PL/SQL</p>
@@ -164,7 +176,7 @@
 
       <section id="projects" class="section reveal">
         <h2>Selected Projects</h2>
-        <div class="grid">
+        <div class="grid" id="projectsGrid">
           <article class="card reveal">
             <h3>Core Banking Migration Platform</h3>
             <p class="meta">PL/SQL, Data Engineering</p>
@@ -203,22 +215,24 @@
       <section id="education" class="section split reveal">
         <div>
           <h2>Education</h2>
-          <article class="card reveal">
-            <h3>MSc Cloud Computing with Industry</h3>
-            <p class="meta">University of Leicester | Jan 2026 – Present</p>
-          </article>
-          <article class="card reveal">
-            <h3>B.Tech in Computer Science & Engineering</h3>
-            <p class="meta">
-              Sreepathy Institute of Management and Technology | Aug 2018 – Aug
-              2022
-            </p>
-            <p>CGPA: 8.19 / 10</p>
-          </article>
+          <div id="educationGrid">
+            <article class="card reveal">
+              <h3>MSc Cloud Computing with Industry</h3>
+              <p class="meta">University of Leicester | Jan 2026 – Present</p>
+            </article>
+            <article class="card reveal">
+              <h3>B.Tech in Computer Science & Engineering</h3>
+              <p class="meta">
+                Sreepathy Institute of Management and Technology | Aug 2018 –
+                Aug 2022
+              </p>
+              <p>CGPA: 8.19 / 10</p>
+            </article>
+          </div>
         </div>
         <div>
           <h2>Certification Highlights</h2>
-          <article class="card reveal">
+          <article class="card reveal" id="certificationsCard">
             <p>Discrete Mathematics — NPTEL, IIT Madras</p>
             <p>Java Full Stack Developer — NIIT, Chennai</p>
             <p>Introduction to Analytics & Excel — Coding Ninjas</p>
@@ -230,7 +244,7 @@
 
       <section class="section reveal">
         <h2>Profile</h2>
-        <article class="card reveal">
+        <article class="card reveal" id="profileCard">
           <p>
             Languages: Malayalam (Native), English (Advanced), Hindi, Tamil
             (Upper Intermediate)
@@ -243,9 +257,10 @@
     </main>
 
     <footer class="site-footer reveal">
-      <p>© 2026 Adarsh Malayath</p>
+      <p>© 2026 <span id="footerName">Adarsh Malayath</span></p>
     </footer>
 
     <script src="script.js"></script>
+    <script type="module" src="portfolio-data.js"></script>
   </body>
 </html>
