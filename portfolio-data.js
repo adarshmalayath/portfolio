@@ -1,11 +1,11 @@
-import { firebaseConfig, firebaseReady } from "./firebase-config.js";
+import { supabaseConfig, supabaseReady } from "./supabase-config.js";
 import {
   defaultPortfolioContent,
   normalizePortfolioContent
 } from "./portfolio-content.js";
 
-const CONTENT_COLLECTION = "portfolio";
-const CONTENT_DOC = "siteContent";
+const CONTENT_TABLE = "portfolio_content";
+const CONTENT_ROW_ID = 1;
 
 function textById(id, value) {
   const element = document.getElementById(id);
@@ -210,26 +210,37 @@ function renderPortfolioContent(content) {
 }
 
 async function fetchRemotePortfolio() {
-  if (!firebaseReady) {
+  if (!supabaseReady) {
     return defaultPortfolioContent;
   }
 
-  try {
-    const [{ initializeApp }, { getFirestore, doc, getDoc }] = await Promise.all([
-      import("https://www.gstatic.com/firebasejs/10.13.2/firebase-app.js"),
-      import("https://www.gstatic.com/firebasejs/10.13.2/firebase-firestore.js")
-    ]);
+  const endpoint =
+    `${supabaseConfig.url}/rest/v1/${CONTENT_TABLE}` +
+    `?id=eq.${CONTENT_ROW_ID}&select=content,updated_at`;
 
-    const app = initializeApp(firebaseConfig);
-    const db = getFirestore(app);
-    const ref = doc(db, CONTENT_COLLECTION, CONTENT_DOC);
-    const snapshot = await getDoc(ref);
-    if (!snapshot.exists()) {
+  try {
+    const response = await fetch(endpoint, {
+      method: "GET",
+      cache: "no-store",
+      headers: {
+        apikey: supabaseConfig.anonKey,
+        Authorization: `Bearer ${supabaseConfig.anonKey}`,
+        Accept: "application/json"
+      }
+    });
+
+    if (!response.ok) {
+      throw new Error(`SQL read failed (${response.status})`);
+    }
+
+    const rows = await response.json();
+    if (!Array.isArray(rows) || rows.length === 0 || !rows[0].content) {
       return defaultPortfolioContent;
     }
-    return snapshot.data();
+
+    return rows[0].content;
   } catch (error) {
-    console.warn("Portfolio content fallback to local default:", error);
+    console.warn("SQL content fetch failed; using local default.", error);
     return defaultPortfolioContent;
   }
 }

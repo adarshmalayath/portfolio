@@ -85,6 +85,24 @@ body {
   margin-top: 1rem;
 }
 
+.form-section {
+  background: rgba(255, 255, 255, 0.01);
+  border: 1px solid #323232;
+  border-radius: 0.8rem;
+  padding: 0.9rem;
+}
+
+.form-section h2 {
+  margin: 0 0 0.75rem;
+  font-size: 1.05rem;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.45rem;
+}
+
 .hidden {
   display: none;
 }
@@ -142,8 +160,7 @@ textarea {
   background: #101010;
   color: #ececec;
   padding: 0.85rem;
-  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
-    "Courier New", monospace;
+  font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
   resize: vertical;
   line-height: 1.5;
 }

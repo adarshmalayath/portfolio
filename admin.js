@@ -1,23 +1,26 @@
-import { firebaseConfig, firebaseReady, adminAccess } from "./firebase-config.js";
+import { createClient } from "https://esm.sh/@supabase/supabase-js@2?bundle";
 import {
   defaultPortfolioContent,
   normalizePortfolioContent
 } from "./portfolio-content.js";
+import { supabaseAdmin, supabaseConfig, supabaseReady } from "./supabase-config.js";
 
-const COLLECTION = "portfolio";
-const DOC_ID = "siteContent";
+const TABLE = "portfolio_content";
+const ROW_ID = 1;
 
 const statusBox = document.getElementById("status");
 const loginPanel = document.getElementById("loginPanel");
 const editorPanel = document.getElementById("editorPanel");
 const userText = document.getElementById("userText");
-const editor = document.getElementById("contentEditor");
 
 const googleLoginBtn = document.getElementById("googleLoginBtn");
 const signOutBtn = document.getElementById("signOutBtn");
 const loadBtn = document.getElementById("loadBtn");
 const resetBtn = document.getElementById("resetBtn");
 const saveBtn = document.getElementById("saveBtn");
+
+let supabase = null;
+let currentUser = null;
 
 function setStatus(type, message) {
   statusBox.className = `status ${type}`;
@@ -44,191 +47,341 @@ function lockDownPage(message) {
   `;
 }
 
-function prettyPrint(content) {
-  return JSON.stringify(normalizePortfolioContent(content), null, 2);
+function inputValue(id, fallback = "") {
+  const element = document.getElementById(id);
+  return element ? element.value.trim() || fallback : fallback;
+}
+
+function setInputValue(id, value = "") {
+  const element = document.getElementById(id);
+  if (!element) {
+    return;
+  }
+  element.value = value;
+}
+
+function linesToArray(value) {
+  return String(value || "")
+    .split("\n")
+    .map((item) => item.trim())
+    .filter(Boolean);
+}
+
+function arrayToLines(value) {
+  return Array.isArray(value) ? value.join("\n") : "";
 }
 
 function isAllowedUser(user) {
   if (!user) {
     return false;
   }
-  const allowedEmails = Array.isArray(adminAccess.allowedEmails)
-    ? adminAccess.allowedEmails.map((email) => email.toLowerCase())
+
+  const email = String(user.email || "").toLowerCase();
+  const id = String(user.id || "");
+  const allowedEmails = Array.isArray(supabaseAdmin.allowedEmails)
+    ? supabaseAdmin.allowedEmails.map((item) => item.toLowerCase())
     : [];
-  const allowedUids = Array.isArray(adminAccess.allowedUids) ? adminAccess.allowedUids : [];
-  const email = (user.email || "").toLowerCase();
+  const allowedIds = Array.isArray(supabaseAdmin.allowedIds) ? supabaseAdmin.allowedIds : [];
 
-  return allowedEmails.includes(email) || allowedUids.includes(user.uid);
+  return allowedEmails.includes(email) || allowedIds.includes(id);
 }
 
-if (!firebaseReady) {
-  setStatus(
-    "warn",
-    "Firebase is not configured. Update firebase-config.js before using login and editing."
-  );
-  googleLoginBtn.disabled = true;
-  editor.value = prettyPrint(defaultPortfolioContent);
-  setEditorView(false);
-} else {
-  initAdmin().catch((error) => {
-    console.error(error);
-    setStatus("error", "Failed to initialize admin panel. Check console for details.");
-  });
+function authHint(errorCode) {
+  const hints = {
+    access_denied:
+      "Google sign-in was denied. Make sure your admin Google account is selected.",
+    unauthorized_domain:
+      "Add adarshmalayath.github.io in Supabase Authentication URL configuration.",
+    invalid_request:
+      "Check Supabase Google provider config and redirect URL."
+  };
+  return hints[errorCode] || "Check Supabase Auth provider configuration.";
 }
 
-async function initAdmin() {
-  const [
-    { initializeApp },
-    {
-      getAuth,
-      GoogleAuthProvider,
-      signInWithPopup,
-      signInWithRedirect,
-      getRedirectResult,
-      signOut,
-      onAuthStateChanged,
-      setPersistence,
-      browserSessionPersistence
+function getStatsFromForm() {
+  const stats = [];
+  for (let i = 0; i < 4; i += 1) {
+    const value = inputValue(`stat${i}Value`);
+    const label = inputValue(`stat${i}Label`);
+    if (value && label) {
+      stats.push({ value, label });
+    }
+  }
+  return stats;
+}
+
+function getSkillsFromForm() {
+  const skills = [];
+  for (let i = 0; i < 6; i += 1) {
+    const title = inputValue(`skill${i}Title`);
+    const description = inputValue(`skill${i}Description`);
+    if (title && description) {
+      skills.push({ title, description });
+    }
+  }
+  return skills;
+}
+
+function getProjectsFromForm() {
+  const projects = [];
+  for (let i = 0; i < 4; i += 1) {
+    const title = inputValue(`project${i}Title`);
+    const tech = inputValue(`project${i}Tech`);
+    const description = inputValue(`project${i}Description`);
+    if (title && description) {
+      projects.push({ title, tech, description });
+    }
+  }
+  return projects;
+}
+
+function getEducationFromForm() {
+  const education = [];
+  for (let i = 0; i < 2; i += 1) {
+    const title = inputValue(`education${i}Title`);
+    const meta = inputValue(`education${i}Meta`);
+    const detail = inputValue(`education${i}Detail`);
+    if (title && meta) {
+      education.push({ title, meta, detail });
+    }
+  }
+  return education;
+}
+
+function collectContentFromForm() {
+  const raw = {
+    profile: {
+      name: inputValue("profileName"),
+      role: inputValue("profileRole"),
+      headline: inputValue("profileHeadline"),
+      summary: inputValue("profileSummary"),
+      location: inputValue("profileLocation"),
+      email: inputValue("profileEmail"),
+      phone: inputValue("profilePhone"),
+      linkedin: inputValue("profileLinkedin"),
+      github: inputValue("profileGithub"),
+      cvUrl: inputValue("profileCvUrl")
     },
-    { getFirestore, doc, getDoc, setDoc }
-  ] = await Promise.all([
-    import("https://www.gstatic.com/firebasejs/10.13.2/firebase-app.js"),
-    import("https://www.gstatic.com/firebasejs/10.13.2/firebase-auth.js"),
-    import("https://www.gstatic.com/firebasejs/10.13.2/firebase-firestore.js")
-  ]);
+    stats: getStatsFromForm(),
+    experience: {
+      role: inputValue("experienceRoleInput"),
+      meta: inputValue("experienceMetaInput"),
+      bullets: linesToArray(inputValue("experienceBulletsInput"))
+    },
+    skills: getSkillsFromForm(),
+    projects: getProjectsFromForm(),
+    education: getEducationFromForm(),
+    certifications: linesToArray(inputValue("certificationsInput")),
+    profileDetails: linesToArray(inputValue("profileDetailsInput"))
+  };
 
-  const app = initializeApp(firebaseConfig);
-  const auth = getAuth(app);
-  const db = getFirestore(app);
-  const contentRef = doc(db, COLLECTION, DOC_ID);
+  return normalizePortfolioContent(raw);
+}
 
-  await setPersistence(auth, browserSessionPersistence);
+function fillStats(stats) {
+  for (let i = 0; i < 4; i += 1) {
+    setInputValue(`stat${i}Value`, stats[i]?.value || "");
+    setInputValue(`stat${i}Label`, stats[i]?.label || "");
+  }
+}
 
-  function authHint(errorCode) {
-    const hints = {
-      "auth/configuration-not-found":
-        "Google Auth configuration missing. In Firebase Console, open Authentication, click Get started, and enable Google provider.",
-      "auth/unauthorized-domain":
-        "Add adarshmalayath.github.io in Firebase Authentication -> Settings -> Authorized domains.",
-      "auth/operation-not-allowed":
-        "Enable Google provider in Firebase Authentication -> Sign-in method.",
-      "auth/popup-blocked":
-        "Popup blocked by browser. Allow popups and retry.",
-      "auth/user-disabled":
-        "This account is disabled in Firebase Authentication.",
-      "auth/internal-error":
-        "Internal auth error. Verify Google provider and authorized domain settings.",
-      "auth/network-request-failed":
-        "Network error. Check your connection and retry."
-    };
-    return hints[errorCode] || "Check browser console and Firebase Auth settings.";
+function fillSkills(skills) {
+  for (let i = 0; i < 6; i += 1) {
+    setInputValue(`skill${i}Title`, skills[i]?.title || "");
+    setInputValue(`skill${i}Description`, skills[i]?.description || "");
+  }
+}
+
+function fillProjects(projects) {
+  for (let i = 0; i < 4; i += 1) {
+    setInputValue(`project${i}Title`, projects[i]?.title || "");
+    setInputValue(`project${i}Tech`, projects[i]?.tech || "");
+    setInputValue(`project${i}Description`, projects[i]?.description || "");
+  }
+}
+
+function fillEducation(education) {
+  for (let i = 0; i < 2; i += 1) {
+    setInputValue(`education${i}Title`, education[i]?.title || "");
+    setInputValue(`education${i}Meta`, education[i]?.meta || "");
+    setInputValue(`education${i}Detail`, education[i]?.detail || "");
+  }
+}
+
+function fillForm(content) {
+  const normalized = normalizePortfolioContent(content);
+
+  setInputValue("profileName", normalized.profile.name);
+  setInputValue("profileRole", normalized.profile.role);
+  setInputValue("profileHeadline", normalized.profile.headline);
+  setInputValue("profileSummary", normalized.profile.summary);
+  setInputValue("profileLocation", normalized.profile.location);
+  setInputValue("profileEmail", normalized.profile.email);
+  setInputValue("profilePhone", normalized.profile.phone);
+  setInputValue("profileLinkedin", normalized.profile.linkedin);
+  setInputValue("profileGithub", normalized.profile.github);
+  setInputValue("profileCvUrl", normalized.profile.cvUrl);
+
+  fillStats(normalized.stats);
+  setInputValue("experienceRoleInput", normalized.experience.role);
+  setInputValue("experienceMetaInput", normalized.experience.meta);
+  setInputValue("experienceBulletsInput", arrayToLines(normalized.experience.bullets));
+  fillSkills(normalized.skills);
+  fillProjects(normalized.projects);
+  fillEducation(normalized.education);
+  setInputValue("certificationsInput", arrayToLines(normalized.certifications));
+  setInputValue("profileDetailsInput", arrayToLines(normalized.profileDetails));
+}
+
+async function loadFromDatabase() {
+  setStatus("info", "Loading content from SQL database...");
+
+  const { data, error } = await supabase
+    .from(TABLE)
+    .select("*")
+    .eq("id", ROW_ID)
+    .maybeSingle();
+
+  if (error) {
+    throw new Error(error.message);
   }
 
-  async function handleRedirectResult() {
-    try {
-      await getRedirectResult(auth);
-    } catch (error) {
-      const code = error?.code || "unknown";
-      setStatus("error", `Google sign-in redirect failed (${code}). ${authHint(code)}`);
-    }
+  if (!data || !data.content) {
+    fillForm(defaultPortfolioContent);
+    setStatus("warn", "No SQL row found yet. Loaded default template.");
+    return;
   }
 
-  await handleRedirectResult();
+  fillForm(data.content);
+  const updatedAt = data.updated_at ? new Date(data.updated_at).toLocaleString() : "unknown";
+  setStatus("ok", `Loaded latest content from SQL (updated: ${updatedAt}).`);
+}
 
-  async function loadContentIntoEditor() {
-    setStatus("info", "Loading content from database...");
-    const snapshot = await getDoc(contentRef);
-    if (snapshot.exists()) {
-      editor.value = prettyPrint(snapshot.data());
-      setStatus("ok", "Loaded latest portfolio content.");
-      return;
-    }
-    editor.value = prettyPrint(defaultPortfolioContent);
-    setStatus("warn", "No content in Firestore yet. Loaded default template.");
+async function saveToDatabase() {
+  const content = collectContentFromForm();
+  const payload = {
+    id: ROW_ID,
+    content
+  };
+
+  const { error } = await supabase.from(TABLE).upsert(payload, { onConflict: "id" });
+  if (error) {
+    throw new Error(error.message);
   }
 
-  async function saveEditorToFirestore() {
-    let parsed;
-    try {
-      parsed = JSON.parse(editor.value);
-    } catch (error) {
-      setStatus("error", `Invalid JSON: ${error.message}`);
-      return;
-    }
+  setStatus("ok", "Saved to SQL database successfully.");
+}
 
-    const normalized = normalizePortfolioContent(parsed);
-    await setDoc(contentRef, normalized, { merge: false });
-    editor.value = prettyPrint(normalized);
-    setStatus("ok", "Saved successfully. Portfolio site will reflect changes after refresh.");
+async function handleSession(session) {
+  const user = session?.user || null;
+
+  if (!user) {
+    currentUser = null;
+    setEditorView(false);
+    userText.textContent = "";
+    setStatus("info", "Private page. Sign in with your admin Google account.");
+    return;
   }
 
+  if (!isAllowedUser(user)) {
+    await supabase.auth.signOut();
+    setStatus("error", "This account is not authorized.");
+    lockDownPage("This route is private.");
+    return;
+  }
+
+  currentUser = user;
+  setEditorView(true);
+  userText.textContent = `Signed in as ${user.email || user.id}`;
+  try {
+    await loadFromDatabase();
+  } catch (error) {
+    setStatus("error", `Could not load from SQL: ${error.message}`);
+  }
+}
+
+function bindUi() {
   googleLoginBtn.addEventListener("click", async () => {
     try {
-      setStatus("info", "Opening Google sign-in...");
-      await signInWithPopup(auth, new GoogleAuthProvider());
-    } catch (error) {
-      const code = error?.code || "unknown";
-      if (code === "auth/popup-blocked") {
-        await signInWithRedirect(auth, new GoogleAuthProvider());
-        return;
+      setStatus("info", "Redirecting to Google sign-in...");
+      const { error } = await supabase.auth.signInWithOAuth({
+        provider: "google",
+        options: {
+          redirectTo: window.location.href
+        }
+      });
+      if (error) {
+        throw error;
       }
+    } catch (error) {
+      const code = error?.code || error?.name || "unknown";
       setStatus("error", `Google sign-in failed (${code}). ${authHint(code)}`);
     }
   });
 
   signOutBtn.addEventListener("click", async () => {
-    await signOut(auth);
+    await supabase.auth.signOut();
   });
 
   loadBtn.addEventListener("click", async () => {
     try {
-      await loadContentIntoEditor();
+      await loadFromDatabase();
     } catch (error) {
       setStatus("error", `Reload failed: ${error.message}`);
     }
   });
 
   resetBtn.addEventListener("click", () => {
-    editor.value = prettyPrint(defaultPortfolioContent);
-    setStatus("warn", "Editor reset to default template. Save to publish.");
+    fillForm(defaultPortfolioContent);
+    setStatus("warn", "Editor reset to defaults. Save to persist to SQL.");
   });
 
   saveBtn.addEventListener("click", async () => {
     saveBtn.disabled = true;
     try {
-      setStatus("info", "Saving changes...");
-      await saveEditorToFirestore();
+      setStatus("info", "Saving to SQL database...");
+      await saveToDatabase();
     } catch (error) {
       setStatus("error", `Save failed: ${error.message}`);
     } finally {
       saveBtn.disabled = false;
     }
   });
+}
 
-  onAuthStateChanged(auth, async (user) => {
-    if (!user) {
-      setEditorView(false);
-      userText.textContent = "";
-      setStatus(
-        "info",
-        "Private page. Sign in with your admin Google account."
-      );
-      return;
-    }
+async function initAdmin() {
+  fillForm(defaultPortfolioContent);
+  if (!supabaseReady) {
+    setStatus(
+      "warn",
+      "Supabase SQL is not configured. Update supabase-config.js to enable login and database reload."
+    );
+    googleLoginBtn.disabled = true;
+    setEditorView(false);
+    return;
+  }
 
-    if (!isAllowedUser(user)) {
-      setStatus("error", "This account is not authorized.");
-      await signOut(auth);
-      lockDownPage("This route is private.");
-      return;
-    }
-
-    setEditorView(true);
-    userText.textContent = `Signed in as ${user.email || user.uid}`;
-    try {
-      await loadContentIntoEditor();
-    } catch (error) {
-      setStatus("error", `Could not load content: ${error.message}`);
+  supabase = createClient(supabaseConfig.url, supabaseConfig.anonKey, {
+    auth: {
+      persistSession: true,
+      autoRefreshToken: true,
+      detectSessionInUrl: true
     }
   });
+
+  bindUi();
+
+  const {
+    data: { session }
+  } = await supabase.auth.getSession();
+  await handleSession(session);
+
+  supabase.auth.onAuthStateChange(async (_event, sessionUpdate) => {
+    await handleSession(sessionUpdate);
+  });
 }
+
+initAdmin().catch((error) => {
+  console.error(error);
+  setStatus("error", `Initialization failed: ${error.message}`);
+});

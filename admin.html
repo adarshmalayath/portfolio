@@ -7,7 +7,7 @@
     <meta name="robots" content="noindex, nofollow, noarchive, nosnippet" />
     <meta
       http-equiv="Content-Security-Policy"
-      content="default-src 'self'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; object-src 'none'; script-src 'self' https://www.gstatic.com https://apis.google.com; style-src 'self'; img-src 'self' data: https://*.googleusercontent.com; font-src 'self'; connect-src 'self' https://*.googleapis.com https://*.firebaseapp.com https://*.web.app https://firebaseinstallations.googleapis.com; frame-src https://accounts.google.com https://www.google.com https://*.google.com https://*.firebaseapp.com https://*.web.app; upgrade-insecure-requests; block-all-mixed-content"
+      content="default-src 'self'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; object-src 'none'; script-src 'self' https://esm.sh; style-src 'self'; img-src 'self' data: https://*.googleusercontent.com; font-src 'self'; connect-src 'self' https://*.supabase.co https://*.googleapis.com; frame-src https://accounts.google.com https://www.google.com https://*.google.com; upgrade-insecure-requests; block-all-mixed-content"
     />
     <meta http-equiv="Referrer-Policy" content="no-referrer" />
     <meta http-equiv="X-Content-Type-Options" content="nosniff" />
@@ -24,8 +24,8 @@
           <p class="eyebrow">Portfolio Admin</p>
           <h1>Manage Website Content</h1>
           <p class="subtext">
-            Sign in with Google, then edit the portfolio JSON and publish
-            changes live.
+            Sign in with Google, then edit each section and publish changes
+            live to SQL storage.
           </p>
         </header>
 
@@ -46,13 +46,177 @@
             </button>
           </div>
 
-          <label for="contentEditor">Portfolio Content JSON</label>
-          <textarea
-            id="contentEditor"
-            rows="24"
-            spellcheck="false"
-            aria-label="Portfolio content JSON"
-          ></textarea>
+          <section class="form-section">
+            <h2>Profile</h2>
+            <div class="form-grid">
+              <label for="profileName">Name</label>
+              <input id="profileName" type="text" />
+              <label for="profileRole">Role</label>
+              <input id="profileRole" type="text" />
+              <label for="profileHeadline">Headline</label>
+              <input id="profileHeadline" type="text" />
+              <label for="profileSummary">Summary</label>
+              <textarea id="profileSummary" rows="4"></textarea>
+              <label for="profileLocation">Location</label>
+              <input id="profileLocation" type="text" />
+              <label for="profileEmail">Email</label>
+              <input id="profileEmail" type="email" />
+              <label for="profilePhone">Phone</label>
+              <input id="profilePhone" type="text" />
+              <label for="profileLinkedin">LinkedIn URL</label>
+              <input id="profileLinkedin" type="url" />
+              <label for="profileGithub">GitHub URL</label>
+              <input id="profileGithub" type="url" />
+              <label for="profileCvUrl">CV URL/Path</label>
+              <input id="profileCvUrl" type="text" />
+            </div>
+          </section>
+
+          <section class="form-section">
+            <h2>Stats (4)</h2>
+            <div class="form-grid">
+              <label for="stat0Value">Stat 1 Value</label>
+              <input id="stat0Value" type="text" />
+              <label for="stat0Label">Stat 1 Label</label>
+              <input id="stat0Label" type="text" />
+
+              <label for="stat1Value">Stat 2 Value</label>
+              <input id="stat1Value" type="text" />
+              <label for="stat1Label">Stat 2 Label</label>
+              <input id="stat1Label" type="text" />
+
+              <label for="stat2Value">Stat 3 Value</label>
+              <input id="stat2Value" type="text" />
+              <label for="stat2Label">Stat 3 Label</label>
+              <input id="stat2Label" type="text" />
+
+              <label for="stat3Value">Stat 4 Value</label>
+              <input id="stat3Value" type="text" />
+              <label for="stat3Label">Stat 4 Label</label>
+              <input id="stat3Label" type="text" />
+            </div>
+          </section>
+
+          <section class="form-section">
+            <h2>Experience</h2>
+            <div class="form-grid">
+              <label for="experienceRoleInput">Role</label>
+              <input id="experienceRoleInput" type="text" />
+              <label for="experienceMetaInput">Meta</label>
+              <input id="experienceMetaInput" type="text" />
+              <label for="experienceBulletsInput"
+                >Bullets (one item per line)</label
+              >
+              <textarea id="experienceBulletsInput" rows="6"></textarea>
+            </div>
+          </section>
+
+          <section class="form-section">
+            <h2>Skills (6)</h2>
+            <div class="form-grid">
+              <label for="skill0Title">Skill 1 Title</label>
+              <input id="skill0Title" type="text" />
+              <label for="skill0Description">Skill 1 Description</label>
+              <input id="skill0Description" type="text" />
+
+              <label for="skill1Title">Skill 2 Title</label>
+              <input id="skill1Title" type="text" />
+              <label for="skill1Description">Skill 2 Description</label>
+              <input id="skill1Description" type="text" />
+
+              <label for="skill2Title">Skill 3 Title</label>
+              <input id="skill2Title" type="text" />
+              <label for="skill2Description">Skill 3 Description</label>
+              <input id="skill2Description" type="text" />
+
+              <label for="skill3Title">Skill 4 Title</label>
+              <input id="skill3Title" type="text" />
+              <label for="skill3Description">Skill 4 Description</label>
+              <input id="skill3Description" type="text" />
+
+              <label for="skill4Title">Skill 5 Title</label>
+              <input id="skill4Title" type="text" />
+              <label for="skill4Description">Skill 5 Description</label>
+              <input id="skill4Description" type="text" />
+
+              <label for="skill5Title">Skill 6 Title</label>
+              <input id="skill5Title" type="text" />
+              <label for="skill5Description">Skill 6 Description</label>
+              <input id="skill5Description" type="text" />
+            </div>
+          </section>
+
+          <section class="form-section">
+            <h2>Projects (4)</h2>
+            <div class="form-grid">
+              <label for="project0Title">Project 1 Title</label>
+              <input id="project0Title" type="text" />
+              <label for="project0Tech">Project 1 Tech</label>
+              <input id="project0Tech" type="text" />
+              <label for="project0Description">Project 1 Description</label>
+              <textarea id="project0Description" rows="3"></textarea>
+
+              <label for="project1Title">Project 2 Title</label>
+              <input id="project1Title" type="text" />
+              <label for="project1Tech">Project 2 Tech</label>
+              <input id="project1Tech" type="text" />
+              <label for="project1Description">Project 2 Description</label>
+              <textarea id="project1Description" rows="3"></textarea>
+
+              <label for="project2Title">Project 3 Title</label>
+              <input id="project2Title" type="text" />
+              <label for="project2Tech">Project 3 Tech</label>
+              <input id="project2Tech" type="text" />
+              <label for="project2Description">Project 3 Description</label>
+              <textarea id="project2Description" rows="3"></textarea>
+
+              <label for="project3Title">Project 4 Title</label>
+              <input id="project3Title" type="text" />
+              <label for="project3Tech">Project 4 Tech</label>
+              <input id="project3Tech" type="text" />
+              <label for="project3Description">Project 4 Description</label>
+              <textarea id="project3Description" rows="3"></textarea>
+            </div>
+          </section>
+
+          <section class="form-section">
+            <h2>Education (2)</h2>
+            <div class="form-grid">
+              <label for="education0Title">Education 1 Title</label>
+              <input id="education0Title" type="text" />
+              <label for="education0Meta">Education 1 Meta</label>
+              <input id="education0Meta" type="text" />
+              <label for="education0Detail">Education 1 Detail</label>
+              <input id="education0Detail" type="text" />
+
+              <label for="education1Title">Education 2 Title</label>
+              <input id="education1Title" type="text" />
+              <label for="education1Meta">Education 2 Meta</label>
+              <input id="education1Meta" type="text" />
+              <label for="education1Detail">Education 2 Detail</label>
+              <input id="education1Detail" type="text" />
+            </div>
+          </section>
+
+          <section class="form-section">
+            <h2>Certifications</h2>
+            <div class="form-grid">
+              <label for="certificationsInput"
+                >One certification per line</label
+              >
+              <textarea id="certificationsInput" rows="6"></textarea>
+            </div>
+          </section>
+
+          <section class="form-section">
+            <h2>Profile Details</h2>
+            <div class="form-grid">
+              <label for="profileDetailsInput"
+                >One detail line per row</label
+              >
+              <textarea id="profileDetailsInput" rows="6"></textarea>
+            </div>
+          </section>
 
           <div class="actions">
             <button id="loadBtn" class="btn btn-secondary" type="button">
