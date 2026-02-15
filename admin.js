@@ -2,12 +2,12 @@ import { createClient } from "https://esm.sh/@supabase/supabase-js@2?bundle";
 import {
   defaultPortfolioContent,
   normalizePortfolioContent
-} from "./portfolio-content.js?v=20260215v16";
+} from "./portfolio-content.js?v=20260215v17";
 import {
   supabaseAdmin,
   supabaseConfig,
   supabaseReady
-} from "./supabase-config.js?v=20260215v16";
+} from "./supabase-config.js?v=20260215v17";
 
 const TABLE = "portfolio_content";
 const ROW_ID = 1;
@@ -661,7 +661,9 @@ async function saveToDatabase() {
 
   const startedAt = performance.now();
   const writePayload = {
-    content
+    content,
+    updated_at: new Date().toISOString(),
+    updated_by: currentUser?.id || null
   };
 
   let updatedAt = "";

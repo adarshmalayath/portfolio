@@ -1,8 +1,8 @@
-import { supabaseConfig, supabaseReady } from "./supabase-config.js?v=20260215v16";
+import { supabaseConfig, supabaseReady } from "./supabase-config.js?v=20260215v17";
 import {
   defaultPortfolioContent,
   normalizePortfolioContent
-} from "./portfolio-content.js?v=20260215v16";
+} from "./portfolio-content.js?v=20260215v17";
 
 const CONTENT_TABLE = "portfolio_content";
 const CONTENT_ROW_ID = 1;
@@ -359,8 +359,6 @@ async function fetchRemotePortfolio() {
           headers: {
             apikey: supabaseConfig.anonKey,
             Authorization: `Bearer ${supabaseConfig.anonKey}`,
-            "Cache-Control": "no-cache",
-            Pragma: "no-cache",
             Accept: "application/json"
           }
         },
