@@ -354,7 +354,7 @@ async function initAdmin() {
   if (!supabaseReady) {
     setStatus(
       "warn",
-      "Supabase SQL is not configured. Update supabase-config.js to enable login and database reload."
+      "Supabase SQL is not configured. Set the anon public key in supabase-config.js (Supabase Dashboard -> Project Settings -> API)."
     );
     googleLoginBtn.disabled = true;
     setEditorView(false);
