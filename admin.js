@@ -2,17 +2,18 @@ import { createClient } from "https://esm.sh/@supabase/supabase-js@2?bundle";
 import {
   defaultPortfolioContent,
   normalizePortfolioContent
-} from "./portfolio-content.js?v=20260215v14";
+} from "./portfolio-content.js?v=20260215v15";
 import {
   supabaseAdmin,
   supabaseConfig,
   supabaseReady
-} from "./supabase-config.js?v=20260215v14";
+} from "./supabase-config.js?v=20260215v15";
 
 const TABLE = "portfolio_content";
 const ROW_ID = 1;
 const QUERY_TIMEOUT_MS = 12000;
 const SAVE_QUERY_TIMEOUT_MS = 18000;
+const PREFERRED_CV_URL = "https://adarshmalayath.github.io/portfolio/CV%20IT.pdf";
 
 const statusBox = document.getElementById("status");
 const loginPanel = document.getElementById("loginPanel");
@@ -181,6 +182,28 @@ function linesToArray(value) {
     .split("\n")
     .map((item) => item.trim())
     .filter(Boolean);
+}
+
+function sanitizeCvUrl(value) {
+  const normalized = String(value || "").trim();
+  if (!normalized) {
+    return PREFERRED_CV_URL;
+  }
+
+  if (
+    normalized === "https://adarshmalayath.github.io/CV%20IT.pdf" ||
+    normalized === "https://adarshmalayath.github.io/CV IT.pdf" ||
+    normalized === "/CV%20IT.pdf" ||
+    normalized === "/CV IT.pdf" ||
+    normalized === "CV%20IT.pdf" ||
+    normalized === "CV IT.pdf" ||
+    normalized === "/portfolio/CV%20IT.pdf" ||
+    normalized === "/portfolio/CV IT.pdf"
+  ) {
+    return PREFERRED_CV_URL;
+  }
+
+  return normalized;
 }
 
 function arrayToLines(value) {
@@ -499,7 +522,7 @@ function collectContentFromForm() {
       phone: inputValue("profilePhone"),
       linkedin: inputValue("profileLinkedin"),
       github: inputValue("profileGithub"),
-      cvUrl: inputValue("profileCvUrl")
+      cvUrl: sanitizeCvUrl(inputValue("profileCvUrl"))
     },
     stats: getStatsFromForm(),
     experience: {
@@ -561,7 +584,7 @@ function fillForm(content) {
   setInputValue("profilePhone", normalized.profile.phone);
   setInputValue("profileLinkedin", normalized.profile.linkedin);
   setInputValue("profileGithub", normalized.profile.github);
-  setInputValue("profileCvUrl", normalized.profile.cvUrl);
+  setInputValue("profileCvUrl", sanitizeCvUrl(normalized.profile.cvUrl));
   fillSectionTitles(normalized.sectionTitles);
 
   fillStats(normalized.stats);

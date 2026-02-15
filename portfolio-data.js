@@ -1,13 +1,14 @@
-import { supabaseConfig, supabaseReady } from "./supabase-config.js?v=20260215v14";
+import { supabaseConfig, supabaseReady } from "./supabase-config.js?v=20260215v15";
 import {
   defaultPortfolioContent,
   normalizePortfolioContent
-} from "./portfolio-content.js?v=20260215v14";
+} from "./portfolio-content.js?v=20260215v15";
 
 const CONTENT_TABLE = "portfolio_content";
 const CONTENT_ROW_ID = 1;
 const FETCH_TIMEOUT_MS = 12000;
 const APP_BASE_PATH = new URL(".", import.meta.url).pathname;
+const PREFERRED_CV_URL = "https://adarshmalayath.github.io/portfolio/CV%20IT.pdf";
 
 function wait(ms) {
   return new Promise((resolve) => {
@@ -95,6 +96,36 @@ function normalizeLocalPath(path, fallback) {
 
   const relativePath = encodeURI(value.replace(/^\/+/, ""));
   return `${APP_BASE_PATH}${relativePath}`;
+}
+
+function normalizeCvUrl(path) {
+  const value = String(path || "").trim();
+  if (!value) {
+    return PREFERRED_CV_URL;
+  }
+
+  if (
+    value === "https://adarshmalayath.github.io/CV%20IT.pdf" ||
+    value === "https://adarshmalayath.github.io/CV IT.pdf" ||
+    value === "/CV%20IT.pdf" ||
+    value === "/CV IT.pdf" ||
+    value === "CV%20IT.pdf" ||
+    value === "CV IT.pdf"
+  ) {
+    return PREFERRED_CV_URL;
+  }
+
+  const normalized = normalizeLocalPath(value, PREFERRED_CV_URL);
+  if (
+    normalized === "/CV%20IT.pdf" ||
+    normalized === "/CV IT.pdf" ||
+    normalized === "/portfolio/CV%20IT.pdf" ||
+    normalized === "/portfolio/CV IT.pdf"
+  ) {
+    return PREFERRED_CV_URL;
+  }
+
+  return normalized;
 }
 
 function createCard(title, body, meta = "") {
@@ -267,7 +298,7 @@ function renderPortfolioContent(content) {
   const tel = normalizeTel(profile.phone, "tel:+447721445027");
   const linkedin = normalizeExternalHttps(profile.linkedin, "https://linkedin.com/in/adarshmalayath");
   const github = normalizeExternalHttps(profile.github, "https://github.com/adarshmalayath");
-  const cv = normalizeLocalPath(profile.cvUrl, "CV IT.pdf");
+  const cv = normalizeCvUrl(profile.cvUrl);
 
   setLink("contactEmailButton", mailto);
   setLink("contactEmail", mailto, profile.email || "adarshmalayath@gmail.com");
