@@ -22,7 +22,6 @@ function applyTheme(theme) {
 
   const icon = document.getElementById("themeToggleIcon");
   const toggle = document.getElementById("themeToggle");
-  const heroVisualTag = document.getElementById("heroVisualTag");
   const isLight = resolvedTheme === "light";
 
   if (toggle) {
@@ -31,9 +30,6 @@ function applyTheme(theme) {
   }
   if (icon) {
     icon.textContent = isLight ? "☀️" : "🌙";
-  }
-  if (heroVisualTag) {
-    heroVisualTag.textContent = isLight ? "Metropolis Stack" : "Night Stack";
   }
 }
 

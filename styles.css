@@ -404,18 +404,6 @@ body[data-theme="light"] .hero-visual {
     linear-gradient(145deg, rgba(255, 255, 255, 0.95), rgba(233, 240, 255, 0.92));
 }
 
-.hero-visual-tag {
-  margin: 0;
-  font-size: 0.74rem;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--signal);
-}
-
-body[data-theme="light"] .hero-visual-tag {
-  color: #1848b8;
-}
-
 .hero-visual-stage {
   position: relative;
   margin-top: 0.68rem;
