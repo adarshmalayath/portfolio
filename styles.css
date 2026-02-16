@@ -589,6 +589,15 @@ a:hover {
   gap: 0.8rem;
 }
 
+#certificationsGrid {
+  display: grid;
+  gap: 0.8rem;
+}
+
+.certification-card p {
+  margin: 0;
+}
+
 .timeline-item {
   position: relative;
   padding-left: 2rem;

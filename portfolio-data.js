@@ -358,6 +358,25 @@ function renderSimpleLines(cardId, lines) {
   });
 }
 
+function renderCertifications(certifications) {
+  const wrapper = document.getElementById("certificationsGrid");
+  if (!wrapper) {
+    return;
+  }
+
+  wrapper.innerHTML = "";
+  certifications.forEach((item) => {
+    const card = document.createElement("article");
+    card.className = "card certification-card";
+
+    const paragraph = document.createElement("p");
+    paragraph.textContent = item;
+
+    card.appendChild(paragraph);
+    wrapper.appendChild(card);
+  });
+}
+
 function renderSectionTitles(sectionTitles) {
   textById("experienceHeading", sectionTitles.experience);
   textById("skillsHeading", sectionTitles.skills);
@@ -431,7 +450,7 @@ function renderPortfolioContent(content) {
   renderSkills(normalized.skills);
   renderProjects(normalized.projects);
   renderEducation(normalized.education);
-  renderSimpleLines("certificationsCard", normalized.certifications);
+  renderCertifications(normalized.certifications);
   renderSimpleLines("profileCard", normalized.profileDetails);
   renderSectionTitles(normalized.sectionTitles);
   renderCustomSections(normalized.customSections);
