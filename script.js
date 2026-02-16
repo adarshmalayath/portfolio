@@ -71,6 +71,13 @@ function bindSkillsCarousel() {
   let currentPage = 0;
   let isScrollTicking = false;
 
+  function normalizePageIndex(pageIndex, pageCount) {
+    if (pageCount <= 1) {
+      return 0;
+    }
+    return ((pageIndex % pageCount) + pageCount) % pageCount;
+  }
+
   function getCards() {
     return Array.from(track.querySelectorAll(":scope > .card"));
   }
@@ -120,13 +127,7 @@ function bindSkillsCarousel() {
 
   function syncControls() {
     const { pageCount } = getMetrics();
-
-    if (currentPage > pageCount - 1) {
-      currentPage = pageCount - 1;
-    }
-    if (currentPage < 0) {
-      currentPage = 0;
-    }
+    currentPage = normalizePageIndex(currentPage, pageCount);
 
     const singlePage = pageCount <= 1;
     carousel.classList.toggle("is-single-page", singlePage);
@@ -136,14 +137,14 @@ function bindSkillsCarousel() {
       renderDots(pageCount);
     }
 
-    prevButton.disabled = singlePage || currentPage <= 0;
-    nextButton.disabled = singlePage || currentPage >= pageCount - 1;
+    prevButton.disabled = singlePage;
+    nextButton.disabled = singlePage;
     setActiveDot();
   }
 
   function goToPage(pageIndex) {
     const { pageCount, visibleCount, step } = getMetrics();
-    currentPage = Math.max(0, Math.min(pageIndex, pageCount - 1));
+    currentPage = normalizePageIndex(pageIndex, pageCount);
 
     const targetIndex = currentPage * visibleCount;
     const targetLeft = targetIndex * step;
