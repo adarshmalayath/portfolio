@@ -324,6 +324,7 @@ body[data-theme="light"] .orb-b {
 
 .site-nav {
   display: flex;
+  align-items: center;
   gap: 1rem;
   font-size: 0.94rem;
 }
@@ -336,23 +337,20 @@ body[data-theme="light"] .orb-b {
   color: var(--signal);
 }
 
-.header-controls {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.7rem;
-}
-
 .theme-toggle {
   border: 1px solid rgba(242, 200, 75, 0.45);
   background: rgba(18, 18, 18, 0.82);
   color: var(--text);
-  border-radius: 999px;
+  border-radius: 50%;
   display: inline-flex;
+  justify-content: center;
   align-items: center;
-  gap: 0.38rem;
-  padding: 0.4rem 0.74rem;
-  font-size: 0.82rem;
-  font-weight: 600;
+  width: 2.15rem;
+  height: 2.15rem;
+  margin-left: auto;
+  padding: 0;
+  font-size: 1rem;
+  line-height: 1;
   cursor: pointer;
   transition: transform 0.2s ease, border-color 0.2s ease;
 }
@@ -363,7 +361,8 @@ body[data-theme="light"] .orb-b {
 }
 
 .theme-toggle-icon {
-  font-size: 0.85rem;
+  font-size: 1rem;
+  line-height: 1;
 }
 
 body[data-theme="light"] .theme-toggle {
@@ -1212,12 +1211,8 @@ body[data-theme="light"] .skills-dot {
   .site-nav {
     flex-wrap: wrap;
     gap: 0.7rem;
-  }
-
-  .header-controls {
     width: 100%;
-    justify-content: space-between;
-    gap: 0.45rem;
+    justify-content: flex-start;
   }
 
   .site-nav {
@@ -1225,7 +1220,8 @@ body[data-theme="light"] .skills-dot {
   }
 
   .theme-toggle {
-    padding: 0.35rem 0.62rem;
+    width: 2.05rem;
+    height: 2.05rem;
   }
 
   .hero {

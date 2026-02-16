@@ -21,21 +21,19 @@ function applyTheme(theme) {
   document.body.setAttribute("data-theme", resolvedTheme);
 
   const icon = document.getElementById("themeToggleIcon");
-  const text = document.getElementById("themeToggleText");
   const toggle = document.getElementById("themeToggle");
   const heroVisualTag = document.getElementById("heroVisualTag");
+  const isLight = resolvedTheme === "light";
 
   if (toggle) {
-    toggle.setAttribute("aria-pressed", resolvedTheme === "light" ? "true" : "false");
+    toggle.setAttribute("aria-pressed", isLight ? "true" : "false");
+    toggle.setAttribute("aria-label", isLight ? "Switch to dark mode" : "Switch to light mode");
   }
   if (icon) {
-    icon.textContent = resolvedTheme === "light" ? "☀️" : "🌙";
-  }
-  if (text) {
-    text.textContent = resolvedTheme === "light" ? "Light" : "Dark";
+    icon.textContent = isLight ? "☀️" : "🌙";
   }
   if (heroVisualTag) {
-    heroVisualTag.textContent = resolvedTheme === "light" ? "Metropolis Stack" : "Night Stack";
+    heroVisualTag.textContent = isLight ? "Metropolis Stack" : "Night Stack";
   }
 }
 
