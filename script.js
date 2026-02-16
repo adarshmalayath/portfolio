@@ -68,8 +68,11 @@ function bindSkillsCarousel() {
     return;
   }
 
+  const AUTO_ADVANCE_MS = 1500;
   let currentPage = 0;
   let isScrollTicking = false;
+  let autoplayTimerId = null;
+  let isInteractionActive = false;
 
   function normalizePageIndex(pageIndex, pageCount) {
     if (pageCount <= 1) {
@@ -99,6 +102,34 @@ function bindSkillsCarousel() {
     const pageCount = Math.max(1, Math.ceil(cards.length / visibleCount));
 
     return { pageCount, visibleCount, step };
+  }
+
+  function stopAutoplay() {
+    if (autoplayTimerId === null) {
+      return;
+    }
+    window.clearInterval(autoplayTimerId);
+    autoplayTimerId = null;
+  }
+
+  function shouldAutoplay() {
+    const { pageCount } = getMetrics();
+    return pageCount > 1 && !isInteractionActive && !document.hidden;
+  }
+
+  function refreshAutoplay() {
+    if (!shouldAutoplay()) {
+      stopAutoplay();
+      return;
+    }
+
+    if (autoplayTimerId !== null) {
+      return;
+    }
+
+    autoplayTimerId = window.setInterval(() => {
+      goToPage(currentPage + 1);
+    }, AUTO_ADVANCE_MS);
   }
 
   function setActiveDot() {
@@ -140,6 +171,7 @@ function bindSkillsCarousel() {
     prevButton.disabled = singlePage;
     nextButton.disabled = singlePage;
     setActiveDot();
+    refreshAutoplay();
   }
 
   function goToPage(pageIndex) {
@@ -188,6 +220,33 @@ function bindSkillsCarousel() {
     },
     { passive: true }
   );
+
+  carousel.addEventListener("mouseenter", () => {
+    isInteractionActive = true;
+    refreshAutoplay();
+  });
+
+  carousel.addEventListener("mouseleave", () => {
+    isInteractionActive = false;
+    refreshAutoplay();
+  });
+
+  carousel.addEventListener("focusin", () => {
+    isInteractionActive = true;
+    refreshAutoplay();
+  });
+
+  carousel.addEventListener("focusout", (event) => {
+    if (carousel.contains(event.relatedTarget)) {
+      return;
+    }
+    isInteractionActive = false;
+    refreshAutoplay();
+  });
+
+  document.addEventListener("visibilitychange", () => {
+    refreshAutoplay();
+  });
 
   window.addEventListener("resize", () => {
     goToPage(currentPage);
