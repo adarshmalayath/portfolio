@@ -110,11 +110,6 @@ body[data-theme="light"]::before {
   overflow: hidden;
 }
 
-.scene-batman,
-.scene-superman {
-  display: none !important;
-}
-
 .scroll-scene {
   position: absolute;
   inset: 0;
@@ -1572,26 +1567,6 @@ body[data-theme="light"] .skills-dot {
   100% {
     transform: translateY(10.2rem);
     opacity: 0.08;
-  }
-}
-
-@keyframes cape-wave {
-  0%,
-  100% {
-    transform: skewY(0deg);
-  }
-  50% {
-    transform: skewY(5deg);
-  }
-}
-
-@keyframes cape-sweep {
-  0%,
-  100% {
-    transform: rotate(0deg) skewY(0deg);
-  }
-  50% {
-    transform: rotate(-2deg) skewY(5deg);
   }
 }
 
