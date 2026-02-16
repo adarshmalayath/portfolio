@@ -39,68 +39,51 @@
       href="/portfolio/brand-icon-180.png?v=20260215v22"
     />
     <link rel="manifest" href="/portfolio/site.webmanifest?v=20260215v22" />
-    <link rel="stylesheet" href="/portfolio/styles.css?v=20260216v36" />
+    <link rel="stylesheet" href="/portfolio/styles.css?v=20260216v51" />
   </head>
   <body data-theme="dark">
     <div class="bg-orb orb-a" aria-hidden="true"></div>
     <div class="bg-orb orb-b" aria-hidden="true"></div>
     <div class="scroll-scenes" aria-hidden="true">
-      <svg class="scroll-scene scene-batman" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice">
-        <defs>
-          <linearGradient id="bat-accent" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stop-color="#f2c84b" stop-opacity="0.95" />
-            <stop offset="100%" stop-color="#7a6424" stop-opacity="0.7" />
-          </linearGradient>
-        </defs>
-        <g class="batman-anchor" transform="translate(1280 36)">
-          <g class="batman-swing">
-            <line class="bat-rope" x1="0" y1="-120" x2="0" y2="190" />
-            <circle class="bat-hook" cx="0" cy="-120" r="7" />
-            <g class="batman-character" transform="translate(0 194)">
-              <path
-                class="bat-cape"
-                d="M 0 -8 C -58 -6 -104 52 -94 110 C -66 90 -40 92 -12 86 C 10 80 36 78 66 92 C 76 50 46 -2 0 -8 Z"
-              />
-              <path
-                class="bat-cape-inner"
-                d="M -6 18 C -52 20 -76 50 -66 82 C -44 70 -24 72 -4 66 C 16 60 32 58 56 68 C 60 42 34 20 -6 18 Z"
-              />
-              <circle class="bat-head" cx="0" cy="-24" r="13" />
-              <rect class="bat-body" x="-14" y="-10" width="28" height="44" rx="8" />
-              <path class="bat-shoulders" d="M -28 -4 L 28 -4 L 20 14 L -20 14 Z" />
-              <line class="bat-limb" x1="-8" y1="34" x2="-20" y2="64" />
-              <line class="bat-limb" x1="8" y1="34" x2="20" y2="64" />
-            </g>
-          </g>
-        </g>
-      </svg>
+      <div class="scroll-scene scene-batman">
+        <div class="comic-stage bat-stage">
+          <div class="bat-moon"></div>
+          <div class="bat-signal"></div>
+          <div class="bat-art-wrap">
+            <div class="batman-css-art">
+              <div class="bat-mouth"></div>
+              <div class="bat-eye"></div>
+              <div class="bat-cape"></div>
+              <div class="bat-leg"></div>
+              <div class="bat-costume"></div>
+              <div class="bat-belt"></div>
+            </div>
+            <div class="bat-base"></div>
+          </div>
+        </div>
+      </div>
 
-      <svg class="scroll-scene scene-superman" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice">
-        <defs>
-          <linearGradient id="sup-red" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stop-color="#d61f38" />
-            <stop offset="100%" stop-color="#b40f2b" />
-          </linearGradient>
-          <linearGradient id="sup-blue" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stop-color="#2b61d4" />
-            <stop offset="100%" stop-color="#1243b6" />
-          </linearGradient>
-        </defs>
-        <ellipse class="superman-impact" cx="360" cy="784" rx="188" ry="34" />
-        <ellipse class="superman-dust" cx="360" cy="802" rx="240" ry="40" />
-        <g class="superman-flight">
-          <path class="super-trail" d="M 186 46 C 156 126 170 192 222 246" />
-          <path class="super-trail" d="M 208 36 C 186 122 204 198 264 250" />
-          <g class="superman-character" transform="translate(260 130)">
-            <path class="super-cape" d="M -22 8 C -98 20 -116 114 -44 156 C -8 122 18 120 50 146 C 86 106 76 32 16 8 Z" />
-            <circle class="super-head" cx="0" cy="-24" r="14" />
-            <rect class="super-body" x="-16" y="-8" width="32" height="54" rx="10" />
-            <path class="super-emblem" d="M -8 8 L 8 8 L 6 20 L -6 20 Z" />
-            <line class="super-limb" x1="-10" y1="44" x2="-28" y2="78" />
-            <line class="super-limb" x1="10" y1="44" x2="32" y2="76" />
-          </g>
-        </g>
-      </svg>
+      <div class="scroll-scene scene-superman">
+        <div class="comic-stage sup-stage">
+          <div class="sup-sun"></div>
+          <div class="sup-skyline"></div>
+          <div class="super-art-wrap">
+            <div class="superman-css-art">
+              <div class="sup-head"></div>
+              <div class="sup-hair"></div>
+              <div class="sup-cape"></div>
+              <div class="sup-torso"></div>
+              <div class="sup-emblem"></div>
+              <div class="sup-belt"></div>
+              <div class="sup-arm arm-left"></div>
+              <div class="sup-arm arm-right"></div>
+              <div class="sup-leg leg-left"></div>
+              <div class="sup-leg leg-right"></div>
+            </div>
+            <div class="sup-landing"></div>
+          </div>
+        </div>
+      </div>
     </div>
 
     <header class="site-header reveal">
@@ -219,7 +202,17 @@
                 <rect class="code-line code-line-primary" x="150" y="261" width="226" height="8" rx="4" />
               </g>
 
-              <rect x="132" y="290" width="102" height="24" rx="7" fill="#182430" stroke="#f2c84b" stroke-opacity="0.6" />
+              <rect
+                class="screen-pill"
+                x="132"
+                y="290"
+                width="102"
+                height="24"
+                rx="7"
+                fill="#182430"
+                stroke="#f2c84b"
+                stroke-opacity="0.6"
+              />
               <text x="146" y="306" class="screen-label">npm run build</text>
 
               <path class="projection-beam" d="M496 196 C560 160, 610 135, 685 124" />
