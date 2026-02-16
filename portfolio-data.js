@@ -1,13 +1,25 @@
-import { supabaseConfig, supabaseReady } from "./supabase-config.js?v=20260215v22";
+import { supabaseConfig, supabaseReady } from "./supabase-config.js?v=20260215v23";
 import {
   normalizePortfolioContent
-} from "./portfolio-content.js?v=20260215v22";
+} from "./portfolio-content.js?v=20260215v23";
 
 const CONTENT_TABLE = "portfolio_content";
 const CONTENT_ROW_ID = 1;
 const FETCH_TIMEOUT_MS = 30000;
 const APP_BASE_PATH = new URL(".", import.meta.url).pathname;
 const PREFERRED_CV_URL = "https://adarshmalayath.github.io/portfolio/CV%20IT.pdf";
+const CV_EDUCATION_ADDITIONS = [
+  {
+    title: "Higher Secondary Education (Plus Two)",
+    meta: "Government Higher Secondary School Kuttippuram, India | Jul 2016 – Mar 2018",
+    detail: "Percentage: 85.25%"
+  },
+  {
+    title: "Secondary Education (10th)",
+    meta: "Technical Higher Secondary School Vattamkulam, India | Jun 2015 – Mar 2016",
+    detail: "Percentage: 95%"
+  }
+];
 
 function wait(ms) {
   return new Promise((resolve) => {
@@ -219,7 +231,19 @@ function renderEducation(education) {
   }
   wrapper.innerHTML = "";
 
-  education.forEach((item) => {
+  const mergedEducation = [...education];
+  const existingTitles = new Set(
+    mergedEducation.map((item) => String(item?.title || "").trim().toLowerCase())
+  );
+
+  CV_EDUCATION_ADDITIONS.forEach((item) => {
+    const key = String(item.title).trim().toLowerCase();
+    if (!existingTitles.has(key)) {
+      mergedEducation.push(item);
+    }
+  });
+
+  mergedEducation.forEach((item) => {
     const card = createCard(item.title, item.detail, item.meta);
     wrapper.appendChild(card);
   });

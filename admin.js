@@ -1,12 +1,12 @@
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2?bundle";
 import {
   normalizePortfolioContent
-} from "./portfolio-content.js?v=20260215v20";
+} from "./portfolio-content.js?v=20260215v21";
 import {
   supabaseAdmin,
   supabaseConfig,
   supabaseReady
-} from "./supabase-config.js?v=20260215v20";
+} from "./supabase-config.js?v=20260215v21";
 
 const TABLE = "portfolio_content";
 const ROW_ID = 1;
@@ -475,7 +475,7 @@ function getProjectsFromForm() {
 
 function getEducationFromForm() {
   const education = [];
-  for (let i = 0; i < 2; i += 1) {
+  for (let i = 0; i < 4; i += 1) {
     const title = inputValue(`education${i}Title`);
     const meta = inputValue(`education${i}Meta`);
     const detail = inputValue(`education${i}Detail`);
@@ -541,7 +541,7 @@ function fillProjects(projects) {
 }
 
 function fillEducation(education) {
-  for (let i = 0; i < 2; i += 1) {
+  for (let i = 0; i < 4; i += 1) {
     setInputValue(`education${i}Title`, education[i]?.title || "");
     setInputValue(`education${i}Meta`, education[i]?.meta || "");
     setInputValue(`education${i}Detail`, education[i]?.detail || "");
@@ -580,7 +580,7 @@ function clearFormState() {
     setInputValue(`project${i}Description`, "");
   }
 
-  for (let i = 0; i < 2; i += 1) {
+  for (let i = 0; i < 4; i += 1) {
     setInputValue(`education${i}Title`, "");
     setInputValue(`education${i}Meta`, "");
     setInputValue(`education${i}Detail`, "");

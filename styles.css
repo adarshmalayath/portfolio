@@ -309,6 +309,11 @@ a:hover {
   margin-top: 0.25rem;
 }
 
+#educationGrid {
+  display: grid;
+  gap: 0.8rem;
+}
+
 .timeline-item {
   position: relative;
   padding-left: 2rem;

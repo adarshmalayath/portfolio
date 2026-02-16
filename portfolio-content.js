@@ -69,6 +69,16 @@ export const defaultPortfolioContent = {
       title: "B.Tech in Computer Science & Engineering",
       meta: "Sreepathy Institute of Management and Technology | Aug 2018 – Aug 2022",
       detail: "CGPA: 8.19 / 10"
+    },
+    {
+      title: "Higher Secondary Education (Plus Two)",
+      meta: "Government Higher Secondary School Kuttippuram, India | Jul 2016 – Mar 2018",
+      detail: "Percentage: 85.25%"
+    },
+    {
+      title: "Secondary Education (10th)",
+      meta: "Technical Higher Secondary School Vattamkulam, India | Jun 2015 – Mar 2016",
+      detail: "Percentage: 95%"
     }
   ],
   certifications: [
