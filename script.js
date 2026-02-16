@@ -68,7 +68,7 @@ function bindSkillsCarousel() {
     return;
   }
 
-  const AUTO_ADVANCE_MS = 1500;
+  const AUTO_ADVANCE_MS = 5000;
   let currentPage = 0;
   let isScrollTicking = false;
   let autoplayTimerId = null;
