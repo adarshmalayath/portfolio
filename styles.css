@@ -103,11 +103,17 @@ body[data-theme="light"]::before {
 }
 
 .scroll-scenes {
+  display: none !important;
   position: fixed;
   inset: 0;
   pointer-events: none;
   z-index: 1;
   overflow: hidden;
+}
+
+.scene-batman,
+.scene-superman {
+  display: none !important;
 }
 
 .scroll-scene {
