@@ -871,6 +871,10 @@ a:hover {
     gap: 0.65rem;
   }
 
+  .skills-carousel .carousel-nav-btn {
+    display: none;
+  }
+
   .skills-track {
     grid-auto-columns: 100%;
   }
