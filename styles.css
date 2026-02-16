@@ -153,7 +153,7 @@ a:hover {
   display: grid;
   grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr);
   gap: 1.1rem;
-  align-items: stretch;
+  align-items: start;
   position: relative;
 }
 
@@ -171,7 +171,7 @@ a:hover {
     linear-gradient(145deg, rgba(255, 255, 255, 0.03), rgba(16, 16, 16, 0.96));
   box-shadow: var(--shadow);
   min-height: 22.6rem;
-  padding: 1.15rem;
+  padding: 1.15rem 1.15rem 1rem;
 }
 
 .hero-visual-tag {
@@ -264,6 +264,51 @@ a:hover {
 .hero-computer-svg .projected-ui {
   animation: project-hover 4.8s ease-in-out infinite;
   transform-origin: 610px 210px;
+}
+
+.hero-computer-svg .keyboard-shadow {
+  fill: rgba(0, 0, 0, 0.35);
+}
+
+.hero-computer-svg .keyboard-body {
+  fill: rgba(12, 15, 20, 0.96);
+  stroke: rgba(242, 200, 75, 0.55);
+  stroke-width: 1.8;
+}
+
+.hero-computer-svg .keyboard-key {
+  animation: code-flicker 3.6s ease-in-out infinite;
+}
+
+.hero-computer-svg .keyboard-key.key-soft {
+  fill: rgba(199, 212, 229, 0.74);
+}
+
+.hero-computer-svg .keyboard-key.key-primary {
+  fill: rgba(242, 200, 75, 0.9);
+}
+
+.hero-computer-svg .mouse-shadow {
+  fill: rgba(0, 0, 0, 0.32);
+}
+
+.hero-computer-svg .mouse-shell {
+  fill: rgba(11, 14, 19, 0.96);
+  stroke: rgba(242, 200, 75, 0.6);
+  stroke-width: 1.7;
+}
+
+.hero-computer-svg .mouse-line {
+  stroke: rgba(230, 237, 245, 0.8);
+  stroke-width: 1.5;
+}
+
+.hero-computer-svg .mouse-wheel {
+  fill: rgba(242, 200, 75, 0.9);
+}
+
+.hero-computer-svg .mouse-group {
+  animation: ui-float 5.2s ease-in-out infinite;
 }
 
 .hero-ui-chip {
