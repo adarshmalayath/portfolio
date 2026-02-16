@@ -240,16 +240,44 @@ body[data-theme="light"] .scene-space .nebula-b {
   aspect-ratio: 1;
   background: radial-gradient(circle at 32% 26%, rgba(241, 245, 255, 0.92), rgba(124, 140, 189, 0.88) 62%, rgba(59, 72, 112, 0.9) 100%);
   box-shadow: 0 0 24px rgba(163, 178, 222, 0.3);
+  z-index: 1;
+  isolation: isolate;
+}
+
+.scene-space .planet-a::before {
+  content: "";
+  position: absolute;
+  inset: 38% -25% auto;
+  height: 18%;
+  border-radius: 999px;
+  border: 2px solid rgba(188, 197, 229, 0.26);
+  transform: rotate(-16deg);
+  filter: blur(0.35px);
+  box-shadow: 0 0 8px rgba(188, 197, 229, 0.18);
+  z-index: -1;
 }
 
 .scene-space .planet-a::after {
   content: "";
   position: absolute;
-  inset: 38% -24% auto;
+  inset: 38% -25% auto;
   height: 18%;
   border-radius: 999px;
-  border: 2px solid rgba(188, 197, 229, 0.45);
+  border: 2px solid rgba(210, 219, 245, 0.58);
   transform: rotate(-16deg);
+  -webkit-mask: linear-gradient(
+    to right,
+    #000 0 19%,
+    transparent 33% 67%,
+    #000 81% 100%
+  );
+  mask: linear-gradient(
+    to right,
+    #000 0 19%,
+    transparent 33% 67%,
+    #000 81% 100%
+  );
+  box-shadow: 0 0 6px rgba(210, 219, 245, 0.2);
 }
 
 .scene-space .planet-b {
@@ -267,7 +295,13 @@ body[data-theme="light"] .scene-space .planet-a {
 }
 
 body[data-theme="light"] .scene-space .planet-a::after {
-  border-color: rgba(97, 138, 217, 0.42);
+  border-color: rgba(97, 138, 217, 0.52);
+  box-shadow: 0 0 5px rgba(97, 138, 217, 0.16);
+}
+
+body[data-theme="light"] .scene-space .planet-a::before {
+  border-color: rgba(97, 138, 217, 0.24);
+  box-shadow: 0 0 7px rgba(97, 138, 217, 0.12);
 }
 
 body[data-theme="light"] .scene-space .planet-b {
