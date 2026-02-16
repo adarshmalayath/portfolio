@@ -103,7 +103,6 @@ body[data-theme="light"]::before {
 }
 
 .scroll-scenes {
-  display: none !important;
   position: fixed;
   inset: 0;
   pointer-events: none;
