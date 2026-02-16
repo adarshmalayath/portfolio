@@ -303,6 +303,31 @@ a:hover {
   color: var(--text-soft);
 }
 
+.skill-list {
+  list-style: none;
+  margin: 0.62rem 0 0;
+  padding: 0;
+  display: grid;
+  gap: 0.5rem;
+}
+
+.skill-list-item {
+  display: flex;
+  align-items: center;
+  gap: 0.56rem;
+  color: var(--text-soft);
+}
+
+.skill-item-icon {
+  width: 1rem;
+  height: 1rem;
+  flex: 0 0 auto;
+  object-fit: contain;
+  filter: brightness(0) saturate(100%) invert(82%) sepia(4%) saturate(102%) hue-rotate(356deg)
+    brightness(92%) contrast(88%);
+  opacity: 0.95;
+}
+
 .meta {
   color: #a8a8a8;
   font-size: 0.9rem;

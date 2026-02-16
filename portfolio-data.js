@@ -7,6 +7,33 @@ const CONTENT_TABLE = "portfolio_content";
 const CONTENT_ROW_ID = 1;
 const FETCH_TIMEOUT_MS = 30000;
 const APP_BASE_PATH = new URL(".", import.meta.url).pathname;
+const SKILL_ICON_BASE_PATH = `${APP_BASE_PATH}skill-icons/`;
+const SKILL_ICON_MAP = {
+  java: "java.svg",
+  javascript: "javascript.svg",
+  python: "python.svg",
+  plsql: "plsql.svg",
+  react: "react.svg",
+  reactjs: "react.svg",
+  html5: "html5.svg",
+  css3: "css3.svg",
+  bootstrap: "bootstrap.svg",
+  spring: "spring.svg",
+  springboot: "springboot.svg",
+  oracle: "oracle.svg",
+  sqlserver: "sqlserver.svg",
+  mysql: "mysql.svg",
+  git: "git.svg",
+  intellijidea: "intellijidea.svg",
+  vscode: "vscode.svg",
+  servicenow: "servicenow.svg",
+  jira: "jira.svg",
+  obdx: "obdx.svg",
+  bankingplatforms: "banking.svg",
+  fraudrisk: "fraud.svg",
+  apiintegration: "api.svg",
+  compliance: "compliance.svg"
+};
 const PREFERRED_CV_URL = "https://adarshmalayath.github.io/portfolio/CV%20IT.pdf";
 const CV_EDUCATION_ADDITIONS = [
   {
@@ -163,6 +190,27 @@ function createCard(title, body, meta = "") {
   return article;
 }
 
+function normalizeSkillToken(value) {
+  return String(value || "")
+    .toLowerCase()
+    .replace(/&/g, "and")
+    .replace(/\+/g, "plus")
+    .replace(/[^a-z0-9]/g, "");
+}
+
+function getSkillItems(description) {
+  return String(description || "")
+    .split(",")
+    .map((item) => item.trim())
+    .filter(Boolean);
+}
+
+function getSkillIconPath(skillItem) {
+  const key = normalizeSkillToken(skillItem);
+  const iconFile = SKILL_ICON_MAP[key] || "generic.svg";
+  return `${SKILL_ICON_BASE_PATH}${iconFile}`;
+}
+
 function renderStats(stats) {
   const grid = document.getElementById("statsGrid");
   if (!grid) {
@@ -208,8 +256,54 @@ function renderSkills(skills) {
     return;
   }
   grid.innerHTML = "";
+
   skills.forEach((skill) => {
-    grid.appendChild(createCard(skill.title, skill.description));
+    const article = document.createElement("article");
+    article.className = "card";
+
+    const heading = document.createElement("h3");
+    heading.textContent = skill.title;
+    article.appendChild(heading);
+
+    const items = getSkillItems(skill.description);
+    if (items.length === 0) {
+      const paragraph = document.createElement("p");
+      paragraph.textContent = skill.description;
+      article.appendChild(paragraph);
+      grid.appendChild(article);
+      return;
+    }
+
+    const list = document.createElement("ul");
+    list.className = "skill-list";
+
+    items.forEach((itemText) => {
+      const row = document.createElement("li");
+      row.className = "skill-list-item";
+
+      const icon = document.createElement("img");
+      icon.className = "skill-item-icon";
+      icon.src = getSkillIconPath(itemText);
+      icon.alt = `${itemText} logo`;
+      icon.loading = "lazy";
+      icon.decoding = "async";
+      icon.addEventListener("error", () => {
+        if (icon.src.endsWith("/generic.svg")) {
+          return;
+        }
+        icon.src = `${SKILL_ICON_BASE_PATH}generic.svg`;
+      });
+
+      const text = document.createElement("span");
+      text.textContent = itemText;
+
+      row.appendChild(icon);
+      row.appendChild(text);
+      list.appendChild(row);
+    });
+
+    article.appendChild(list);
+    grid.appendChild(article);
   });
 }
 
