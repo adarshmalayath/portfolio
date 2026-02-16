@@ -39,7 +39,7 @@
       href="/portfolio/brand-icon-180.png?v=20260215v22"
     />
     <link rel="manifest" href="/portfolio/site.webmanifest?v=20260215v22" />
-    <link rel="stylesheet" href="/portfolio/styles.css?v=20260216v27" />
+    <link rel="stylesheet" href="/portfolio/styles.css?v=20260216v28" />
   </head>
   <body>
     <div class="bg-orb orb-a" aria-hidden="true"></div>
@@ -124,18 +124,124 @@
         </div>
         <aside class="hero-visual reveal" aria-hidden="true">
           <p class="hero-visual-tag">Night Stack</p>
-          <div class="hero-visual-mark"></div>
-          <div class="hero-visual-ring ring-a"></div>
-          <div class="hero-visual-ring ring-b"></div>
-          <div class="hero-visual-grid"></div>
-          <div class="hero-visual-bars">
-            <span style="--bar-height: 38%"></span>
-            <span style="--bar-height: 52%"></span>
-            <span style="--bar-height: 44%"></span>
-            <span style="--bar-height: 68%"></span>
-            <span style="--bar-height: 60%"></span>
-            <span style="--bar-height: 74%"></span>
-            <span style="--bar-height: 56%"></span>
+          <div class="hero-visual-stage">
+            <svg
+              class="hero-computer-svg"
+              viewBox="0 0 760 520"
+              role="presentation"
+              focusable="false"
+            >
+              <defs>
+                <linearGradient id="computerFrame" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stop-color="#f2c84b" stop-opacity="0.9" />
+                  <stop offset="100%" stop-color="#7a6424" stop-opacity="0.75" />
+                </linearGradient>
+                <linearGradient id="screenTone" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stop-color="#0f141b" />
+                  <stop offset="100%" stop-color="#06080c" />
+                </linearGradient>
+                <linearGradient id="projectCard" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stop-color="#202730" stop-opacity="0.95" />
+                  <stop offset="100%" stop-color="#0d1118" stop-opacity="0.95" />
+                </linearGradient>
+              </defs>
+
+              <ellipse class="desk-glow" cx="320" cy="460" rx="235" ry="36" />
+
+              <rect
+                class="monitor-shell"
+                x="86"
+                y="84"
+                width="448"
+                height="276"
+                rx="22"
+                fill="#101214"
+                stroke="url(#computerFrame)"
+                stroke-width="3"
+              />
+              <rect
+                class="monitor-screen"
+                x="108"
+                y="108"
+                width="404"
+                height="228"
+                rx="14"
+                fill="url(#screenTone)"
+              />
+
+              <circle cx="122" cy="122" r="4" fill="#ff6f6f" opacity="0.9" />
+              <circle cx="138" cy="122" r="4" fill="#f2c84b" opacity="0.9" />
+              <circle cx="154" cy="122" r="4" fill="#93ff8f" opacity="0.85" />
+
+              <g class="code-layer">
+                <rect class="code-line code-line-primary" x="132" y="152" width="258" height="8" rx="4" />
+                <rect class="code-line code-line-soft" x="132" y="171" width="318" height="7" rx="3.5" />
+                <rect class="code-line code-line-soft" x="132" y="189" width="266" height="7" rx="3.5" />
+                <rect class="code-line code-line-primary" x="158" y="207" width="301" height="8" rx="4" />
+                <rect class="code-line code-line-soft" x="174" y="225" width="248" height="7" rx="3.5" />
+                <rect class="code-line code-line-soft" x="132" y="243" width="333" height="7" rx="3.5" />
+                <rect class="code-line code-line-primary" x="150" y="261" width="226" height="8" rx="4" />
+              </g>
+
+              <rect x="132" y="290" width="102" height="24" rx="7" fill="#182430" stroke="#f2c84b" stroke-opacity="0.6" />
+              <text x="146" y="306" class="screen-label">npm run build</text>
+
+              <path class="projection-beam" d="M496 196 C560 160, 610 135, 685 124" />
+              <path class="projection-beam" d="M492 226 C566 214, 616 214, 704 216" />
+              <path class="projection-beam" d="M486 258 C556 282, 614 316, 686 352" />
+
+              <g class="projected-ui">
+                <rect class="project-card" x="604" y="92" width="124" height="70" rx="12" />
+                <rect class="project-line" x="618" y="110" width="74" height="7" rx="3.5" />
+                <rect class="project-line soft" x="618" y="126" width="92" height="6" rx="3" />
+                <rect class="project-line soft" x="618" y="140" width="58" height="6" rx="3" />
+
+                <rect class="project-card" x="598" y="186" width="138" height="82" rx="12" />
+                <rect class="project-line" x="614" y="206" width="88" height="7" rx="3.5" />
+                <rect class="project-line soft" x="614" y="223" width="106" height="6" rx="3" />
+                <rect class="project-pill" x="614" y="238" width="42" height="13" rx="6.5" />
+
+                <rect class="project-card" x="614" y="304" width="114" height="62" rx="12" />
+                <rect class="project-line" x="628" y="322" width="72" height="7" rx="3.5" />
+                <rect class="project-line soft" x="628" y="338" width="58" height="6" rx="3" />
+              </g>
+
+              <rect
+                class="monitor-neck"
+                x="276"
+                y="364"
+                width="66"
+                height="52"
+                rx="12"
+                fill="#111315"
+                stroke="#f2c84b"
+                stroke-opacity="0.4"
+              />
+              <rect
+                class="monitor-base"
+                x="214"
+                y="410"
+                width="190"
+                height="24"
+                rx="12"
+                fill="#0f1113"
+                stroke="#f2c84b"
+                stroke-opacity="0.42"
+              />
+            </svg>
+
+            <div class="hero-ui-chip chip-a">
+              <span class="chip-title">Build</span>
+              <span class="chip-value">Deploy</span>
+            </div>
+            <div class="hero-ui-chip chip-b">
+              <span class="chip-title">API</span>
+              <span class="chip-value">Secure</span>
+            </div>
+            <div class="hero-ui-chip chip-c">
+              <span class="chip-title">UX</span>
+              <span class="chip-value">Realtime</span>
+            </div>
           </div>
           <p class="hero-visual-caption">
             Secure systems. Strong APIs. Reliable delivery.

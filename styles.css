@@ -170,7 +170,7 @@ a:hover {
     radial-gradient(circle at 78% 20%, rgba(242, 200, 75, 0.18), rgba(10, 10, 10, 0) 44%),
     linear-gradient(145deg, rgba(255, 255, 255, 0.03), rgba(16, 16, 16, 0.96));
   box-shadow: var(--shadow);
-  min-height: 22rem;
+  min-height: 22.6rem;
   padding: 1.15rem;
 }
 
@@ -182,76 +182,136 @@ a:hover {
   color: var(--signal);
 }
 
-.hero-visual-mark {
-  width: min(10.2rem, 62%);
-  height: 3rem;
-  margin-top: 0.72rem;
-  border: 1px solid rgba(242, 200, 75, 0.55);
+.hero-visual-stage {
+  position: relative;
+  margin-top: 0.68rem;
+  min-height: 17.8rem;
+}
+
+.hero-visual-stage::after {
+  content: "";
+  position: absolute;
+  left: 15%;
+  right: 34%;
+  top: 26%;
+  height: 2px;
   border-radius: 999px;
-  background-image: url("brand-mark.svg");
-  background-size: 82% auto;
-  background-repeat: no-repeat;
-  background-position: center;
+  background: linear-gradient(to right, rgba(242, 200, 75, 0), rgba(242, 200, 75, 0.95), rgba(242, 200, 75, 0));
+  box-shadow: 0 0 10px rgba(242, 200, 75, 0.42);
+  animation: screen-scan 4.8s ease-in-out infinite;
 }
 
-.hero-visual-ring {
+.hero-computer-svg {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.hero-computer-svg .desk-glow {
+  fill: rgba(242, 200, 75, 0.11);
+  filter: blur(4px);
+}
+
+.hero-computer-svg .monitor-screen {
+  animation: screen-glow 5.6s ease-in-out infinite;
+}
+
+.hero-computer-svg .code-line {
+  animation: code-flicker 3.9s ease-in-out infinite;
+}
+
+.hero-computer-svg .code-line-primary {
+  fill: rgba(242, 200, 75, 0.9);
+}
+
+.hero-computer-svg .code-line-soft {
+  fill: rgba(214, 227, 240, 0.8);
+}
+
+.hero-computer-svg .screen-label {
+  fill: #e5edf7;
+  font-size: 14px;
+  font-family: Consolas, "Courier New", monospace;
+}
+
+.hero-computer-svg .projection-beam {
+  fill: none;
+  stroke: rgba(242, 200, 75, 0.62);
+  stroke-width: 2;
+  stroke-dasharray: 4 7;
+  animation: beam-flow 6s linear infinite;
+}
+
+.hero-computer-svg .project-card {
+  fill: url(#projectCard);
+  stroke: rgba(242, 200, 75, 0.58);
+  stroke-width: 1.6;
+  filter: drop-shadow(0 6px 10px rgba(0, 0, 0, 0.35));
+}
+
+.hero-computer-svg .project-line {
+  fill: rgba(242, 200, 75, 0.92);
+}
+
+.hero-computer-svg .project-line.soft {
+  fill: rgba(223, 232, 242, 0.8);
+}
+
+.hero-computer-svg .project-pill {
+  fill: rgba(38, 138, 94, 0.88);
+}
+
+.hero-computer-svg .projected-ui {
+  animation: project-hover 4.8s ease-in-out infinite;
+  transform-origin: 610px 210px;
+}
+
+.hero-ui-chip {
   position: absolute;
-  border: 1px solid rgba(242, 200, 75, 0.3);
-  border-radius: 50%;
-}
-
-.hero-visual-ring.ring-a {
-  width: 13rem;
-  height: 13rem;
-  right: -4.5rem;
-  top: 2rem;
-  animation: rotate-slow 16s linear infinite;
-}
-
-.hero-visual-ring.ring-b {
-  width: 7.6rem;
-  height: 7.6rem;
-  right: 1rem;
-  top: 4.7rem;
-  animation: rotate-slow 11s linear infinite reverse;
-}
-
-.hero-visual-grid {
-  position: absolute;
-  inset: 7.4rem 1.15rem 4.1rem 1.15rem;
-  border-radius: 0.9rem;
-  border: 1px solid rgba(255, 255, 255, 0.09);
-  background:
-    linear-gradient(to right, rgba(255, 255, 255, 0.09) 1px, transparent 1px) 0 0 / 24px 24px,
-    linear-gradient(to bottom, rgba(255, 255, 255, 0.09) 1px, transparent 1px) 0 0 / 24px 24px,
-    rgba(8, 8, 8, 0.74);
-  mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 1) 68%, rgba(0, 0, 0, 0));
-}
-
-.hero-visual-bars {
-  position: absolute;
-  left: 1.55rem;
-  right: 1.55rem;
-  bottom: 1.3rem;
   display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  gap: 0.45rem;
-  align-items: end;
-  height: 5.8rem;
+  align-content: center;
+  gap: 0.12rem;
+  min-width: 5rem;
+  border-radius: 0.75rem;
+  border: 1px solid rgba(242, 200, 75, 0.5);
+  background: rgba(10, 12, 16, 0.95);
+  box-shadow: 0 12px 18px rgba(0, 0, 0, 0.35);
+  padding: 0.42rem 0.58rem;
+  animation: ui-float 6.2s ease-in-out infinite;
 }
 
-.hero-visual-bars span {
-  height: var(--bar-height);
-  border-radius: 999px;
-  background: linear-gradient(to top, rgba(242, 200, 75, 0.82), rgba(255, 255, 255, 0.98));
-  box-shadow: 0 0 12px rgba(242, 200, 75, 0.3);
+.hero-ui-chip .chip-title {
+  font-size: 0.58rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: rgba(242, 200, 75, 0.95);
+}
+
+.hero-ui-chip .chip-value {
+  font-size: 0.7rem;
+  color: rgba(241, 245, 250, 0.92);
+  font-weight: 600;
+}
+
+.hero-ui-chip.chip-a {
+  right: 7%;
+  top: 16%;
+}
+
+.hero-ui-chip.chip-b {
+  right: 1%;
+  top: 31%;
+  animation-delay: -1.6s;
+}
+
+.hero-ui-chip.chip-c {
+  right: 6%;
+  top: 47%;
+  animation-delay: -2.7s;
 }
 
 .hero-visual-caption {
-  position: absolute;
-  left: 1.2rem;
-  bottom: 0.85rem;
-  margin: 0;
+  margin: 0.68rem 0 0;
   font-size: 0.79rem;
   color: rgba(245, 245, 245, 0.86);
   letter-spacing: 0.02em;
@@ -621,12 +681,67 @@ a:hover {
   }
 }
 
-@keyframes rotate-slow {
+@keyframes screen-glow {
+  0%,
+  100% {
+    filter: brightness(1);
+  }
+  50% {
+    filter: brightness(1.14);
+  }
+}
+
+@keyframes code-flicker {
+  0%,
+  100% {
+    opacity: 0.95;
+  }
+  50% {
+    opacity: 0.66;
+  }
+}
+
+@keyframes beam-flow {
   from {
-    transform: rotate(0deg);
+    stroke-dashoffset: 0;
   }
   to {
-    transform: rotate(360deg);
+    stroke-dashoffset: -44;
+  }
+}
+
+@keyframes project-hover {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+}
+
+@keyframes ui-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-7px);
+  }
+}
+
+@keyframes screen-scan {
+  0% {
+    transform: translateY(0);
+    opacity: 0.05;
+  }
+  20%,
+  80% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(10.2rem);
+    opacity: 0.08;
   }
 }
 
@@ -639,6 +754,15 @@ a:hover {
 
   .hero-visual {
     min-height: 18rem;
+  }
+
+  .hero-visual-stage {
+    min-height: 15.6rem;
+  }
+
+  .hero-ui-chip {
+    min-width: 4.5rem;
+    padding: 0.34rem 0.48rem;
   }
 
   .stats {
@@ -669,6 +793,23 @@ a:hover {
 
   .hero-visual {
     min-height: 15.4rem;
+  }
+
+  .hero-visual-stage {
+    min-height: 12.8rem;
+  }
+
+  .hero-ui-chip {
+    min-width: 4.1rem;
+    padding: 0.3rem 0.4rem;
+  }
+
+  .hero-ui-chip .chip-title {
+    font-size: 0.5rem;
+  }
+
+  .hero-ui-chip .chip-value {
+    font-size: 0.62rem;
   }
 
   .skills-carousel {
