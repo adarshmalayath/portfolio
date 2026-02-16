@@ -119,598 +119,349 @@ body[data-theme="light"]::before {
   transition: opacity 0.45s ease;
 }
 
-body[data-theme="dark"] .scene-batman {
-  opacity: 0.78;
+body[data-theme="dark"] .scene-space {
+  opacity: 0.72;
 }
 
-body[data-theme="light"] .scene-superman {
-  opacity: 0.8;
+body[data-theme="light"] .scene-space {
+  opacity: 0.62;
 }
 
-.comic-stage {
+.space-stage {
   position: absolute;
   inset: 0;
   overflow: hidden;
 }
 
-.scene-batman .bat-stage {
+body[data-theme="dark"] .scene-space .space-stage {
   background:
-    radial-gradient(circle at 80% 18%, rgba(242, 200, 75, 0.14) 0%, rgba(10, 10, 10, 0) 36%),
-    linear-gradient(170deg, rgba(5, 8, 13, 0.85) 0%, rgba(1, 2, 5, 0.98) 100%);
+    radial-gradient(circle at 78% 14%, rgba(242, 200, 75, 0.12), rgba(10, 10, 10, 0) 36%),
+    radial-gradient(circle at 20% 82%, rgba(32, 71, 141, 0.22), rgba(10, 10, 10, 0) 38%),
+    linear-gradient(170deg, rgba(6, 10, 16, 0.9) 0%, rgba(3, 5, 10, 0.98) 100%);
 }
 
-.scene-batman .bat-stage::before {
+body[data-theme="light"] .scene-space .space-stage {
+  background:
+    radial-gradient(circle at 82% 14%, rgba(207, 27, 45, 0.14), rgba(244, 247, 255, 0) 40%),
+    radial-gradient(circle at 16% 84%, rgba(24, 86, 211, 0.19), rgba(244, 247, 255, 0) 44%),
+    linear-gradient(170deg, rgba(238, 245, 255, 0.82) 0%, rgba(228, 238, 255, 0.74) 100%);
+}
+
+.scene-space .space-stage::before {
   content: "";
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    -26deg,
+    rgba(255, 255, 255, 0.04) 0,
+    rgba(255, 255, 255, 0.04) 1px,
+    transparent 1px,
+    transparent 12px
+  );
+  opacity: 0.38;
+}
+
+body[data-theme="light"] .scene-space .space-stage::before {
+  background: repeating-linear-gradient(
+    -26deg,
+    rgba(30, 83, 193, 0.08) 0,
+    rgba(30, 83, 193, 0.08) 1px,
+    transparent 1px,
+    transparent 12px
+  );
+  opacity: 0.32;
+}
+
+.scene-space .space-stars {
   position: absolute;
   inset: 0;
   background-image:
-    radial-gradient(circle at 12% 16%, rgba(237, 243, 255, 0.8) 0 1px, transparent 1.5px),
-    radial-gradient(circle at 36% 22%, rgba(237, 243, 255, 0.65) 0 1px, transparent 1.5px),
-    radial-gradient(circle at 74% 12%, rgba(237, 243, 255, 0.68) 0 1px, transparent 1.5px),
-    radial-gradient(circle at 86% 30%, rgba(237, 243, 255, 0.62) 0 1px, transparent 1.5px),
-    radial-gradient(circle at 24% 48%, rgba(237, 243, 255, 0.58) 0 1px, transparent 1.5px),
-    radial-gradient(circle at 60% 58%, rgba(237, 243, 255, 0.55) 0 1px, transparent 1.5px);
+    radial-gradient(circle at 8% 18%, rgba(240, 245, 255, 0.86) 0 1px, transparent 1.2px),
+    radial-gradient(circle at 14% 34%, rgba(240, 245, 255, 0.76) 0 1px, transparent 1.2px),
+    radial-gradient(circle at 26% 14%, rgba(240, 245, 255, 0.78) 0 1px, transparent 1.2px),
+    radial-gradient(circle at 38% 28%, rgba(240, 245, 255, 0.72) 0 1px, transparent 1.2px),
+    radial-gradient(circle at 56% 18%, rgba(240, 245, 255, 0.7) 0 1px, transparent 1.2px),
+    radial-gradient(circle at 66% 34%, rgba(240, 245, 255, 0.8) 0 1px, transparent 1.2px),
+    radial-gradient(circle at 78% 20%, rgba(240, 245, 255, 0.66) 0 1px, transparent 1.2px),
+    radial-gradient(circle at 88% 36%, rgba(240, 245, 255, 0.76) 0 1px, transparent 1.2px);
+  opacity: 0.54;
+  animation: star-drift 20s linear infinite;
+}
+
+body[data-theme="light"] .scene-space .space-stars {
   opacity: 0.34;
-  animation: star-drift 18s linear infinite;
 }
 
-.scene-batman .bat-stage::after {
-  content: "";
+.scene-space .space-nebula {
   position: absolute;
-  left: -4%;
-  right: -4%;
-  bottom: -1%;
-  height: 27%;
-  background:
-    linear-gradient(to top, rgba(2, 4, 7, 0.96) 8%, rgba(2, 4, 7, 0.52) 52%, rgba(2, 4, 7, 0) 100%),
-    repeating-linear-gradient(
-      to right,
-      rgba(10, 15, 23, 0.95) 0 26px,
-      rgba(7, 11, 18, 0.95) 26px 46px
-    );
-  clip-path: polygon(
-    0 100%,
-    0 54%,
-    4% 54%,
-    4% 36%,
-    9% 36%,
-    9% 60%,
-    15% 60%,
-    15% 42%,
-    21% 42%,
-    21% 63%,
-    26% 63%,
-    26% 45%,
-    33% 45%,
-    33% 61%,
-    39% 61%,
-    39% 40%,
-    45% 40%,
-    45% 62%,
-    53% 62%,
-    53% 36%,
-    58% 36%,
-    58% 58%,
-    64% 58%,
-    64% 44%,
-    72% 44%,
-    72% 62%,
-    80% 62%,
-    80% 48%,
-    88% 48%,
-    88% 64%,
-    96% 64%,
-    96% 52%,
-    100% 52%,
-    100% 100%
-  );
+  border-radius: 50%;
+  filter: blur(3px);
 }
 
-.scene-batman .bat-moon {
-  position: absolute;
+.scene-space .nebula-a {
   top: 8%;
-  right: 8%;
-  width: min(24vw, 16rem);
+  left: 8%;
+  width: min(28vw, 18rem);
+  height: min(12vw, 7rem);
+  background: radial-gradient(ellipse at center, rgba(42, 105, 227, 0.24), rgba(42, 105, 227, 0));
+}
+
+.scene-space .nebula-b {
+  right: 10%;
+  bottom: 14%;
+  width: min(24vw, 15rem);
+  height: min(10vw, 6rem);
+  background: radial-gradient(ellipse at center, rgba(242, 200, 75, 0.18), rgba(242, 200, 75, 0));
+}
+
+body[data-theme="light"] .scene-space .nebula-a {
+  background: radial-gradient(ellipse at center, rgba(37, 95, 211, 0.2), rgba(37, 95, 211, 0));
+}
+
+body[data-theme="light"] .scene-space .nebula-b {
+  background: radial-gradient(ellipse at center, rgba(207, 27, 45, 0.18), rgba(207, 27, 45, 0));
+}
+
+.scene-space .space-planet {
+  position: absolute;
+  border-radius: 50%;
+}
+
+.scene-space .planet-a {
+  top: 10%;
+  right: 9%;
+  width: min(13vw, 8.2rem);
   aspect-ratio: 1;
-  border-radius: 50%;
-  background:
-    radial-gradient(circle at 32% 30%, rgba(250, 251, 255, 0.95) 0 24%, rgba(224, 226, 240, 0.88) 25% 45%, rgba(180, 185, 214, 0.65) 46% 64%, rgba(132, 138, 174, 0.2) 70% 100%);
-  box-shadow: 0 0 48px rgba(188, 180, 220, 0.38);
-  opacity: 0.84;
+  background: radial-gradient(circle at 32% 26%, rgba(241, 245, 255, 0.92), rgba(124, 140, 189, 0.88) 62%, rgba(59, 72, 112, 0.9) 100%);
+  box-shadow: 0 0 24px rgba(163, 178, 222, 0.3);
 }
 
-.scene-batman .bat-moon::before,
-.scene-batman .bat-moon::after {
+.scene-space .planet-a::after {
   content: "";
   position: absolute;
-  border-radius: 50%;
-  background: rgba(133, 137, 170, 0.35);
-}
-
-.scene-batman .bat-moon::before {
-  width: 22%;
-  height: 22%;
-  top: 26%;
-  left: 18%;
-}
-
-.scene-batman .bat-moon::after {
-  width: 16%;
-  height: 16%;
-  top: 58%;
-  right: 24%;
-}
-
-.scene-batman .bat-signal {
-  position: absolute;
-  top: 22%;
-  right: 14%;
-  width: min(17vw, 9.8rem);
-  height: min(8vw, 4.8rem);
+  inset: 38% -24% auto;
+  height: 18%;
   border-radius: 999px;
-  border: 1px solid rgba(242, 200, 75, 0.55);
-  background: rgba(9, 12, 19, 0.78);
-  box-shadow: 0 0 22px rgba(242, 200, 75, 0.22);
-  transform: rotate(-12deg);
+  border: 2px solid rgba(188, 197, 229, 0.45);
+  transform: rotate(-16deg);
 }
 
-.scene-batman .bat-signal::before {
-  content: "";
-  position: absolute;
-  inset: 22% 24%;
-  background: rgba(242, 200, 75, 0.88);
-  clip-path: polygon(
-    0 48%,
-    12% 28%,
-    24% 37%,
-    34% 18%,
-    46% 28%,
-    58% 17%,
-    72% 34%,
-    88% 30%,
-    100% 49%,
-    84% 62%,
-    70% 58%,
-    58% 68%,
-    45% 57%,
-    34% 68%,
-    22% 57%,
-    8% 61%
-  );
+.scene-space .planet-b {
+  left: 8%;
+  bottom: 8%;
+  width: min(8vw, 4.8rem);
+  aspect-ratio: 1;
+  background: radial-gradient(circle at 32% 24%, rgba(250, 222, 161, 0.9), rgba(191, 123, 52, 0.9));
+  box-shadow: 0 0 14px rgba(221, 158, 86, 0.28);
 }
 
-.scene-batman .bat-art-wrap {
+body[data-theme="light"] .scene-space .planet-a {
+  background: radial-gradient(circle at 32% 26%, rgba(255, 255, 255, 0.94), rgba(170, 189, 232, 0.9) 66%, rgba(85, 118, 185, 0.86) 100%);
+  box-shadow: 0 0 18px rgba(48, 101, 212, 0.2);
+}
+
+body[data-theme="light"] .scene-space .planet-a::after {
+  border-color: rgba(97, 138, 217, 0.42);
+}
+
+body[data-theme="light"] .scene-space .planet-b {
+  background: radial-gradient(circle at 32% 24%, rgba(255, 212, 220, 0.9), rgba(213, 79, 99, 0.9));
+  box-shadow: 0 0 12px rgba(213, 79, 99, 0.2);
+}
+
+.scene-space .space-flight {
   position: absolute;
-  top: 3%;
-  right: 12%;
-  width: min(36vw, 22rem);
-  height: min(56vh, 31rem);
-  transform-origin: 50% 0%;
+  top: 12%;
+  left: 4%;
+  width: min(48vw, 30rem);
+  height: min(22vh, 13.5rem);
+  transform-origin: 54% 50%;
   transform:
     translate3d(
-      calc(-1vw + (var(--scroll-progress) * 5vw)),
-      calc(-7vh + (var(--scroll-progress) * 36vh)),
+      calc(-10vw + (var(--scroll-progress) * 29vw)),
+      calc(-4vh + (var(--scroll-progress) * 26vh)),
       0
     )
-    rotate(calc(-15deg + (var(--scroll-progress) * 26deg)));
+    rotate(calc(-7deg + (var(--scroll-progress) * 14deg)));
 }
 
-.scene-batman .bat-art-wrap::before {
-  content: "";
+.scene-space .ship-trail {
   position: absolute;
-  left: 54%;
-  top: -36%;
-  width: 2px;
-  height: 52%;
+  left: 0;
+  top: 46%;
+  width: 56%;
+  height: 26%;
+  transform: translateY(-50%);
+  border-radius: 999px;
   background: linear-gradient(
-    to bottom,
-    rgba(242, 200, 75, 0.94),
-    rgba(242, 200, 75, 0.42),
-    rgba(242, 200, 75, 0)
+    to left,
+    rgba(96, 183, 255, 0.52),
+    rgba(96, 183, 255, 0.2) 42%,
+    rgba(96, 183, 255, 0)
   );
-  box-shadow: 0 0 6px rgba(242, 200, 75, 0.36);
+  filter: blur(1px);
 }
 
-.scene-batman .bat-art-wrap::after {
+body[data-theme="light"] .scene-space .ship-trail {
+  background: linear-gradient(
+    to left,
+    rgba(49, 113, 236, 0.38),
+    rgba(49, 113, 236, 0.12) 42%,
+    rgba(49, 113, 236, 0)
+  );
+}
+
+.scene-space .spaceship {
+  position: absolute;
+  right: 0;
+  top: 24%;
+  width: min(26vw, 16rem);
+  min-width: 11rem;
+  height: min(9vw, 5.6rem);
+  animation: ship-hover 5.4s ease-in-out infinite;
+  filter: drop-shadow(0 10px 16px rgba(0, 0, 0, 0.38));
+}
+
+.scene-space .ship-body {
+  position: absolute;
+  left: 20%;
+  top: 26%;
+  width: 58%;
+  height: 50%;
+  border-radius: 999px;
+  border: 1px solid rgba(117, 138, 177, 0.72);
+  background: linear-gradient(145deg, rgba(208, 222, 248, 0.95), rgba(89, 109, 146, 0.95));
+}
+
+.scene-space .ship-body::before {
   content: "";
   position: absolute;
-  left: calc(54% - 0.4rem);
-  top: calc(-36% + 0.1rem);
-  width: 0.84rem;
-  height: 0.84rem;
-  border-radius: 50%;
-  border: 2px solid rgba(242, 200, 75, 0.86);
+  left: 9%;
+  right: 16%;
+  top: 40%;
+  height: 2px;
+  background: rgba(12, 20, 34, 0.42);
 }
 
-.scene-batman .batman-css-art {
-  position: absolute;
-  left: 50%;
-  top: 20%;
-  width: min(12vw, 7.8rem);
-  min-width: 6.4rem;
-  aspect-ratio: 0.56;
-  transform: translateX(-50%);
-  filter: drop-shadow(0 16px 22px rgba(0, 0, 0, 0.55));
-}
-
-.scene-batman .batman-css-art::before {
+.scene-space .ship-body::after {
   content: "";
+  position: absolute;
+  right: -16%;
+  top: 19%;
+  width: 26%;
+  height: 62%;
+  clip-path: polygon(0 0, 100% 50%, 0 100%);
+  background: linear-gradient(150deg, rgba(198, 216, 247, 0.96), rgba(77, 96, 132, 0.96));
+  border: 1px solid rgba(117, 138, 177, 0.72);
+  border-left: none;
+}
+
+.scene-space .ship-cockpit {
+  position: absolute;
+  left: 44%;
+  top: 11%;
+  width: 18%;
+  height: 28%;
+  border-radius: 999px 999px 45% 45%;
+  border: 1px solid rgba(113, 193, 255, 0.7);
+  background: linear-gradient(160deg, rgba(159, 232, 255, 0.96), rgba(72, 141, 222, 0.9));
+}
+
+.scene-space .ship-wing {
   position: absolute;
   left: 28%;
-  top: 0;
-  width: 44%;
-  height: 22%;
-  background: #0b0f16;
-  border-radius: 42% 42% 32% 32%;
-  box-shadow:
-    -16px -10px 0 -10px #0b0f16,
-    16px -10px 0 -10px #0b0f16;
-}
-
-.scene-batman .bat-mouth {
-  position: absolute;
-  left: 38%;
-  top: 14%;
-  width: 24%;
-  height: 6%;
-  background: #e7c7ad;
-  border-radius: 0 0 40% 40%;
-}
-
-.scene-batman .bat-eye {
-  position: absolute;
-  top: 9.5%;
-  left: 34%;
   width: 32%;
-  height: 4.4%;
-}
-
-.scene-batman .bat-eye::before,
-.scene-batman .bat-eye::after {
-  content: "";
-  position: absolute;
-  width: 38%;
-  height: 100%;
-  background: #f6f8fd;
-  clip-path: polygon(0 100%, 100% 58%, 100% 0, 0 46%);
-}
-
-.scene-batman .bat-eye::before {
-  left: 0;
-}
-
-.scene-batman .bat-eye::after {
-  right: 0;
-  transform: scaleX(-1);
-}
-
-.scene-batman .bat-cape {
-  position: absolute;
-  left: -12%;
-  top: 16%;
-  width: 124%;
-  height: 60%;
-  background: linear-gradient(160deg, rgba(13, 22, 36, 0.95), rgba(5, 10, 18, 0.98));
-  border: 1px solid rgba(68, 88, 122, 0.52);
-  clip-path: polygon(6% 0%, 94% 0%, 100% 50%, 82% 100%, 48% 80%, 16% 100%, 0% 62%);
-  animation: cape-sweep 2.8s ease-in-out infinite;
-  z-index: -1;
-}
-
-.scene-batman .bat-costume {
-  position: absolute;
-  left: 24%;
-  top: 22%;
-  width: 52%;
-  height: 42%;
-  border-radius: 34% 34% 22% 22%;
-  background: linear-gradient(180deg, #707980 0%, #5f666c 45%, #6f767c 100%);
-  border: 1px solid rgba(33, 41, 50, 0.7);
-}
-
-.scene-batman .bat-costume::before {
-  content: "";
-  position: absolute;
-  left: 30%;
-  top: 34%;
-  width: 40%;
-  height: 16%;
-  background: rgba(7, 11, 17, 0.96);
-  clip-path: polygon(0 52%, 20% 32%, 36% 45%, 50% 28%, 64% 45%, 80% 32%, 100% 52%, 72% 70%, 28% 70%);
-}
-
-.scene-batman .bat-belt {
-  position: absolute;
-  left: 24%;
-  top: 60%;
-  width: 52%;
-  height: 5.2%;
+  height: 14%;
   border-radius: 999px;
-  background: linear-gradient(to right, #b58920, #f2c84b, #b58920);
-  box-shadow: 0 0 9px rgba(242, 200, 75, 0.42);
+  border: 1px solid rgba(106, 124, 158, 0.72);
+  background: linear-gradient(145deg, rgba(154, 173, 209, 0.95), rgba(79, 94, 128, 0.95));
 }
 
-.scene-batman .bat-leg {
-  position: absolute;
-  left: 24%;
-  top: 63%;
-  width: 52%;
-  height: 35%;
+.scene-space .ship-wing.wing-top {
+  top: 16%;
+  transform: rotate(-9deg);
 }
 
-.scene-batman .bat-leg::before,
-.scene-batman .bat-leg::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  width: 38%;
-  height: 100%;
-  background: linear-gradient(180deg, #5f666d 0%, #3e4348 100%);
-  border-radius: 30% 30% 24% 24%;
+.scene-space .ship-wing.wing-bottom {
+  bottom: 14%;
+  transform: rotate(10deg);
 }
 
-.scene-batman .bat-leg::before {
-  left: 8%;
-}
-
-.scene-batman .bat-leg::after {
-  right: 8%;
-}
-
-.scene-batman .bat-base {
-  position: absolute;
-  left: 50%;
-  bottom: 5%;
-  width: min(18vw, 12rem);
-  height: min(4.4vw, 2.6rem);
-  transform: translateX(-50%);
-  border-radius: 50%;
-  background: radial-gradient(ellipse at center, rgba(242, 200, 75, 0.2) 0%, rgba(242, 200, 75, 0.03) 60%, rgba(242, 200, 75, 0) 100%);
-}
-
-.scene-superman .sup-stage {
-  background:
-    radial-gradient(circle at 14% 10%, rgba(207, 27, 45, 0.13) 0%, rgba(244, 247, 255, 0) 34%),
-    radial-gradient(circle at 86% 18%, rgba(25, 86, 207, 0.2) 0%, rgba(244, 247, 255, 0) 34%),
-    linear-gradient(180deg, rgba(235, 242, 255, 0.95) 0%, rgba(228, 237, 255, 0.88) 52%, rgba(218, 230, 255, 0.82) 100%);
-}
-
-.scene-superman .sup-stage::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background:
-    radial-gradient(circle at 20% 18%, rgba(255, 255, 255, 0.74) 0 3.6rem, rgba(255, 255, 255, 0) 3.8rem),
-    radial-gradient(circle at 72% 20%, rgba(255, 255, 255, 0.7) 0 3.2rem, rgba(255, 255, 255, 0) 3.4rem),
-    radial-gradient(circle at 90% 34%, rgba(255, 255, 255, 0.58) 0 2.6rem, rgba(255, 255, 255, 0) 2.8rem);
-  opacity: 0.62;
-  animation: cloud-drift 11s ease-in-out infinite;
-}
-
-.scene-superman .sup-stage::after {
-  content: "";
-  position: absolute;
-  left: -3%;
-  right: -3%;
-  bottom: -1%;
-  height: 23%;
-  background:
-    linear-gradient(to top, rgba(76, 114, 192, 0.34), rgba(76, 114, 192, 0)),
-    repeating-linear-gradient(
-      to right,
-      rgba(147, 174, 230, 0.44) 0 28px,
-      rgba(134, 165, 226, 0.34) 28px 48px
-    );
-  clip-path: polygon(
-    0 100%,
-    0 58%,
-    6% 58%,
-    6% 40%,
-    14% 40%,
-    14% 64%,
-    21% 64%,
-    21% 46%,
-    30% 46%,
-    30% 60%,
-    40% 60%,
-    40% 38%,
-    50% 38%,
-    50% 62%,
-    62% 62%,
-    62% 42%,
-    74% 42%,
-    74% 65%,
-    84% 65%,
-    84% 48%,
-    94% 48%,
-    94% 66%,
-    100% 66%,
-    100% 100%
-  );
-}
-
-.scene-superman .sup-sun {
-  position: absolute;
-  top: 7%;
-  left: 10%;
-  width: min(15vw, 9rem);
-  aspect-ratio: 1;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(255, 255, 255, 0.95) 0 28%, rgba(255, 214, 187, 0.84) 29% 54%, rgba(207, 27, 45, 0.2) 70%, rgba(207, 27, 45, 0) 100%);
-  box-shadow: 0 0 40px rgba(207, 27, 45, 0.22);
-}
-
-.scene-superman .sup-skyline {
-  position: absolute;
-  bottom: 11%;
-  left: 10%;
-  right: 10%;
-  height: 2px;
-  background: linear-gradient(to right, rgba(21, 70, 184, 0), rgba(21, 70, 184, 0.72), rgba(207, 27, 45, 0.62), rgba(21, 70, 184, 0.72), rgba(21, 70, 184, 0));
-  box-shadow: 0 0 10px rgba(40, 86, 194, 0.2);
-}
-
-.scene-superman .super-art-wrap {
-  position: absolute;
-  top: 0;
-  left: 56%;
-  width: min(40vw, 24rem);
-  height: min(58vh, 34rem);
-  transform-origin: 50% 0%;
-  transform:
-    translate3d(
-      calc(-12vw + (var(--scroll-progress) * 4vw)),
-      calc(-18vh + (var(--scroll-progress) * 62vh)),
-      0
-    )
-    rotate(calc(-14deg + (var(--scroll-progress) * 14deg)));
-}
-
-.scene-superman .super-art-wrap::before {
-  content: "";
+.scene-space .ship-fin {
   position: absolute;
   left: 36%;
-  top: 18%;
-  width: 58%;
+  top: 8%;
+  width: 8%;
+  height: 18%;
+  border-radius: 4px 4px 0 0;
+  background: linear-gradient(to top, rgba(114, 131, 168, 0.9), rgba(188, 204, 236, 0.95));
+  border: 1px solid rgba(106, 124, 158, 0.72);
+  border-bottom: none;
+}
+
+.scene-space .ship-engine {
+  position: absolute;
+  left: 12%;
+  top: 34%;
+  width: 10%;
+  height: 32%;
+  border-radius: 50%;
+  border: 1px solid rgba(109, 128, 164, 0.75);
+  background: linear-gradient(145deg, rgba(145, 165, 203, 0.94), rgba(74, 91, 126, 0.92));
+}
+
+.scene-space .ship-thruster {
+  position: absolute;
+  left: 0;
+  top: 40%;
+  width: 16%;
   height: 20%;
-  background: linear-gradient(
-    to right,
-    rgba(39, 92, 204, 0),
-    rgba(39, 92, 204, 0.42),
-    rgba(207, 27, 45, 0.3),
-    rgba(39, 92, 204, 0)
-  );
-  filter: blur(2px);
-  transform: skewX(-18deg);
+  clip-path: polygon(0 50%, 100% 0, 100% 100%);
+  background: linear-gradient(90deg, rgba(111, 216, 255, 0.95), rgba(255, 245, 183, 0.9));
+  filter: blur(0.2px);
+  animation: thruster-pulse 0.95s ease-in-out infinite;
 }
 
-.scene-superman .superman-css-art {
-  position: absolute;
-  left: 50%;
-  top: 16%;
-  width: min(13vw, 8.4rem);
-  min-width: 6.6rem;
-  aspect-ratio: 0.56;
-  transform: translateX(-50%);
-  filter: drop-shadow(0 16px 18px rgba(34, 76, 167, 0.3));
+body[data-theme="light"] .scene-space .spaceship {
+  filter: drop-shadow(0 10px 14px rgba(25, 76, 176, 0.18));
 }
 
-.scene-superman .sup-head {
-  position: absolute;
-  left: 34%;
-  top: 0;
-  width: 32%;
-  height: 17%;
-  border-radius: 50%;
-  background: #ffd7c2;
-  border: 1px solid rgba(120, 76, 47, 0.22);
+body[data-theme="light"] .scene-space .ship-body {
+  border-color: rgba(72, 118, 208, 0.58);
+  background: linear-gradient(145deg, rgba(250, 253, 255, 0.96), rgba(178, 204, 246, 0.92));
 }
 
-.scene-superman .sup-hair {
-  position: absolute;
-  left: 33%;
-  top: 1%;
-  width: 34%;
-  height: 8%;
-  border-radius: 55% 45% 44% 56%;
-  background: #193f93;
+body[data-theme="light"] .scene-space .ship-body::before {
+  background: rgba(20, 62, 141, 0.24);
 }
 
-.scene-superman .sup-cape {
-  position: absolute;
-  left: -6%;
-  top: 14%;
-  width: 108%;
-  height: 52%;
-  border-radius: 18% 82% 42% 58%;
-  background: linear-gradient(150deg, rgba(226, 50, 72, 0.96), rgba(178, 20, 40, 0.94));
-  clip-path: polygon(4% 2%, 94% 18%, 86% 44%, 100% 72%, 72% 86%, 44% 70%, 16% 96%, 0 58%);
-  animation: cape-sweep 2.6s ease-in-out infinite;
-  z-index: -1;
+body[data-theme="light"] .scene-space .ship-body::after {
+  background: linear-gradient(150deg, rgba(243, 249, 255, 0.98), rgba(149, 181, 237, 0.94));
+  border-color: rgba(72, 118, 208, 0.58);
 }
 
-.scene-superman .sup-torso {
-  position: absolute;
-  left: 24%;
-  top: 16%;
-  width: 52%;
-  height: 40%;
-  border-radius: 28% 28% 20% 20%;
-  background: linear-gradient(180deg, #2b5fca 0%, #1c4dad 100%);
-  border: 1px solid rgba(22, 59, 136, 0.5);
+body[data-theme="light"] .scene-space .ship-cockpit {
+  border-color: rgba(56, 112, 214, 0.64);
+  background: linear-gradient(160deg, rgba(185, 238, 255, 0.96), rgba(101, 160, 236, 0.92));
 }
 
-.scene-superman .sup-emblem {
-  position: absolute;
-  left: 38%;
-  top: 28%;
-  width: 24%;
-  height: 11%;
-  background: #f8cf52;
-  border: 1px solid rgba(166, 27, 48, 0.62);
-  clip-path: polygon(50% 0, 100% 22%, 84% 100%, 16% 100%, 0 22%);
+body[data-theme="light"] .scene-space .ship-wing {
+  border-color: rgba(72, 118, 208, 0.54);
+  background: linear-gradient(145deg, rgba(231, 240, 255, 0.94), rgba(155, 181, 228, 0.9));
 }
 
-.scene-superman .sup-belt {
-  position: absolute;
-  left: 26%;
-  top: 52%;
-  width: 48%;
-  height: 5%;
-  border-radius: 999px;
-  background: linear-gradient(to right, #c1122c, #f05b6d, #c1122c);
+body[data-theme="light"] .scene-space .ship-fin {
+  border-color: rgba(72, 118, 208, 0.54);
+  background: linear-gradient(to top, rgba(173, 195, 237, 0.92), rgba(241, 247, 255, 0.96));
 }
 
-.scene-superman .sup-arm {
-  position: absolute;
-  top: 22%;
-  width: 17%;
-  height: 30%;
-  border-radius: 46% 46% 30% 30%;
-  background: linear-gradient(180deg, #2b5fca 0%, #1c4dad 100%);
-  border: 1px solid rgba(22, 59, 136, 0.5);
+body[data-theme="light"] .scene-space .ship-engine {
+  border-color: rgba(72, 118, 208, 0.56);
+  background: linear-gradient(145deg, rgba(225, 236, 255, 0.94), rgba(152, 182, 234, 0.9));
 }
 
-.scene-superman .sup-arm.arm-left {
-  left: 9%;
-  transform: rotate(26deg);
-}
-
-.scene-superman .sup-arm.arm-right {
-  right: 9%;
-  transform: rotate(-32deg);
-}
-
-.scene-superman .sup-leg {
-  position: absolute;
-  top: 56%;
-  width: 20%;
-  height: 42%;
-  border-radius: 36% 36% 24% 24%;
-  background: linear-gradient(180deg, #2b5fca 0%, #1c4dad 100%);
-  border: 1px solid rgba(22, 59, 136, 0.5);
-}
-
-.scene-superman .sup-leg.leg-left {
-  left: 24%;
-  transform: rotate(9deg);
-}
-
-.scene-superman .sup-leg.leg-right {
-  right: 24%;
-  transform: rotate(-12deg);
-}
-
-.scene-superman .sup-landing {
-  position: absolute;
-  left: 50%;
-  bottom: 6%;
-  width: min(22vw, 14rem);
-  height: min(5.4vw, 3.2rem);
-  transform: translateX(-50%) scale(calc(0.62 + (var(--landing-progress) * 0.64)));
-  border-radius: 50%;
-  background:
-    radial-gradient(ellipse at center, rgba(48, 99, 215, calc(0.14 + (var(--landing-progress) * 0.22))) 0%, rgba(207, 27, 45, calc(0.08 + (var(--landing-progress) * 0.17))) 42%, rgba(255, 255, 255, 0) 100%);
+body[data-theme="light"] .scene-space .ship-thruster {
+  background: linear-gradient(90deg, rgba(76, 144, 244, 0.86), rgba(255, 126, 151, 0.82));
 }
 
 a {
@@ -824,14 +575,14 @@ body[data-theme="light"] .orb-b {
 }
 
 .theme-toggle {
-  --toggle-thumb-travel: 1.92rem;
+  --toggle-thumb-travel: 5.02rem;
   border: 0;
   background: transparent;
   display: inline-flex;
   justify-content: center;
   align-items: center;
-  width: 4.08rem;
-  height: 2.08rem;
+  width: 7.8rem;
+  height: 2.9rem;
   margin-left: auto;
   padding: 0;
   cursor: pointer;
@@ -852,179 +603,132 @@ body[data-theme="light"] .orb-b {
   height: 100%;
   border-radius: 999px;
   overflow: hidden;
-  border: 2px solid #1f63d4;
-  background: linear-gradient(145deg, #7ed8f5 0%, #57bfe8 58%, #7ad5f2 100%);
-  box-shadow: inset 0 0 12px rgba(31, 99, 212, 0.22);
+  border: 1px solid rgba(168, 176, 191, 0.62);
+  background: linear-gradient(145deg, #e7ebf2 0%, #cfd5e0 100%);
+  box-shadow:
+    inset -8px -8px 14px rgba(255, 255, 255, 0.58),
+    inset 8px 8px 16px rgba(143, 151, 166, 0.26),
+    0 8px 15px rgba(101, 111, 132, 0.16);
 }
 
-.theme-toggle:focus-visible .theme-toggle-track {
-  box-shadow: 0 0 0 2px rgba(31, 99, 212, 0.25), inset 0 0 12px rgba(31, 99, 212, 0.24);
-}
-
-.theme-stars,
-.theme-clouds {
+.theme-toggle-label {
   position: absolute;
-  inset: 0;
-  transition: opacity 0.3s ease;
+  top: 50%;
+  transform: translateY(-50%);
+  text-align: center;
+  font-size: 0.75rem;
+  line-height: 0.92;
+  letter-spacing: 0.04em;
+  font-weight: 800;
+  pointer-events: none;
+  user-select: none;
+  transition: opacity 0.25s ease, color 0.25s ease;
 }
 
-.theme-stars {
+.theme-label-light {
+  right: 0.94rem;
+  color: #8b94a6;
+  opacity: 1;
+}
+
+.theme-label-dark {
+  left: 0.96rem;
+  color: #727c92;
   opacity: 0;
 }
 
-.theme-stars .star {
-  position: absolute;
-  width: 2px;
-  height: 2px;
-  border-radius: 50%;
-  background: rgba(245, 245, 245, 0.92);
-}
-
-.theme-stars .star-a {
-  top: 0.45rem;
-  left: 0.9rem;
-}
-
-.theme-stars .star-b {
-  top: 0.78rem;
-  left: 1.48rem;
-}
-
-.theme-stars .star-c {
-  top: 1.08rem;
-  left: 1.9rem;
-}
-
-.theme-stars .star-d {
-  top: 0.56rem;
-  left: 2.2rem;
-}
-
-.theme-clouds {
-  opacity: 0.9;
-}
-
-.theme-clouds .cloud {
-  position: absolute;
-  border-radius: 999px;
-  background: rgba(233, 248, 255, 0.95);
-  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.6);
-}
-
-.theme-clouds .cloud-a {
-  width: 0.86rem;
-  height: 0.36rem;
-  top: 0.6rem;
-  left: 1.62rem;
-}
-
-.theme-clouds .cloud-b {
-  width: 0.58rem;
-  height: 0.28rem;
-  top: 1.13rem;
-  left: 1.24rem;
-}
-
-.theme-clouds .cloud-c {
-  width: 0.7rem;
-  height: 0.32rem;
-  top: 1.01rem;
-  left: 2.08rem;
+.theme-toggle:focus-visible .theme-toggle-track {
+  box-shadow:
+    0 0 0 2px rgba(91, 116, 168, 0.24),
+    inset -8px -8px 14px rgba(255, 255, 255, 0.58),
+    inset 8px 8px 16px rgba(143, 151, 166, 0.26),
+    0 8px 15px rgba(101, 111, 132, 0.16);
 }
 
 .theme-toggle-thumb {
   position: absolute;
-  top: 0.16rem;
-  left: 0.16rem;
-  width: 1.68rem;
-  height: 1.68rem;
+  top: 0.24rem;
+  left: 0.24rem;
+  width: 2.36rem;
+  height: 2.36rem;
   border-radius: 50%;
-  background: #ffe100;
-  box-shadow: 0 0 12px rgba(255, 226, 0, 0.55);
-  transition: transform 0.28s ease, background-color 0.28s ease, box-shadow 0.28s ease;
+  background: linear-gradient(145deg, #f1f4f9, #d5dbe7);
+  box-shadow:
+    -6px -6px 12px rgba(255, 255, 255, 0.68),
+    7px 8px 14px rgba(127, 136, 154, 0.3);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.28s ease, background-color 0.28s ease, box-shadow 0.28s ease, color 0.28s ease;
 }
 
-.theme-toggle-thumb::before,
-.theme-toggle-thumb::after {
-  content: "";
-  position: absolute;
-  border-radius: 50%;
-  opacity: 0;
-  transition: opacity 0.24s ease;
-}
-
-.theme-toggle-thumb::before {
-  width: 0.35rem;
-  height: 0.35rem;
-  top: 0.36rem;
-  left: 0.38rem;
-  background: rgba(205, 200, 184, 0.52);
-}
-
-.theme-toggle-thumb::after {
-  width: 0.23rem;
-  height: 0.23rem;
-  top: 0.86rem;
-  left: 0.84rem;
-  background: rgba(205, 200, 184, 0.52);
+.theme-toggle-icon::before {
+  content: "☀";
+  font-size: 1.22rem;
+  font-weight: 700;
+  line-height: 1;
+  color: #b5bcc9;
+  transition: color 0.28s ease;
 }
 
 body[data-theme="dark"] .theme-toggle-track {
-  border-color: #0b3b8a;
-  background: linear-gradient(145deg, #02153a 0%, #042357 54%, #0a2b63 100%);
-  box-shadow: inset 0 0 12px rgba(5, 33, 84, 0.62);
+  border-color: rgba(69, 78, 101, 0.86);
+  background: linear-gradient(145deg, #242e44 0%, #1c2435 100%);
+  box-shadow:
+    inset -8px -8px 14px rgba(75, 86, 113, 0.2),
+    inset 8px 8px 14px rgba(11, 16, 29, 0.55),
+    0 8px 14px rgba(6, 10, 20, 0.28);
 }
 
-body[data-theme="dark"] .theme-stars {
-  opacity: 1;
-}
-
-body[data-theme="dark"] .theme-stars .star {
-  background: rgba(247, 249, 255, 0.9);
-}
-
-body[data-theme="dark"] .theme-clouds {
+body[data-theme="dark"] .theme-label-light {
   opacity: 0;
+}
+
+body[data-theme="dark"] .theme-label-dark {
+  opacity: 1;
 }
 
 body[data-theme="dark"] .theme-toggle-thumb {
   transform: translateX(var(--toggle-thumb-travel));
-  background: #efede2;
-  box-shadow: 0 0 11px rgba(239, 237, 226, 0.5);
-}
-
-body[data-theme="dark"] .theme-toggle-thumb::before,
-body[data-theme="dark"] .theme-toggle-thumb::after {
-  opacity: 1;
-}
-
-body[data-theme="light"] .theme-toggle-thumb::before,
-body[data-theme="light"] .theme-toggle-thumb::after {
-  opacity: 0;
+  background: linear-gradient(145deg, #687292, #4f5a76);
+  box-shadow:
+    -6px -6px 12px rgba(117, 128, 155, 0.28),
+    8px 8px 14px rgba(10, 15, 27, 0.52);
 }
 
 body[data-theme="light"] .theme-toggle-track {
-  border-color: #1f63d4;
-  background: linear-gradient(145deg, #7ed8f5 0%, #57bfe8 58%, #7ad5f2 100%);
-  box-shadow: inset 0 0 12px rgba(31, 99, 212, 0.22);
+  border-color: rgba(168, 176, 191, 0.62);
+  background: linear-gradient(145deg, #e7ebf2 0%, #cfd5e0 100%);
+  box-shadow:
+    inset -8px -8px 14px rgba(255, 255, 255, 0.58),
+    inset 8px 8px 16px rgba(143, 151, 166, 0.26),
+    0 8px 15px rgba(101, 111, 132, 0.16);
 }
 
-body[data-theme="light"] .theme-stars {
+body[data-theme="light"] .theme-label-light {
+  opacity: 1;
+}
+
+body[data-theme="light"] .theme-label-dark {
   opacity: 0;
-}
-
-body[data-theme="light"] .theme-clouds {
-  opacity: 0.95;
-}
-
-body[data-theme="light"] .theme-clouds .cloud {
-  background: rgba(233, 248, 255, 0.95);
 }
 
 body[data-theme="light"] .theme-toggle-thumb {
   transform: translateX(0);
-  background: #ffe100;
-  box-shadow: 0 0 12px rgba(255, 226, 0, 0.55);
+  background: linear-gradient(145deg, #f1f4f9, #d5dbe7);
+  box-shadow:
+    -6px -6px 12px rgba(255, 255, 255, 0.68),
+    7px 8px 14px rgba(127, 136, 154, 0.3);
+}
+
+body[data-theme="dark"] .theme-toggle-icon::before {
+  content: "☽";
+  color: #d7deef;
+}
+
+body[data-theme="light"] .theme-toggle-icon::before {
+  content: "☀";
+  color: #b5bcc9;
 }
 
 .hero {
@@ -1357,7 +1061,8 @@ body[data-theme="light"] .hero-ui-chip .chip-value {
 }
 
 body[data-theme="light"] .hero-visual-caption {
-  color: #0f3f9f !important;
+  color: #124dc2 !important;
+  -webkit-text-fill-color: #124dc2;
   border-color: rgba(36, 87, 203, 0.48) !important;
   background: rgba(255, 255, 255, 0.92) !important;
   box-shadow: 0 8px 18px rgba(46, 93, 197, 0.14), 0 2px 6px rgba(207, 27, 45, 0.08);
@@ -1907,12 +1612,34 @@ body[data-theme="light"] .skills-dot {
   }
 }
 
+@keyframes ship-hover {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+}
+
+@keyframes thruster-pulse {
+  0%,
+  100% {
+    opacity: 0.72;
+    transform: scaleX(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scaleX(1.16);
+  }
+}
+
 @media (max-width: 900px) {
-  body[data-theme="dark"] .scene-batman {
+  body[data-theme="dark"] .scene-space {
     opacity: 0.42;
   }
 
-  body[data-theme="light"] .scene-superman {
+  body[data-theme="light"] .scene-space {
     opacity: 0.46;
   }
 
@@ -1972,9 +1699,33 @@ body[data-theme="light"] .skills-dot {
   }
 
   .theme-toggle {
-    --toggle-thumb-travel: 1.72rem;
-    width: 3.7rem;
-    height: 1.9rem;
+    --toggle-thumb-travel: 4.12rem;
+    width: 6.6rem;
+    height: 2.5rem;
+  }
+
+  .theme-toggle-thumb {
+    top: 0.2rem;
+    left: 0.2rem;
+    width: 2.08rem;
+    height: 2.08rem;
+  }
+
+  .theme-toggle-icon::before {
+    font-size: 1.08rem;
+  }
+
+  .theme-toggle-label {
+    font-size: 0.64rem;
+    line-height: 0.9;
+  }
+
+  body[data-theme="light"] .theme-label-light {
+    right: 0.8rem;
+  }
+
+  body[data-theme="dark"] .theme-label-dark {
+    left: 0.84rem;
   }
 
   .hero {
