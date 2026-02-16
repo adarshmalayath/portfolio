@@ -581,14 +581,14 @@ body[data-theme="light"] .orb-b {
 }
 
 .theme-toggle {
-  --toggle-thumb-travel: 1.56rem;
+  --toggle-thumb-travel: 1.26rem;
   border: 0;
   background: transparent;
   display: inline-flex;
   justify-content: center;
   align-items: center;
-  width: 3.5rem;
-  height: 1.94rem;
+  width: 3.14rem;
+  height: 1.72rem;
   margin-left: auto;
   padding: 0;
   cursor: pointer;
@@ -624,10 +624,10 @@ body[data-theme="light"] .orb-b {
 
 .theme-toggle-thumb {
   position: absolute;
-  top: 0.18rem;
-  left: 0.18rem;
-  width: 1.56rem;
-  height: 1.56rem;
+  top: 0.14rem;
+  left: 0.14rem;
+  width: 1.4rem;
+  height: 1.4rem;
   border-radius: 50%;
   background: #ffe16e;
   box-shadow: 0 2px 7px rgba(17, 36, 80, 0.24);
@@ -639,7 +639,7 @@ body[data-theme="light"] .orb-b {
 
 .theme-toggle-icon::before {
   content: "☀";
-  font-size: 0.9rem;
+  font-size: 0.78rem;
   font-weight: 700;
   line-height: 1;
   color: #725b00;
@@ -655,7 +655,7 @@ body[data-theme="dark"] .theme-toggle-track {
 body[data-theme="dark"] .theme-toggle-thumb {
   transform: translateX(var(--toggle-thumb-travel));
   background: #e7ecf6;
-  box-shadow: 0 2px 8px rgba(3, 8, 17, 0.45);
+  box-shadow: 0 2px 7px rgba(3, 8, 17, 0.45);
 }
 
 body[data-theme="light"] .theme-toggle-track {
@@ -1648,20 +1648,20 @@ body[data-theme="light"] .skills-dot {
   }
 
   .theme-toggle {
-    --toggle-thumb-travel: 1.34rem;
-    width: 3.22rem;
-    height: 1.84rem;
+    --toggle-thumb-travel: 1.18rem;
+    width: 2.96rem;
+    height: 1.62rem;
   }
 
   .theme-toggle-thumb {
-    top: 0.17rem;
-    left: 0.17rem;
-    width: 1.44rem;
-    height: 1.44rem;
+    top: 0.12rem;
+    left: 0.12rem;
+    width: 1.32rem;
+    height: 1.32rem;
   }
 
   .theme-toggle-icon::before {
-    font-size: 0.84rem;
+    font-size: 0.72rem;
   }
 
   .hero {
