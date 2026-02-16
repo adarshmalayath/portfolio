@@ -60,6 +60,48 @@ function bindThemeToggle() {
   });
 }
 
+function bindScrollScenes() {
+  const root = document.documentElement;
+
+  function writeScrollState(progressValue) {
+    const progress = Math.max(0, Math.min(1, progressValue));
+    const landingStart = 0.36;
+    const landingEnd = 0.72;
+    let landing = 0;
+
+    if (progress > landingStart) {
+      landing = Math.min(1, (progress - landingStart) / (landingEnd - landingStart));
+    }
+
+    root.style.setProperty("--scroll-progress", progress.toFixed(4));
+    root.style.setProperty("--landing-progress", landing.toFixed(4));
+  }
+
+  if (prefersReducedMotion) {
+    writeScrollState(0.35);
+    return;
+  }
+
+  let isTicking = false;
+  const update = () => {
+    const totalScrollable = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
+    writeScrollState(window.scrollY / totalScrollable);
+    isTicking = false;
+  };
+
+  const requestUpdate = () => {
+    if (isTicking) {
+      return;
+    }
+    isTicking = true;
+    window.requestAnimationFrame(update);
+  };
+
+  window.addEventListener("scroll", requestUpdate, { passive: true });
+  window.addEventListener("resize", requestUpdate);
+  update();
+}
+
 function getCleanPortfolioPath() {
   const withoutIndex = window.location.pathname.replace(/\/index\.html$/, "");
   if (!withoutIndex || withoutIndex === "/") {
@@ -345,6 +387,7 @@ if (prefersReducedMotion) {
 }
 
 bindThemeToggle();
+bindScrollScenes();
 bindSkillsCarousel();
 bindSectionLinks();
 applyInitialHashScroll();

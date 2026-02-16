@@ -20,6 +20,8 @@
   --card-overlay-start: rgba(255, 255, 255, 0.02);
   --card-overlay-end: rgba(20, 20, 20, 0.92);
   --timeline-bg: rgba(20, 20, 20, 0.85);
+  --scroll-progress: 0;
+  --landing-progress: 0;
 }
 
 * {
@@ -94,6 +96,135 @@ body[data-theme="light"]::before {
     transparent 1px,
     transparent 12px
   );
+}
+
+.scroll-scenes {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  overflow: hidden;
+}
+
+.scroll-scene {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  transition: opacity 0.45s ease;
+}
+
+body[data-theme="dark"] .scene-batman {
+  opacity: 0.42;
+}
+
+body[data-theme="light"] .scene-superman {
+  opacity: 0.46;
+}
+
+.scene-batman .batman-swing {
+  transform-box: fill-box;
+  transform-origin: 50% 0%;
+  transform:
+    translate(
+      calc(-12vw + (var(--scroll-progress) * 16vw)),
+      calc(-6vh + (var(--scroll-progress) * 44vh))
+    )
+    rotate(calc(-32deg + (var(--scroll-progress) * 56deg)));
+}
+
+.scene-batman .bat-rope {
+  stroke: url(#bat-accent);
+  stroke-width: 2.4;
+}
+
+.scene-batman .bat-hook {
+  fill: rgba(242, 200, 75, 0.8);
+}
+
+.scene-batman .bat-cape {
+  fill: rgba(8, 11, 18, 0.95);
+  stroke: rgba(242, 200, 75, 0.42);
+  stroke-width: 1.2;
+  animation: cape-wave 2.6s ease-in-out infinite;
+}
+
+.scene-batman .bat-cape-inner {
+  fill: rgba(18, 23, 31, 0.9);
+}
+
+.scene-batman .bat-head,
+.scene-batman .bat-body,
+.scene-batman .bat-shoulders {
+  fill: rgba(10, 13, 20, 0.98);
+  stroke: rgba(242, 200, 75, 0.38);
+  stroke-width: 1.2;
+}
+
+.scene-batman .bat-limb {
+  stroke: rgba(220, 226, 236, 0.72);
+  stroke-width: 2.6;
+  stroke-linecap: round;
+}
+
+.scene-superman .superman-flight {
+  transform-box: fill-box;
+  transform-origin: 50% 0%;
+  transform:
+    translate(
+      calc((var(--scroll-progress) * 8vw)),
+      calc(-34vh + (var(--scroll-progress) * 76vh))
+    )
+    rotate(calc(-16deg + (var(--scroll-progress) * 15deg)));
+}
+
+.scene-superman .super-trail {
+  fill: none;
+  stroke: rgba(23, 72, 189, 0.42);
+  stroke-width: 6;
+  stroke-linecap: round;
+}
+
+.scene-superman .super-cape {
+  fill: url(#sup-red);
+  stroke: rgba(153, 17, 39, 0.5);
+  stroke-width: 1.3;
+  animation: cape-wave 2.2s ease-in-out infinite;
+}
+
+.scene-superman .super-head {
+  fill: #ffd7bd;
+}
+
+.scene-superman .super-body {
+  fill: url(#sup-blue);
+  stroke: rgba(10, 42, 122, 0.45);
+  stroke-width: 1.4;
+}
+
+.scene-superman .super-emblem {
+  fill: rgba(240, 224, 72, 0.92);
+}
+
+.scene-superman .super-limb {
+  stroke: rgba(16, 55, 147, 0.82);
+  stroke-width: 3;
+  stroke-linecap: round;
+}
+
+.scene-superman .superman-impact {
+  fill: rgba(21, 70, 184, calc(var(--landing-progress) * 0.24));
+  transform-box: fill-box;
+  transform-origin: center;
+  transform: scale(calc(0.68 + (var(--landing-progress) * 0.54)));
+}
+
+.scene-superman .superman-dust {
+  fill: rgba(207, 27, 45, calc(var(--landing-progress) * 0.19));
+  transform-box: fill-box;
+  transform-origin: center;
+  transform: scale(calc(0.65 + (var(--landing-progress) * 0.68)));
 }
 
 a {
@@ -1015,7 +1146,25 @@ body[data-theme="light"] .skills-dot {
   }
 }
 
+@keyframes cape-wave {
+  0%,
+  100% {
+    transform: skewY(0deg);
+  }
+  50% {
+    transform: skewY(5deg);
+  }
+}
+
 @media (max-width: 900px) {
+  body[data-theme="dark"] .scene-batman {
+    opacity: 0.28;
+  }
+
+  body[data-theme="light"] .scene-superman {
+    opacity: 0.3;
+  }
+
   .hero {
     grid-template-columns: 1fr;
     gap: 1rem;
@@ -1049,6 +1198,10 @@ body[data-theme="light"] .skills-dot {
 }
 
 @media (max-width: 680px) {
+  .scroll-scenes {
+    opacity: 0.75;
+  }
+
   .site-header {
     border-radius: 1rem;
     flex-direction: column;
@@ -1065,6 +1218,10 @@ body[data-theme="light"] .skills-dot {
     width: 100%;
     justify-content: space-between;
     gap: 0.45rem;
+  }
+
+  .site-nav {
+    font-size: 0.88rem;
   }
 
   .theme-toggle {
