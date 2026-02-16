@@ -39,30 +39,42 @@
       href="/portfolio/brand-icon-180.png?v=20260215v22"
     />
     <link rel="manifest" href="/portfolio/site.webmanifest?v=20260215v22" />
-    <link rel="stylesheet" href="/portfolio/styles.css?v=20260216v31" />
+    <link rel="stylesheet" href="/portfolio/styles.css?v=20260216v32" />
   </head>
   <body>
     <div class="bg-orb orb-a" aria-hidden="true"></div>
     <div class="bg-orb orb-b" aria-hidden="true"></div>
 
-	    <header class="site-header reveal">
-	      <a class="brand" href="#top">
-	        <img
-	          class="brand-logo"
-	          src="/portfolio/brand-icon-32.png?v=20260215v22"
-	          alt="Brand logo"
-	          width="24"
-	          height="24"
-	        />
-	        <span id="brandName">Adarsh Malayath</span>
-	      </a>
-	      <nav class="site-nav">
-	        <a href="#experience" id="navExperience">Experience</a>
-	        <a href="#skills" id="navSkills">Skills</a>
-	        <a href="#projects" id="navProjects">Projects</a>
-	        <a href="#education" id="navEducation">Education</a>
-	      </nav>
-	    </header>
+    <header class="site-header reveal">
+      <a class="brand" href="#top">
+        <img
+          class="brand-logo"
+          src="/portfolio/brand-icon-32.png?v=20260215v22"
+          alt="Brand logo"
+          width="24"
+          height="24"
+        />
+        <span id="brandName">Adarsh Malayath</span>
+      </a>
+      <div class="header-controls">
+        <nav class="site-nav">
+          <a href="#experience" id="navExperience">Experience</a>
+          <a href="#skills" id="navSkills">Skills</a>
+          <a href="#projects" id="navProjects">Projects</a>
+          <a href="#education" id="navEducation">Education</a>
+        </nav>
+        <button
+          class="theme-toggle"
+          id="themeToggle"
+          type="button"
+          aria-label="Toggle dark and light mode"
+          aria-pressed="false"
+        >
+          <span class="theme-toggle-icon" id="themeToggleIcon" aria-hidden="true">🌙</span>
+          <span class="theme-toggle-text" id="themeToggleText">Dark</span>
+        </button>
+      </div>
+    </header>
 
     <main id="top" class="container">
       <section class="hero reveal">
@@ -78,52 +90,9 @@
             delivering backend services, frontend interfaces, and production
             support using Java, PL/SQL, and ReactJS.
           </p>
-          <div class="hero-actions">
-            <a
-              class="btn btn-primary"
-              href="mailto:adarshmalayath@gmail.com"
-              id="contactEmailButton"
-              >Contact Me</a
-            >
-            <a
-              class="btn btn-secondary"
-              href="https://adarshmalayath.github.io/portfolio/CV%20IT.pdf"
-              id="cvButton"
-              target="_blank"
-              rel="noopener noreferrer"
-              >View CV</a
-            >
-          </div>
-          <ul class="quick-contact">
-            <li id="contactLocation">Leicester, United Kingdom</li>
-            <li>
-              <a href="mailto:adarshmalayath@gmail.com"
-                id="contactEmail"
-                >adarshmalayath@gmail.com</a
-              >
-            </li>
-            <li><a href="tel:+447721445027" id="contactPhone">+44 7721 445027</a></li>
-            <li>
-              <a
-                href="https://linkedin.com/in/adarshmalayath"
-                id="contactLinkedin"
-                target="_blank"
-                rel="noopener noreferrer"
-                >LinkedIn</a
-              >
-              /
-              <a
-                href="https://github.com/adarshmalayath"
-                id="contactGithub"
-                target="_blank"
-                rel="noopener noreferrer"
-                >GitHub</a
-              >
-            </li>
-          </ul>
         </div>
         <aside class="hero-visual reveal" aria-hidden="true">
-          <p class="hero-visual-tag">Night Stack</p>
+          <p class="hero-visual-tag" id="heroVisualTag">Night Stack</p>
           <div class="hero-visual-stage">
             <svg
               class="hero-computer-svg"
@@ -580,8 +549,56 @@
           <p>Leadership: IEEE & IEDC Core Member (2018 – 2022)</p>
           <p>Work Preference: Open to relocation and remote work</p>
           <p>Eligible to work in the UK</p>
-        </article>
+	        </article>
 	      </section>
+
+        <section id="contactSection" class="section reveal contact-section">
+          <h2>Connect</h2>
+          <article class="card contact-panel">
+            <p class="contact-location" id="contactLocation">Leicester, United Kingdom</p>
+            <div class="contact-actions">
+              <a
+                class="btn btn-primary"
+                href="mailto:adarshmalayath@gmail.com"
+                id="contactEmailButton"
+                >Contact Me</a
+              >
+              <a
+                class="btn btn-secondary"
+                href="https://adarshmalayath.github.io/portfolio/CV%20IT.pdf"
+                id="cvButton"
+                target="_blank"
+                rel="noopener noreferrer"
+                >View CV</a
+              >
+            </div>
+            <ul class="quick-contact contact-links">
+              <li>
+                <a href="mailto:adarshmalayath@gmail.com" id="contactEmail"
+                  >adarshmalayath@gmail.com</a
+                >
+              </li>
+              <li><a href="tel:+447721445027" id="contactPhone">+44 7721 445027</a></li>
+              <li>
+                <a
+                  href="https://linkedin.com/in/adarshmalayath"
+                  id="contactLinkedin"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  >LinkedIn</a
+                >
+                /
+                <a
+                  href="https://github.com/adarshmalayath"
+                  id="contactGithub"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  >GitHub</a
+                >
+              </li>
+            </ul>
+          </article>
+        </section>
 
 	      <div id="customSectionsRoot"></div>
 	    </main>
@@ -590,7 +607,7 @@
       <p>© 2026 <span id="footerName">Adarsh Malayath</span></p>
     </footer>
 
-    <script src="/portfolio/script.js?v=20260216v27"></script>
-    <script type="module" src="/portfolio/portfolio-data.js?v=20260216v26"></script>
+    <script src="/portfolio/script.js?v=20260216v28"></script>
+    <script type="module" src="/portfolio/portfolio-data.js?v=20260216v27"></script>
   </body>
 </html>

@@ -1,6 +1,64 @@
 const prefersReducedMotion = window.matchMedia(
   "(prefers-reduced-motion: reduce)"
 ).matches;
+const THEME_STORAGE_KEY = "portfolio-theme";
+
+function getInitialTheme() {
+  try {
+    const stored = window.localStorage.getItem(THEME_STORAGE_KEY);
+    if (stored === "dark" || stored === "light") {
+      return stored;
+    }
+  } catch (error) {
+    // Ignore localStorage read errors.
+  }
+
+  return "dark";
+}
+
+function applyTheme(theme) {
+  const resolvedTheme = theme === "light" ? "light" : "dark";
+  document.body.setAttribute("data-theme", resolvedTheme);
+
+  const icon = document.getElementById("themeToggleIcon");
+  const text = document.getElementById("themeToggleText");
+  const toggle = document.getElementById("themeToggle");
+  const heroVisualTag = document.getElementById("heroVisualTag");
+
+  if (toggle) {
+    toggle.setAttribute("aria-pressed", resolvedTheme === "light" ? "true" : "false");
+  }
+  if (icon) {
+    icon.textContent = resolvedTheme === "light" ? "☀️" : "🌙";
+  }
+  if (text) {
+    text.textContent = resolvedTheme === "light" ? "Light" : "Dark";
+  }
+  if (heroVisualTag) {
+    heroVisualTag.textContent = resolvedTheme === "light" ? "Metropolis Stack" : "Night Stack";
+  }
+}
+
+function bindThemeToggle() {
+  const toggle = document.getElementById("themeToggle");
+  if (!toggle) {
+    return;
+  }
+
+  applyTheme(getInitialTheme());
+
+  toggle.addEventListener("click", () => {
+    const current = document.body.getAttribute("data-theme") === "light" ? "light" : "dark";
+    const next = current === "light" ? "dark" : "light";
+    applyTheme(next);
+
+    try {
+      window.localStorage.setItem(THEME_STORAGE_KEY, next);
+    } catch (error) {
+      // Ignore localStorage write errors.
+    }
+  });
+}
 
 function getCleanPortfolioPath() {
   const withoutIndex = window.location.pathname.replace(/\/index\.html$/, "");
@@ -286,6 +344,7 @@ if (prefersReducedMotion) {
   revealElements.forEach((element) => observer.observe(element));
 }
 
+bindThemeToggle();
 bindSkillsCarousel();
 bindSectionLinks();
 applyInitialHashScroll();

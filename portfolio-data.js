@@ -464,13 +464,9 @@ function setSectionsVisible(isVisible) {
 }
 
 function setHeroDetailsVisible(isVisible) {
-  const actions = document.querySelector(".hero-actions");
-  const contact = document.querySelector(".quick-contact");
-  if (actions) {
-    actions.style.display = isVisible ? "" : "none";
-  }
-  if (contact) {
-    contact.style.display = isVisible ? "" : "none";
+  const contactSection = document.getElementById("contactSection");
+  if (contactSection) {
+    contactSection.style.display = isVisible ? "" : "none";
   }
 }
 
