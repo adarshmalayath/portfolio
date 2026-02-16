@@ -56,6 +56,151 @@ function applyInitialHashScroll() {
   keepCleanUrl();
 }
 
+function bindSkillsCarousel() {
+  const carousel = document.getElementById("skillsCarousel");
+  const viewport = document.getElementById("skillsViewport");
+  const track = document.getElementById("skillsGrid");
+  const prevButton = document.getElementById("skillsPrev");
+  const nextButton = document.getElementById("skillsNext");
+  const dotsRoot = document.getElementById("skillsDots");
+
+  if (!carousel || !viewport || !track || !prevButton || !nextButton || !dotsRoot) {
+    return;
+  }
+
+  let currentPage = 0;
+  let isScrollTicking = false;
+
+  function getCards() {
+    return Array.from(track.querySelectorAll(":scope > .card"));
+  }
+
+  function getMetrics() {
+    const cards = getCards();
+    if (cards.length === 0) {
+      return {
+        pageCount: 1,
+        visibleCount: 1,
+        step: 0
+      };
+    }
+
+    const styles = window.getComputedStyle(track);
+    const gap = Number.parseFloat(styles.columnGap || styles.gap || "0") || 0;
+    const step = cards[0].getBoundingClientRect().width + gap;
+    const visibleCount = Math.max(1, Math.floor((viewport.clientWidth + gap) / step));
+    const pageCount = Math.max(1, Math.ceil(cards.length / visibleCount));
+
+    return { pageCount, visibleCount, step };
+  }
+
+  function setActiveDot() {
+    const dots = Array.from(dotsRoot.querySelectorAll(".skills-dot"));
+    dots.forEach((dot, index) => {
+      const isActive = index === currentPage;
+      dot.classList.toggle("is-active", isActive);
+      dot.setAttribute("aria-current", isActive ? "true" : "false");
+    });
+  }
+
+  function renderDots(pageCount) {
+    dotsRoot.innerHTML = "";
+
+    for (let index = 0; index < pageCount; index += 1) {
+      const dot = document.createElement("button");
+      dot.type = "button";
+      dot.className = "skills-dot";
+      dot.setAttribute("aria-label", `Go to skills slide ${index + 1}`);
+      dot.addEventListener("click", () => {
+        goToPage(index);
+      });
+      dotsRoot.appendChild(dot);
+    }
+  }
+
+  function syncControls() {
+    const { pageCount } = getMetrics();
+
+    if (currentPage > pageCount - 1) {
+      currentPage = pageCount - 1;
+    }
+    if (currentPage < 0) {
+      currentPage = 0;
+    }
+
+    const singlePage = pageCount <= 1;
+    carousel.classList.toggle("is-single-page", singlePage);
+    dotsRoot.classList.toggle("is-hidden", singlePage);
+
+    if (dotsRoot.childElementCount !== pageCount) {
+      renderDots(pageCount);
+    }
+
+    prevButton.disabled = singlePage || currentPage <= 0;
+    nextButton.disabled = singlePage || currentPage >= pageCount - 1;
+    setActiveDot();
+  }
+
+  function goToPage(pageIndex) {
+    const { pageCount, visibleCount, step } = getMetrics();
+    currentPage = Math.max(0, Math.min(pageIndex, pageCount - 1));
+
+    const targetIndex = currentPage * visibleCount;
+    const targetLeft = targetIndex * step;
+
+    viewport.scrollTo({
+      left: Number.isFinite(targetLeft) ? targetLeft : 0,
+      behavior: prefersReducedMotion ? "auto" : "smooth"
+    });
+
+    syncControls();
+  }
+
+  prevButton.addEventListener("click", () => {
+    goToPage(currentPage - 1);
+  });
+
+  nextButton.addEventListener("click", () => {
+    goToPage(currentPage + 1);
+  });
+
+  viewport.addEventListener(
+    "scroll",
+    () => {
+      if (isScrollTicking) {
+        return;
+      }
+      isScrollTicking = true;
+
+      window.requestAnimationFrame(() => {
+        const { pageCount, visibleCount, step } = getMetrics();
+
+        if (step > 0) {
+          const approximateItemIndex = viewport.scrollLeft / step;
+          const approximatePage = Math.round(approximateItemIndex / visibleCount);
+          currentPage = Math.max(0, Math.min(pageCount - 1, approximatePage));
+        }
+
+        syncControls();
+        isScrollTicking = false;
+      });
+    },
+    { passive: true }
+  );
+
+  window.addEventListener("resize", () => {
+    goToPage(currentPage);
+  });
+
+  document.addEventListener("skills:updated", () => {
+    currentPage = 0;
+    viewport.scrollTo({ left: 0, behavior: "auto" });
+    syncControls();
+  });
+
+  syncControls();
+}
+
 const revealElements = Array.from(document.querySelectorAll(".reveal"));
 
 if (prefersReducedMotion) {
@@ -81,5 +226,6 @@ if (prefersReducedMotion) {
   revealElements.forEach((element) => observer.observe(element));
 }
 
+bindSkillsCarousel();
 bindSectionLinks();
 applyInitialHashScroll();

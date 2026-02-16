@@ -305,6 +305,8 @@ function renderSkills(skills) {
     article.appendChild(list);
     grid.appendChild(article);
   });
+
+  document.dispatchEvent(new CustomEvent("skills:updated"));
 }
 
 function renderProjects(projects) {
