@@ -20,16 +20,12 @@ function applyTheme(theme) {
   const resolvedTheme = theme === "light" ? "light" : "dark";
   document.body.setAttribute("data-theme", resolvedTheme);
 
-  const icon = document.getElementById("themeToggleIcon");
   const toggle = document.getElementById("themeToggle");
   const isLight = resolvedTheme === "light";
 
   if (toggle) {
     toggle.setAttribute("aria-pressed", isLight ? "true" : "false");
     toggle.setAttribute("aria-label", isLight ? "Switch to dark mode" : "Switch to light mode");
-  }
-  if (icon) {
-    icon.textContent = isLight ? "☀️" : "🌙";
   }
 }
 
