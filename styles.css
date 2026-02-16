@@ -322,6 +322,7 @@ body[data-theme="light"] .scene-space .planet-b {
       0
     )
     rotate(calc(-7deg + (var(--scroll-progress) * 14deg)));
+  will-change: transform, margin-left, margin-top;
 }
 
 .scene-space .ship-trail {
@@ -1616,6 +1617,18 @@ body[data-theme="light"] .skills-dot {
   }
 }
 
+@keyframes space-mobile-cruise {
+  0%,
+  100% {
+    margin-left: 0;
+    margin-top: 0;
+  }
+  50% {
+    margin-left: 2.6vw;
+    margin-top: -1.4vh;
+  }
+}
+
 @media (max-width: 900px) {
   body[data-theme="dark"] .scene-space {
     opacity: 0.42;
@@ -1623,6 +1636,10 @@ body[data-theme="light"] .skills-dot {
 
   body[data-theme="light"] .scene-space {
     opacity: 0.46;
+  }
+
+  .scene-space .space-flight {
+    animation: space-mobile-cruise 7.4s ease-in-out infinite;
   }
 
   .hero {
@@ -1654,6 +1671,16 @@ body[data-theme="light"] .skills-dot {
 
   .split {
     grid-template-columns: 1fr;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scene-space .space-flight,
+  .scene-space .spaceship,
+  .scene-space .ship-thruster {
+    animation: none !important;
+    margin-left: 0 !important;
+    margin-top: 0 !important;
   }
 }
 
