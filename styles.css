@@ -120,236 +120,597 @@ body[data-theme="light"]::before {
 }
 
 body[data-theme="dark"] .scene-batman {
-  opacity: 0.66;
+  opacity: 0.78;
 }
 
 body[data-theme="light"] .scene-superman {
-  opacity: 0.7;
+  opacity: 0.8;
 }
 
-.scene-batman .bat-sky {
-  fill: url(#bat-sky);
+.comic-stage {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
 }
 
-.scene-batman .bat-stars circle {
-  fill: rgba(230, 238, 248, 0.74);
-  animation: star-twinkle 4.8s ease-in-out infinite;
+.scene-batman .bat-stage {
+  background:
+    radial-gradient(circle at 80% 18%, rgba(242, 200, 75, 0.14) 0%, rgba(10, 10, 10, 0) 36%),
+    linear-gradient(170deg, rgba(5, 8, 13, 0.85) 0%, rgba(1, 2, 5, 0.98) 100%);
 }
 
-.scene-batman .bat-stars circle:nth-child(2n) {
-  animation-delay: -1.2s;
+.scene-batman .bat-stage::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    radial-gradient(circle at 12% 16%, rgba(237, 243, 255, 0.8) 0 1px, transparent 1.5px),
+    radial-gradient(circle at 36% 22%, rgba(237, 243, 255, 0.65) 0 1px, transparent 1.5px),
+    radial-gradient(circle at 74% 12%, rgba(237, 243, 255, 0.68) 0 1px, transparent 1.5px),
+    radial-gradient(circle at 86% 30%, rgba(237, 243, 255, 0.62) 0 1px, transparent 1.5px),
+    radial-gradient(circle at 24% 48%, rgba(237, 243, 255, 0.58) 0 1px, transparent 1.5px),
+    radial-gradient(circle at 60% 58%, rgba(237, 243, 255, 0.55) 0 1px, transparent 1.5px);
+  opacity: 0.34;
+  animation: star-drift 18s linear infinite;
 }
 
-.scene-batman .bat-stars circle:nth-child(3n) {
-  animation-delay: -2.4s;
-}
-
-.scene-batman .bat-moon-glow {
-  fill: rgba(192, 182, 214, 0.24);
-  filter: url(#bat-moon-glow);
+.scene-batman .bat-stage::after {
+  content: "";
+  position: absolute;
+  left: -4%;
+  right: -4%;
+  bottom: -1%;
+  height: 27%;
+  background:
+    linear-gradient(to top, rgba(2, 4, 7, 0.96) 8%, rgba(2, 4, 7, 0.52) 52%, rgba(2, 4, 7, 0) 100%),
+    repeating-linear-gradient(
+      to right,
+      rgba(10, 15, 23, 0.95) 0 26px,
+      rgba(7, 11, 18, 0.95) 26px 46px
+    );
+  clip-path: polygon(
+    0 100%,
+    0 54%,
+    4% 54%,
+    4% 36%,
+    9% 36%,
+    9% 60%,
+    15% 60%,
+    15% 42%,
+    21% 42%,
+    21% 63%,
+    26% 63%,
+    26% 45%,
+    33% 45%,
+    33% 61%,
+    39% 61%,
+    39% 40%,
+    45% 40%,
+    45% 62%,
+    53% 62%,
+    53% 36%,
+    58% 36%,
+    58% 58%,
+    64% 58%,
+    64% 44%,
+    72% 44%,
+    72% 62%,
+    80% 62%,
+    80% 48%,
+    88% 48%,
+    88% 64%,
+    96% 64%,
+    96% 52%,
+    100% 52%,
+    100% 100%
+  );
 }
 
 .scene-batman .bat-moon {
-  fill: url(#bat-moon);
+  position: absolute;
+  top: 8%;
+  right: 8%;
+  width: min(24vw, 16rem);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 32% 30%, rgba(250, 251, 255, 0.95) 0 24%, rgba(224, 226, 240, 0.88) 25% 45%, rgba(180, 185, 214, 0.65) 46% 64%, rgba(132, 138, 174, 0.2) 70% 100%);
+  box-shadow: 0 0 48px rgba(188, 180, 220, 0.38);
+  opacity: 0.84;
 }
 
-.scene-batman .bat-city-back {
-  fill: rgba(8, 11, 17, 0.86);
+.scene-batman .bat-moon::before,
+.scene-batman .bat-moon::after {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(133, 137, 170, 0.35);
 }
 
-.scene-batman .bat-city-front {
-  fill: rgba(3, 5, 9, 0.95);
+.scene-batman .bat-moon::before {
+  width: 22%;
+  height: 22%;
+  top: 26%;
+  left: 18%;
 }
 
-.scene-batman .batman-swing {
-  transform-box: fill-box;
+.scene-batman .bat-moon::after {
+  width: 16%;
+  height: 16%;
+  top: 58%;
+  right: 24%;
+}
+
+.scene-batman .bat-signal {
+  position: absolute;
+  top: 22%;
+  right: 14%;
+  width: min(17vw, 9.8rem);
+  height: min(8vw, 4.8rem);
+  border-radius: 999px;
+  border: 1px solid rgba(242, 200, 75, 0.55);
+  background: rgba(9, 12, 19, 0.78);
+  box-shadow: 0 0 22px rgba(242, 200, 75, 0.22);
+  transform: rotate(-12deg);
+}
+
+.scene-batman .bat-signal::before {
+  content: "";
+  position: absolute;
+  inset: 22% 24%;
+  background: rgba(242, 200, 75, 0.88);
+  clip-path: polygon(
+    0 48%,
+    12% 28%,
+    24% 37%,
+    34% 18%,
+    46% 28%,
+    58% 17%,
+    72% 34%,
+    88% 30%,
+    100% 49%,
+    84% 62%,
+    70% 58%,
+    58% 68%,
+    45% 57%,
+    34% 68%,
+    22% 57%,
+    8% 61%
+  );
+}
+
+.scene-batman .bat-art-wrap {
+  position: absolute;
+  top: 3%;
+  right: 12%;
+  width: min(36vw, 22rem);
+  height: min(56vh, 31rem);
   transform-origin: 50% 0%;
   transform:
-    translate(
-      calc(-5vw + (var(--scroll-progress) * 11vw)),
-      calc(-2vh + (var(--scroll-progress) * 32vh))
+    translate3d(
+      calc(-1vw + (var(--scroll-progress) * 5vw)),
+      calc(-7vh + (var(--scroll-progress) * 36vh)),
+      0
     )
-    rotate(calc(-24deg + (var(--scroll-progress) * 46deg)));
+    rotate(calc(-15deg + (var(--scroll-progress) * 26deg)));
 }
 
-.scene-batman .batman-character {
-  filter: drop-shadow(0 16px 24px rgba(0, 0, 0, 0.55));
+.scene-batman .bat-art-wrap::before {
+  content: "";
+  position: absolute;
+  left: 54%;
+  top: -36%;
+  width: 2px;
+  height: 52%;
+  background: linear-gradient(
+    to bottom,
+    rgba(242, 200, 75, 0.94),
+    rgba(242, 200, 75, 0.42),
+    rgba(242, 200, 75, 0)
+  );
+  box-shadow: 0 0 6px rgba(242, 200, 75, 0.36);
 }
 
-.scene-batman .bat-rope {
-  fill: none;
-  stroke: url(#bat-accent);
-  stroke-width: 3;
-  stroke-linecap: round;
+.scene-batman .bat-art-wrap::after {
+  content: "";
+  position: absolute;
+  left: calc(54% - 0.4rem);
+  top: calc(-36% + 0.1rem);
+  width: 0.84rem;
+  height: 0.84rem;
+  border-radius: 50%;
+  border: 2px solid rgba(242, 200, 75, 0.86);
 }
 
-.scene-batman .bat-hook {
-  fill: rgba(242, 200, 75, 0.86);
-  stroke: rgba(75, 57, 12, 0.85);
-  stroke-width: 1.1;
+.scene-batman .batman-css-art {
+  position: absolute;
+  left: 50%;
+  top: 20%;
+  width: min(12vw, 7.8rem);
+  min-width: 6.4rem;
+  aspect-ratio: 0.56;
+  transform: translateX(-50%);
+  filter: drop-shadow(0 16px 22px rgba(0, 0, 0, 0.55));
 }
 
-.scene-batman .bat-rope-loop {
-  fill: none;
-  stroke: rgba(242, 200, 75, 0.9);
-  stroke-width: 2.6;
-  stroke-linecap: round;
-  stroke-linejoin: round;
+.scene-batman .batman-css-art::before {
+  content: "";
+  position: absolute;
+  left: 28%;
+  top: 0;
+  width: 44%;
+  height: 22%;
+  background: #0b0f16;
+  border-radius: 42% 42% 32% 32%;
+  box-shadow:
+    -16px -10px 0 -10px #0b0f16,
+    16px -10px 0 -10px #0b0f16;
 }
 
-.scene-batman .bat-cape {
-  fill: rgba(6, 10, 18, 0.95);
-  stroke: rgba(84, 108, 147, 0.72);
-  stroke-width: 1.8;
-  animation: cape-wave 2.4s ease-in-out infinite;
-}
-
-.scene-batman .bat-cape-inner {
-  fill: rgba(17, 43, 68, 0.86);
-}
-
-.scene-batman .bat-suit-part {
-  fill: url(#bat-suit);
-  stroke: rgba(25, 35, 50, 0.75);
-  stroke-width: 1.4;
-}
-
-.scene-batman .bat-glove-part {
-  fill: url(#bat-glove);
-  stroke: rgba(8, 26, 42, 0.84);
-  stroke-width: 1.3;
-}
-
-.scene-batman .bat-belt {
-  fill: rgba(240, 193, 46, 0.94);
-  stroke: rgba(136, 104, 20, 0.9);
-  stroke-width: 1.2;
-}
-
-.scene-batman .bat-head {
-  fill: #f1ccb2;
-  stroke: rgba(43, 28, 19, 0.42);
-  stroke-width: 0.9;
-}
-
-.scene-batman .bat-mask {
-  fill: #05080e;
-}
-
-.scene-batman .bat-jaw {
-  fill: #e8c4a8;
+.scene-batman .bat-mouth {
+  position: absolute;
+  left: 38%;
+  top: 14%;
+  width: 24%;
+  height: 6%;
+  background: #e7c7ad;
+  border-radius: 0 0 40% 40%;
 }
 
 .scene-batman .bat-eye {
-  fill: #f5f9ff;
+  position: absolute;
+  top: 9.5%;
+  left: 34%;
+  width: 32%;
+  height: 4.4%;
 }
 
-.scene-batman .bat-symbol {
-  fill: rgba(5, 8, 13, 0.98);
+.scene-batman .bat-eye::before,
+.scene-batman .bat-eye::after {
+  content: "";
+  position: absolute;
+  width: 38%;
+  height: 100%;
+  background: #f6f8fd;
+  clip-path: polygon(0 100%, 100% 58%, 100% 0, 0 46%);
 }
 
-.scene-superman .super-sky {
-  fill: url(#sup-sky);
+.scene-batman .bat-eye::before {
+  left: 0;
 }
 
-.scene-superman .super-cloud {
-  fill: rgba(255, 255, 255, 0.64);
-  filter: drop-shadow(0 6px 10px rgba(25, 74, 175, 0.12));
-  animation: cloud-drift 9.5s ease-in-out infinite;
+.scene-batman .bat-eye::after {
+  right: 0;
+  transform: scaleX(-1);
 }
 
-.scene-superman .cloud-b {
-  animation-delay: -2s;
+.scene-batman .bat-cape {
+  position: absolute;
+  left: -12%;
+  top: 16%;
+  width: 124%;
+  height: 60%;
+  background: linear-gradient(160deg, rgba(13, 22, 36, 0.95), rgba(5, 10, 18, 0.98));
+  border: 1px solid rgba(68, 88, 122, 0.52);
+  clip-path: polygon(6% 0%, 94% 0%, 100% 50%, 82% 100%, 48% 80%, 16% 100%, 0% 62%);
+  animation: cape-sweep 2.8s ease-in-out infinite;
+  z-index: -1;
 }
 
-.scene-superman .cloud-c {
-  animation-delay: -4s;
+.scene-batman .bat-costume {
+  position: absolute;
+  left: 24%;
+  top: 22%;
+  width: 52%;
+  height: 42%;
+  border-radius: 34% 34% 22% 22%;
+  background: linear-gradient(180deg, #707980 0%, #5f666c 45%, #6f767c 100%);
+  border: 1px solid rgba(33, 41, 50, 0.7);
 }
 
-.scene-superman .cloud-d {
-  animation-delay: -6s;
+.scene-batman .bat-costume::before {
+  content: "";
+  position: absolute;
+  left: 30%;
+  top: 34%;
+  width: 40%;
+  height: 16%;
+  background: rgba(7, 11, 17, 0.96);
+  clip-path: polygon(0 52%, 20% 32%, 36% 45%, 50% 28%, 64% 45%, 80% 32%, 100% 52%, 72% 70%, 28% 70%);
 }
 
-.scene-superman .super-city {
-  fill: rgba(108, 140, 208, 0.52);
+.scene-batman .bat-belt {
+  position: absolute;
+  left: 24%;
+  top: 60%;
+  width: 52%;
+  height: 5.2%;
+  border-radius: 999px;
+  background: linear-gradient(to right, #b58920, #f2c84b, #b58920);
+  box-shadow: 0 0 9px rgba(242, 200, 75, 0.42);
 }
 
-.scene-superman .superman-flight {
-  transform-box: fill-box;
+.scene-batman .bat-leg {
+  position: absolute;
+  left: 24%;
+  top: 63%;
+  width: 52%;
+  height: 35%;
+}
+
+.scene-batman .bat-leg::before,
+.scene-batman .bat-leg::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  width: 38%;
+  height: 100%;
+  background: linear-gradient(180deg, #5f666d 0%, #3e4348 100%);
+  border-radius: 30% 30% 24% 24%;
+}
+
+.scene-batman .bat-leg::before {
+  left: 8%;
+}
+
+.scene-batman .bat-leg::after {
+  right: 8%;
+}
+
+.scene-batman .bat-base {
+  position: absolute;
+  left: 50%;
+  bottom: 5%;
+  width: min(18vw, 12rem);
+  height: min(4.4vw, 2.6rem);
+  transform: translateX(-50%);
+  border-radius: 50%;
+  background: radial-gradient(ellipse at center, rgba(242, 200, 75, 0.2) 0%, rgba(242, 200, 75, 0.03) 60%, rgba(242, 200, 75, 0) 100%);
+}
+
+.scene-superman .sup-stage {
+  background:
+    radial-gradient(circle at 14% 10%, rgba(207, 27, 45, 0.13) 0%, rgba(244, 247, 255, 0) 34%),
+    radial-gradient(circle at 86% 18%, rgba(25, 86, 207, 0.2) 0%, rgba(244, 247, 255, 0) 34%),
+    linear-gradient(180deg, rgba(235, 242, 255, 0.95) 0%, rgba(228, 237, 255, 0.88) 52%, rgba(218, 230, 255, 0.82) 100%);
+}
+
+.scene-superman .sup-stage::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 20% 18%, rgba(255, 255, 255, 0.74) 0 3.6rem, rgba(255, 255, 255, 0) 3.8rem),
+    radial-gradient(circle at 72% 20%, rgba(255, 255, 255, 0.7) 0 3.2rem, rgba(255, 255, 255, 0) 3.4rem),
+    radial-gradient(circle at 90% 34%, rgba(255, 255, 255, 0.58) 0 2.6rem, rgba(255, 255, 255, 0) 2.8rem);
+  opacity: 0.62;
+  animation: cloud-drift 11s ease-in-out infinite;
+}
+
+.scene-superman .sup-stage::after {
+  content: "";
+  position: absolute;
+  left: -3%;
+  right: -3%;
+  bottom: -1%;
+  height: 23%;
+  background:
+    linear-gradient(to top, rgba(76, 114, 192, 0.34), rgba(76, 114, 192, 0)),
+    repeating-linear-gradient(
+      to right,
+      rgba(147, 174, 230, 0.44) 0 28px,
+      rgba(134, 165, 226, 0.34) 28px 48px
+    );
+  clip-path: polygon(
+    0 100%,
+    0 58%,
+    6% 58%,
+    6% 40%,
+    14% 40%,
+    14% 64%,
+    21% 64%,
+    21% 46%,
+    30% 46%,
+    30% 60%,
+    40% 60%,
+    40% 38%,
+    50% 38%,
+    50% 62%,
+    62% 62%,
+    62% 42%,
+    74% 42%,
+    74% 65%,
+    84% 65%,
+    84% 48%,
+    94% 48%,
+    94% 66%,
+    100% 66%,
+    100% 100%
+  );
+}
+
+.scene-superman .sup-sun {
+  position: absolute;
+  top: 7%;
+  left: 10%;
+  width: min(15vw, 9rem);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.95) 0 28%, rgba(255, 214, 187, 0.84) 29% 54%, rgba(207, 27, 45, 0.2) 70%, rgba(207, 27, 45, 0) 100%);
+  box-shadow: 0 0 40px rgba(207, 27, 45, 0.22);
+}
+
+.scene-superman .sup-skyline {
+  position: absolute;
+  bottom: 11%;
+  left: 10%;
+  right: 10%;
+  height: 2px;
+  background: linear-gradient(to right, rgba(21, 70, 184, 0), rgba(21, 70, 184, 0.72), rgba(207, 27, 45, 0.62), rgba(21, 70, 184, 0.72), rgba(21, 70, 184, 0));
+  box-shadow: 0 0 10px rgba(40, 86, 194, 0.2);
+}
+
+.scene-superman .super-art-wrap {
+  position: absolute;
+  top: 0;
+  left: 56%;
+  width: min(40vw, 24rem);
+  height: min(58vh, 34rem);
   transform-origin: 50% 0%;
   transform:
-    translate(
-      calc(0vw + (var(--scroll-progress) * 6vw)),
-      calc(-12vh + (var(--scroll-progress) * 56vh))
+    translate3d(
+      calc(-12vw + (var(--scroll-progress) * 4vw)),
+      calc(-18vh + (var(--scroll-progress) * 62vh)),
+      0
     )
-    rotate(calc(-12deg + (var(--scroll-progress) * 12deg)));
+    rotate(calc(-14deg + (var(--scroll-progress) * 14deg)));
 }
 
-.scene-superman .superman-character {
-  filter: drop-shadow(0 14px 20px rgba(20, 58, 142, 0.28));
+.scene-superman .super-art-wrap::before {
+  content: "";
+  position: absolute;
+  left: 36%;
+  top: 18%;
+  width: 58%;
+  height: 20%;
+  background: linear-gradient(
+    to right,
+    rgba(39, 92, 204, 0),
+    rgba(39, 92, 204, 0.42),
+    rgba(207, 27, 45, 0.3),
+    rgba(39, 92, 204, 0)
+  );
+  filter: blur(2px);
+  transform: skewX(-18deg);
 }
 
-.scene-superman .super-trail {
-  fill: none;
-  stroke: rgba(43, 97, 211, 0.4);
-  stroke-width: 7;
-  stroke-dasharray: 8 12;
-  stroke-linecap: round;
+.scene-superman .superman-css-art {
+  position: absolute;
+  left: 50%;
+  top: 16%;
+  width: min(13vw, 8.4rem);
+  min-width: 6.6rem;
+  aspect-ratio: 0.56;
+  transform: translateX(-50%);
+  filter: drop-shadow(0 16px 18px rgba(34, 76, 167, 0.3));
 }
 
-.scene-superman .super-cape {
-  fill: url(#sup-red);
-  stroke: rgba(149, 16, 38, 0.56);
-  stroke-width: 1.5;
-  animation: cape-wave 2.2s ease-in-out infinite;
+.scene-superman .sup-head {
+  position: absolute;
+  left: 34%;
+  top: 0;
+  width: 32%;
+  height: 17%;
+  border-radius: 50%;
+  background: #ffd7c2;
+  border: 1px solid rgba(120, 76, 47, 0.22);
 }
 
-.scene-superman .super-head {
-  fill: #ffd3b8;
-  stroke: rgba(101, 61, 33, 0.3);
-  stroke-width: 0.8;
+.scene-superman .sup-hair {
+  position: absolute;
+  left: 33%;
+  top: 1%;
+  width: 34%;
+  height: 8%;
+  border-radius: 55% 45% 44% 56%;
+  background: #193f93;
 }
 
-.scene-superman .super-hair {
-  fill: rgba(21, 58, 144, 0.92);
+.scene-superman .sup-cape {
+  position: absolute;
+  left: -6%;
+  top: 14%;
+  width: 108%;
+  height: 52%;
+  border-radius: 18% 82% 42% 58%;
+  background: linear-gradient(150deg, rgba(226, 50, 72, 0.96), rgba(178, 20, 40, 0.94));
+  clip-path: polygon(4% 2%, 94% 18%, 86% 44%, 100% 72%, 72% 86%, 44% 70%, 16% 96%, 0 58%);
+  animation: cape-sweep 2.6s ease-in-out infinite;
+  z-index: -1;
 }
 
-.scene-superman .super-body {
-  fill: url(#sup-blue);
-  stroke: rgba(10, 45, 126, 0.56);
-  stroke-width: 1.5;
+.scene-superman .sup-torso {
+  position: absolute;
+  left: 24%;
+  top: 16%;
+  width: 52%;
+  height: 40%;
+  border-radius: 28% 28% 20% 20%;
+  background: linear-gradient(180deg, #2b5fca 0%, #1c4dad 100%);
+  border: 1px solid rgba(22, 59, 136, 0.5);
 }
 
-.scene-superman .super-belt {
-  fill: url(#sup-gold);
-  stroke: rgba(160, 124, 32, 0.7);
-  stroke-width: 1.1;
+.scene-superman .sup-emblem {
+  position: absolute;
+  left: 38%;
+  top: 28%;
+  width: 24%;
+  height: 11%;
+  background: #f8cf52;
+  border: 1px solid rgba(166, 27, 48, 0.62);
+  clip-path: polygon(50% 0, 100% 22%, 84% 100%, 16% 100%, 0 22%);
 }
 
-.scene-superman .super-emblem {
-  fill: rgba(255, 216, 102, 0.96);
-  stroke: rgba(143, 23, 45, 0.72);
-  stroke-width: 0.9;
+.scene-superman .sup-belt {
+  position: absolute;
+  left: 26%;
+  top: 52%;
+  width: 48%;
+  height: 5%;
+  border-radius: 999px;
+  background: linear-gradient(to right, #c1122c, #f05b6d, #c1122c);
 }
 
-.scene-superman .super-limb {
-  fill: url(#sup-blue);
-  stroke: rgba(19, 57, 146, 0.72);
-  stroke-width: 1.4;
+.scene-superman .sup-arm {
+  position: absolute;
+  top: 22%;
+  width: 17%;
+  height: 30%;
+  border-radius: 46% 46% 30% 30%;
+  background: linear-gradient(180deg, #2b5fca 0%, #1c4dad 100%);
+  border: 1px solid rgba(22, 59, 136, 0.5);
 }
 
-.scene-superman .superman-impact {
-  fill: rgba(21, 70, 184, calc(var(--landing-progress) * 0.28));
-  transform-box: fill-box;
-  transform-origin: center;
-  transform: scale(calc(0.66 + (var(--landing-progress) * 0.58)));
+.scene-superman .sup-arm.arm-left {
+  left: 9%;
+  transform: rotate(26deg);
 }
 
-.scene-superman .superman-dust {
-  fill: rgba(207, 27, 45, calc(var(--landing-progress) * 0.22));
-  transform-box: fill-box;
-  transform-origin: center;
-  transform: scale(calc(0.62 + (var(--landing-progress) * 0.74)));
+.scene-superman .sup-arm.arm-right {
+  right: 9%;
+  transform: rotate(-32deg);
+}
+
+.scene-superman .sup-leg {
+  position: absolute;
+  top: 56%;
+  width: 20%;
+  height: 42%;
+  border-radius: 36% 36% 24% 24%;
+  background: linear-gradient(180deg, #2b5fca 0%, #1c4dad 100%);
+  border: 1px solid rgba(22, 59, 136, 0.5);
+}
+
+.scene-superman .sup-leg.leg-left {
+  left: 24%;
+  transform: rotate(9deg);
+}
+
+.scene-superman .sup-leg.leg-right {
+  right: 24%;
+  transform: rotate(-12deg);
+}
+
+.scene-superman .sup-landing {
+  position: absolute;
+  left: 50%;
+  bottom: 6%;
+  width: min(22vw, 14rem);
+  height: min(5.4vw, 3.2rem);
+  transform: translateX(-50%) scale(calc(0.62 + (var(--landing-progress) * 0.64)));
+  border-radius: 50%;
+  background:
+    radial-gradient(ellipse at center, rgba(48, 99, 215, calc(0.14 + (var(--landing-progress) * 0.22))) 0%, rgba(207, 27, 45, calc(0.08 + (var(--landing-progress) * 0.17))) 42%, rgba(255, 255, 255, 0) 100%);
 }
 
 a {
@@ -463,14 +824,14 @@ body[data-theme="light"] .orb-b {
 }
 
 .theme-toggle {
-  --toggle-thumb-travel: 1.94rem;
+  --toggle-thumb-travel: 1.92rem;
   border: 0;
   background: transparent;
   display: inline-flex;
   justify-content: center;
   align-items: center;
-  width: 4.1rem;
-  height: 2.1rem;
+  width: 4.08rem;
+  height: 2.08rem;
   margin-left: auto;
   padding: 0;
   cursor: pointer;
@@ -481,15 +842,23 @@ body[data-theme="light"] .orb-b {
   transform: translateY(-1px) scale(1.01);
 }
 
+.theme-toggle:focus {
+  outline: none;
+}
+
 .theme-toggle-track {
   position: relative;
   width: 100%;
   height: 100%;
   border-radius: 999px;
   overflow: hidden;
-  border: 1px solid rgba(21, 70, 184, 0.38);
-  background: linear-gradient(145deg, #d8ebff 0%, #b9d9ff 62%, #ebf4ff 100%);
-  box-shadow: inset 0 0 10px rgba(21, 70, 184, 0.18);
+  border: 2px solid #1f63d4;
+  background: linear-gradient(145deg, #7ed8f5 0%, #57bfe8 58%, #7ad5f2 100%);
+  box-shadow: inset 0 0 12px rgba(31, 99, 212, 0.22);
+}
+
+.theme-toggle:focus-visible .theme-toggle-track {
+  box-shadow: 0 0 0 2px rgba(31, 99, 212, 0.25), inset 0 0 12px rgba(31, 99, 212, 0.24);
 }
 
 .theme-stars,
@@ -508,7 +877,7 @@ body[data-theme="light"] .orb-b {
   width: 2px;
   height: 2px;
   border-radius: 50%;
-  background: rgba(245, 245, 245, 0.9);
+  background: rgba(245, 245, 245, 0.92);
 }
 
 .theme-stars .star-a {
@@ -538,40 +907,40 @@ body[data-theme="light"] .orb-b {
 .theme-clouds .cloud {
   position: absolute;
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.94);
-  border: 1px solid rgba(30, 79, 186, 0.22);
+  background: rgba(233, 248, 255, 0.95);
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.6);
 }
 
 .theme-clouds .cloud-a {
-  width: 0.88rem;
-  height: 0.38rem;
-  top: 0.58rem;
+  width: 0.86rem;
+  height: 0.36rem;
+  top: 0.6rem;
   left: 1.62rem;
 }
 
 .theme-clouds .cloud-b {
-  width: 0.62rem;
-  height: 0.3rem;
-  top: 1.15rem;
-  left: 1.2rem;
+  width: 0.58rem;
+  height: 0.28rem;
+  top: 1.13rem;
+  left: 1.24rem;
 }
 
 .theme-clouds .cloud-c {
-  width: 0.74rem;
-  height: 0.34rem;
-  top: 1.03rem;
-  left: 2.1rem;
+  width: 0.7rem;
+  height: 0.32rem;
+  top: 1.01rem;
+  left: 2.08rem;
 }
 
 .theme-toggle-thumb {
   position: absolute;
-  top: 0.18rem;
-  left: 0.18rem;
-  width: 1.8rem;
-  height: 1.8rem;
+  top: 0.16rem;
+  left: 0.16rem;
+  width: 1.68rem;
+  height: 1.68rem;
   border-radius: 50%;
-  background: #ffd74a;
-  box-shadow: 0 0 10px rgba(255, 208, 59, 0.45);
+  background: #ffe100;
+  box-shadow: 0 0 12px rgba(255, 226, 0, 0.55);
   transition: transform 0.28s ease, background-color 0.28s ease, box-shadow 0.28s ease;
 }
 
@@ -589,7 +958,7 @@ body[data-theme="light"] .orb-b {
   height: 0.35rem;
   top: 0.36rem;
   left: 0.38rem;
-  background: rgba(207, 205, 191, 0.5);
+  background: rgba(205, 200, 184, 0.52);
 }
 
 .theme-toggle-thumb::after {
@@ -597,13 +966,13 @@ body[data-theme="light"] .orb-b {
   height: 0.23rem;
   top: 0.86rem;
   left: 0.84rem;
-  background: rgba(207, 205, 191, 0.5);
+  background: rgba(205, 200, 184, 0.52);
 }
 
 body[data-theme="dark"] .theme-toggle-track {
-  border-color: rgba(9, 68, 146, 0.5);
-  background: linear-gradient(145deg, #041636 0%, #061f44 100%);
-  box-shadow: inset 0 0 11px rgba(0, 45, 84, 0.6);
+  border-color: #0b3b8a;
+  background: linear-gradient(145deg, #02153a 0%, #042357 54%, #0a2b63 100%);
+  box-shadow: inset 0 0 12px rgba(5, 33, 84, 0.62);
 }
 
 body[data-theme="dark"] .theme-stars {
@@ -611,7 +980,7 @@ body[data-theme="dark"] .theme-stars {
 }
 
 body[data-theme="dark"] .theme-stars .star {
-  background: rgba(242, 200, 75, 0.9);
+  background: rgba(247, 249, 255, 0.9);
 }
 
 body[data-theme="dark"] .theme-clouds {
@@ -620,8 +989,8 @@ body[data-theme="dark"] .theme-clouds {
 
 body[data-theme="dark"] .theme-toggle-thumb {
   transform: translateX(var(--toggle-thumb-travel));
-  background: #f0efe3;
-  box-shadow: 0 0 10px rgba(240, 239, 227, 0.48);
+  background: #efede2;
+  box-shadow: 0 0 11px rgba(239, 237, 226, 0.5);
 }
 
 body[data-theme="dark"] .theme-toggle-thumb::before,
@@ -635,9 +1004,9 @@ body[data-theme="light"] .theme-toggle-thumb::after {
 }
 
 body[data-theme="light"] .theme-toggle-track {
-  border-color: rgba(0, 0, 0, 0.45);
-  background: linear-gradient(145deg, #d8ecff 0%, #ffffff 58%, #ebf4ff 100%);
-  box-shadow: inset 0 0 10px rgba(21, 70, 184, 0.2), 0 0 0 1px rgba(207, 27, 45, 0.15);
+  border-color: #1f63d4;
+  background: linear-gradient(145deg, #7ed8f5 0%, #57bfe8 58%, #7ad5f2 100%);
+  box-shadow: inset 0 0 12px rgba(31, 99, 212, 0.22);
 }
 
 body[data-theme="light"] .theme-stars {
@@ -649,14 +1018,13 @@ body[data-theme="light"] .theme-clouds {
 }
 
 body[data-theme="light"] .theme-clouds .cloud {
-  background: rgba(255, 255, 255, 0.95);
-  border-color: rgba(30, 79, 186, 0.24);
+  background: rgba(233, 248, 255, 0.95);
 }
 
 body[data-theme="light"] .theme-toggle-thumb {
   transform: translateX(0);
-  background: #f6ff00;
-  box-shadow: 0 0 10px rgba(255, 208, 59, 0.45), 0 0 0 1px rgba(207, 27, 45, 0.18);
+  background: #ffe100;
+  box-shadow: 0 0 12px rgba(255, 226, 0, 0.55);
 }
 
 .hero {
@@ -864,7 +1232,7 @@ body[data-theme="light"] .hero-computer-svg .project-line.soft {
 }
 
 body[data-theme="light"] .hero-computer-svg .project-pill {
-  fill: rgba(32, 82, 194, 0.78);
+  fill: rgba(194, 66, 60, 0.78);
 }
 
 body[data-theme="light"] .hero-computer-svg .screen-label {
@@ -975,13 +1343,25 @@ body[data-theme="light"] .hero-ui-chip .chip-value {
 
 .hero-visual-caption {
   margin: 0.68rem 0 0;
-  font-size: 0.79rem;
-  color: rgba(245, 245, 245, 0.86);
+  display: inline-block;
+  width: fit-content;
+  padding: 0.34rem 0.6rem;
+  border-radius: 0.52rem;
+  border: 1px solid rgba(242, 200, 75, 0.28);
+  background: rgba(8, 10, 14, 0.52);
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #f6f8fb;
+  text-shadow: none;
   letter-spacing: 0.02em;
 }
 
 body[data-theme="light"] .hero-visual-caption {
-  color: #1b4ab9;
+  color: #0f3f9f !important;
+  border-color: rgba(36, 87, 203, 0.48) !important;
+  background: rgba(255, 255, 255, 0.92) !important;
+  box-shadow: 0 8px 18px rgba(46, 93, 197, 0.14), 0 2px 6px rgba(207, 27, 45, 0.08);
+  text-shadow: none;
 }
 
 .eyebrow {
@@ -1414,6 +1794,15 @@ body[data-theme="light"] .skills-dot {
   }
 }
 
+@keyframes star-drift {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(14px);
+  }
+}
+
 @keyframes star-twinkle {
   0%,
   100% {
@@ -1508,6 +1897,16 @@ body[data-theme="light"] .skills-dot {
   }
 }
 
+@keyframes cape-sweep {
+  0%,
+  100% {
+    transform: rotate(0deg) skewY(0deg);
+  }
+  50% {
+    transform: rotate(-2deg) skewY(5deg);
+  }
+}
+
 @media (max-width: 900px) {
   body[data-theme="dark"] .scene-batman {
     opacity: 0.42;
@@ -1573,7 +1972,7 @@ body[data-theme="light"] .skills-dot {
   }
 
   .theme-toggle {
-    --toggle-thumb-travel: 1.54rem;
+    --toggle-thumb-travel: 1.72rem;
     width: 3.7rem;
     height: 1.9rem;
   }
