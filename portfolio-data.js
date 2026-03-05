@@ -1,5 +1,6 @@
 import { supabaseConfig, supabaseReady } from "./supabase-config.js?v=20260215v23";
 import {
+  defaultPortfolioContent,
   normalizePortfolioContent
 } from "./portfolio-content.js?v=20260215v23";
 
@@ -549,7 +550,15 @@ async function initPortfolio() {
     setSectionsVisible(true);
   } catch (error) {
     console.error("Portfolio load failed:", error);
-    setDatabaseErrorState(error);
+    try {
+      renderPortfolioContent(defaultPortfolioContent);
+      setHeroDetailsVisible(true);
+      setSectionsVisible(true);
+      console.warn("Loaded local fallback content because SQL read failed.");
+    } catch (fallbackError) {
+      console.error("Portfolio fallback render failed:", fallbackError);
+      setDatabaseErrorState(error);
+    }
   }
 }
 
