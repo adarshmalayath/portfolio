@@ -9,6 +9,10 @@ const CONTENT_ROW_ID = 1;
 const FETCH_TIMEOUT_MS = 5000;
 const MAX_FETCH_ATTEMPTS = 2;
 const RETRY_DELAY_MS = 400;
+const PROJECT_LINK_MAP = {
+  bankingserviceswebapp: "https://github.com/adarshmalayath/Bank-Website-Project",
+  egovernancesystem: "https://github.com/simatlms5/egovernance"
+};
 const APP_BASE_PATH = new URL(".", import.meta.url).pathname;
 const SKILL_ICON_BASE_PATH = `${APP_BASE_PATH}skill-icons/`;
 const SKILL_ICON_MAP = {
@@ -137,6 +141,20 @@ function normalizeLocalPath(path, fallback) {
 
   const relativePath = encodeURI(value.replace(/^\/+/, ""));
   return `${APP_BASE_PATH}${relativePath}`;
+}
+
+function normalizeProjectKey(value) {
+  return String(value || "")
+    .toLowerCase()
+    .replace(/[^a-z0-9]/g, "");
+}
+
+function resolveProjectLink(project) {
+  const explicitUrl = normalizeExternalHttps(project?.url, "");
+  if (explicitUrl) {
+    return explicitUrl;
+  }
+  return PROJECT_LINK_MAP[normalizeProjectKey(project?.title)] || "";
 }
 
 function normalizeCvUrl(path) {
@@ -319,7 +337,23 @@ function renderProjects(projects) {
   }
   grid.innerHTML = "";
   projects.forEach((project) => {
-    grid.appendChild(createCard(project.title, project.description, project.tech));
+    const card = createCard(project.title, project.description, project.tech);
+    const projectLink = resolveProjectLink(project);
+    if (projectLink) {
+      const actionWrap = document.createElement("p");
+      actionWrap.className = "project-link-wrap";
+
+      const link = document.createElement("a");
+      link.className = "project-link";
+      link.href = projectLink;
+      link.target = "_blank";
+      link.rel = "noopener noreferrer";
+      link.textContent = "View Repository";
+
+      actionWrap.appendChild(link);
+      card.appendChild(actionWrap);
+    }
+    grid.appendChild(card);
   });
 }
 
