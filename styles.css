@@ -821,7 +821,11 @@ body[data-theme="light"] .signal-mark {
   margin: 0.62rem 0 0;
   padding: 0;
   display: grid;
-  gap: 0.5rem;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-rows: repeat(4, minmax(0, auto));
+  grid-auto-flow: column;
+  column-gap: 1.1rem;
+  row-gap: 0.5rem;
 }
 
 .skill-list-item {
@@ -1232,6 +1236,13 @@ body[data-theme="light"] .skills-dot {
 
   .skills-track {
     grid-auto-columns: 100%;
+  }
+
+  .skill-list {
+    grid-template-columns: 1fr;
+    grid-template-rows: none;
+    grid-auto-flow: row;
+    column-gap: 0;
   }
 
   .grid,
