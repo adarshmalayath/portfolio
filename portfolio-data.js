@@ -531,7 +531,6 @@ function setHeroDetailsVisible(isVisible) {
 }
 
 function setLoadingState() {
-  textById("brandName", "Portfolio");
   textById("heroRole", "Loading");
   textById("heroHeadline", "Loading portfolio data from database...");
   textById("heroSummary", "Please wait while the latest saved content is fetched.");
@@ -543,7 +542,6 @@ function setDatabaseErrorState(error) {
       ? error.message
       : "Could not load saved portfolio data from database.";
 
-  textById("brandName", "Portfolio");
   textById("heroRole", "Database Error");
   textById("heroHeadline", "Saved portfolio data could not be loaded.");
   textById("heroSummary", message);

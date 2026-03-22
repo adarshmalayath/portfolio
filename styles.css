@@ -139,8 +139,8 @@ a:hover {
   display: inline-flex;
   align-items: center;
   position: relative;
-  padding-bottom: 0.2rem;
-  gap: 0.55rem;
+  padding-bottom: 0;
+  gap: 0;
   font-family: "Trebuchet MS", "Segoe UI", Arial, sans-serif;
   font-weight: 600;
   letter-spacing: 0.02em;
@@ -148,19 +148,13 @@ a:hover {
 }
 
 .brand::after {
-  content: "";
-  position: absolute;
-  left: calc(1.4rem + 0.55rem);
-  bottom: -0.28rem;
-  width: calc(100% - (1.4rem + 0.55rem));
-  height: 2px;
-  background: linear-gradient(to right, var(--signal), transparent);
+  content: none;
 }
 
 .brand-logo {
   display: block;
-  width: 1.4rem;
-  height: 1.4rem;
+  width: 1.9rem;
+  height: 1.9rem;
   flex: 0 0 auto;
 }
 
@@ -290,6 +284,14 @@ body[data-theme="light"] .theme-toggle-icon::before {
 
 .hero-main {
   max-width: 760px;
+}
+
+.hero-name {
+  margin: 0 0 0.18rem;
+  font-family: "Trebuchet MS", "Segoe UI", Arial, sans-serif;
+  font-size: clamp(1.6rem, 3vw, 2.35rem);
+  line-height: 1.12;
+  color: var(--text);
 }
 
 .hero-visual {
@@ -619,10 +621,11 @@ body[data-theme="light"] .hero-visual-caption {
 
 .eyebrow {
   color: var(--signal);
-  font-size: 0.85rem;
+  font-size: 0.88rem;
   text-transform: uppercase;
   letter-spacing: 0.1em;
   margin: 0 0 0.8rem;
+  font-weight: 700;
 }
 
 .signal-mark {
@@ -646,7 +649,7 @@ body[data-theme="light"] .signal-mark {
   content: none;
 }
 
-.hero h1 {
+.hero h2 {
   margin: 0;
   font-family: "Trebuchet MS", "Segoe UI", Arial, sans-serif;
   font-size: clamp(2rem, 4vw, 3.6rem);
