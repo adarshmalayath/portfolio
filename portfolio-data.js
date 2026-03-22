@@ -6,7 +6,9 @@ import {
 
 const CONTENT_TABLE = "portfolio_content";
 const CONTENT_ROW_ID = 1;
-const FETCH_TIMEOUT_MS = 30000;
+const FETCH_TIMEOUT_MS = 5000;
+const MAX_FETCH_ATTEMPTS = 2;
+const RETRY_DELAY_MS = 400;
 const APP_BASE_PATH = new URL(".", import.meta.url).pathname;
 const SKILL_ICON_BASE_PATH = `${APP_BASE_PATH}skill-icons/`;
 const SKILL_ICON_MAP = {
@@ -495,7 +497,7 @@ async function fetchRemotePortfolio() {
     throw new Error("Supabase is not configured. Update supabase-config.js.");
   }
 
-  for (let attempt = 0; attempt < 3; attempt += 1) {
+  for (let attempt = 0; attempt < MAX_FETCH_ATTEMPTS; attempt += 1) {
     const endpoint =
       `${supabaseConfig.url}/rest/v1/${CONTENT_TABLE}` +
       `?id=eq.${CONTENT_ROW_ID}&select=content,updated_at`;
@@ -527,11 +529,16 @@ async function fetchRemotePortfolio() {
 
       return rows[0].content;
     } catch (error) {
-      if (attempt === 2) {
+      const message = String(error?.message || "");
+      const isNetworkFailure =
+        error instanceof TypeError ||
+        message.includes("Failed to fetch") ||
+        message.includes("ERR_NAME_NOT_RESOLVED");
+
+      if (attempt === MAX_FETCH_ATTEMPTS - 1 || isNetworkFailure) {
         throw error;
       }
-      const retryDelayMs = attempt === 0 ? 1400 : 2600;
-      await wait(retryDelayMs);
+      await wait(RETRY_DELAY_MS);
     }
   }
 
