@@ -11,8 +11,17 @@ const MAX_FETCH_ATTEMPTS = 2;
 const RETRY_DELAY_MS = 400;
 const PROJECT_LINK_MAP = {
   bankingserviceswebapp: "https://github.com/adarshmalayath/Bank-Website-Project",
-  egovernancesystem: "https://github.com/simatlms5/egovernance"
+  egovernancesystem: "https://github.com/simatlms5/egovernance",
+  onlinejobportal: "https://github.com/adarshmalayath/Online-Job-Portal"
 };
+const REQUIRED_PROJECTS = [
+  {
+    title: "Online Job Portal",
+    tech: "Full Stack Web Application",
+    description:
+      "Developed a job portal that supports job posting, search, and application workflows for candidates and recruiters."
+  }
+];
 const APP_BASE_PATH = new URL(".", import.meta.url).pathname;
 const SKILL_ICON_BASE_PATH = `${APP_BASE_PATH}skill-icons/`;
 const SKILL_ICON_MAP = {
@@ -336,7 +345,19 @@ function renderProjects(projects) {
     return;
   }
   grid.innerHTML = "";
-  projects.forEach((project) => {
+  const mergedProjects = Array.isArray(projects) ? [...projects] : [];
+  const existingProjectKeys = new Set(
+    mergedProjects.map((project) => normalizeProjectKey(project?.title))
+  );
+
+  REQUIRED_PROJECTS.forEach((project) => {
+    const key = normalizeProjectKey(project.title);
+    if (!existingProjectKeys.has(key)) {
+      mergedProjects.push(project);
+    }
+  });
+
+  mergedProjects.forEach((project) => {
     const card = createCard(project.title, project.description, project.tech);
     const projectLink = resolveProjectLink(project);
     if (projectLink) {
