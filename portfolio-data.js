@@ -45,13 +45,13 @@ const SKILL_ICON_MAP = {
   servicenow: "servicenow.svg",
   jira: "jira.svg",
   obdx: "obdx.svg",
+  powerbi: "powerbi.svg",
+  msexcel: "msexcel.svg",
   bankingplatforms: "banking.svg",
   fraudrisk: "fraud.svg",
   apiintegration: "api.svg",
   compliance: "compliance.svg"
 };
-SKILL_ICON_MAP.powerbi = "generic.svg";
-SKILL_ICON_MAP.msexcel = "generic.svg";
 const PREFERRED_CV_URL = "https://adarshmalayath.github.io/portfolio/CV%20IT.pdf";
 const CV_EDUCATION_ADDITIONS = [
   {

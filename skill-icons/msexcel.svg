@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
+  <rect x="10" y="10" width="44" height="44" rx="5" fill="currentColor" opacity="0.28"/>
+  <rect x="10" y="10" width="23" height="44" rx="5" fill="currentColor"/>
+  <path
+    d="M18 22h4.5l3.2 5.1L29 22h4.3l-5.1 8 5.2 8H29l-3.3-5.3-3.3 5.3H18l5.2-8-5.2-8z"
+    fill="#0a0a0a"
+  />
+  <path d="M35 20h14v4H35zM35 28h14v4H35zM35 36h14v4H35z" fill="currentColor"/>
+</svg>
