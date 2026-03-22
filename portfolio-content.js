@@ -30,12 +30,18 @@ export const defaultPortfolioContent = {
     ]
   },
   skills: [
-    { title: "Languages", description: "Java, JavaScript, Python, PL/SQL" },
-    { title: "Web & UI", description: "ReactJS, HTML5, CSS3, Bootstrap" },
-    { title: "Frameworks", description: "Spring, Spring Boot" },
+    { title: "Languages", description: "Java, Python" },
+    { title: "Web & UI", description: "JavaScript, HTML5, CSS3, Bootstrap" },
+    { title: "Frameworks", description: "ReactJS, Spring" },
     { title: "Databases", description: "Oracle, SQL Server, MySQL" },
-    { title: "Tools", description: "Git, IntelliJ IDEA, VS Code, ServiceNow, JIRA, OBDX" },
-    { title: "Domain Focus", description: "Banking Platforms, Fraud Risk, API Integration, Compliance" }
+    {
+      title: "Tools",
+      description: "Git, IntelliJ IDEA, VS Code, ServiceNow, JIRA, OBDX, Power BI, MS Excel"
+    },
+    {
+      title: "Domain Focus",
+      description: "Banking Platforms, Fraud Risk Management, API Integration, Compliance"
+    }
   ],
   projects: [
     {
@@ -161,7 +167,8 @@ export function normalizePortfolioContent(input) {
       .map((item) => ({
         title: coerceString(item?.title),
         tech: coerceString(item?.tech),
-        description: coerceString(item?.description)
+        description: coerceString(item?.description),
+        url: coerceString(item?.url)
       }))
       .filter((item) => item.title && item.description),
     education: coerceArray(source.education, defaultPortfolioContent.education)

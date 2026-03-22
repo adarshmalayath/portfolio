@@ -1,7 +1,7 @@
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2?bundle";
 import {
   normalizePortfolioContent
-} from "./portfolio-content.js?v=20260215v21";
+} from "./portfolio-content.js?v=20260322v24";
 import {
   supabaseAdmin,
   supabaseConfig,

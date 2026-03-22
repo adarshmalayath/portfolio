@@ -2,7 +2,7 @@ import { supabaseConfig, supabaseReady } from "./supabase-config.js?v=20260215v2
 import {
   defaultPortfolioContent,
   normalizePortfolioContent
-} from "./portfolio-content.js?v=20260215v23";
+} from "./portfolio-content.js?v=20260322v24";
 
 const CONTENT_TABLE = "portfolio_content";
 const CONTENT_ROW_ID = 1;
@@ -50,6 +50,8 @@ const SKILL_ICON_MAP = {
   apiintegration: "api.svg",
   compliance: "compliance.svg"
 };
+SKILL_ICON_MAP.powerbi = "generic.svg";
+SKILL_ICON_MAP.msexcel = "generic.svg";
 const PREFERRED_CV_URL = "https://adarshmalayath.github.io/portfolio/CV%20IT.pdf";
 const CV_EDUCATION_ADDITIONS = [
   {
