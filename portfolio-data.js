@@ -19,7 +19,7 @@ const REQUIRED_PROJECTS = [
     title: "Online Job Portal",
     tech: "Full Stack Web Application",
     description:
-      "Developed a job portal that supports job posting, search, and application workflows for candidates and recruiters."
+      "Developed a job portal that supports job posting, search, and application workflows for candidates."
   }
 ];
 const APP_BASE_PATH = new URL(".", import.meta.url).pathname;
