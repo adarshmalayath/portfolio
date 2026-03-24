@@ -1,6 +1,11 @@
 import { normalizeContent } from "./defaultContent";
 
 const API_BASE = (import.meta.env.VITE_API_BASE || "").replace(/\/$/, "");
+const API_CONFIGURED = Boolean(API_BASE);
+
+function looksLikeHtml(value) {
+  return /<\s*(!doctype|html|head|body)\b/i.test(String(value || ""));
+}
 
 function buildUrl(path) {
   if (/^https?:\/\//i.test(path)) {
@@ -11,6 +16,10 @@ function buildUrl(path) {
 }
 
 async function request(path, options = {}) {
+  if (!API_CONFIGURED) {
+    throw new Error("API is not configured for this deployment.");
+  }
+
   const response = await fetch(buildUrl(path), {
     ...options,
     headers: {
@@ -30,7 +39,12 @@ async function request(path, options = {}) {
   }
 
   if (!response.ok) {
-    const message = body?.message || `Request failed: ${response.status}`;
+    const message =
+      body?.message && !looksLikeHtml(body.message)
+        ? body.message
+        : bodyText && !looksLikeHtml(bodyText)
+          ? bodyText
+          : `Request failed: ${response.status}`;
     throw new Error(message);
   }
 
@@ -38,6 +52,9 @@ async function request(path, options = {}) {
 }
 
 export async function fetchPublicContent() {
+  if (!API_CONFIGURED) {
+    return normalizeContent();
+  }
   const payload = await request("/api/content/public", { method: "GET" });
   return normalizeContent(payload);
 }
