@@ -22,7 +22,6 @@
   --card-overlay-start: rgba(255, 255, 255, 0.02);
   --card-overlay-end: rgba(20, 20, 20, 0.92);
   --timeline-bg: rgba(20, 20, 20, 0.85);
-  --card-title-color: #ffffff;
 }
 
 * {
@@ -70,17 +69,10 @@ body[data-theme="light"] {
   --card-overlay-start: rgba(255, 255, 255, 0.95);
   --card-overlay-end: rgba(231, 238, 255, 0.92);
   --timeline-bg: rgba(238, 244, 255, 0.95);
-  --card-title-color: #152b59;
   background:
     radial-gradient(circle at 84% 10%, rgba(207, 27, 45, 0.24) 0%, rgba(255, 255, 255, 0) 34%),
     radial-gradient(circle at 20% 84%, rgba(207, 27, 45, 0.12) 0%, rgba(255, 255, 255, 0) 44%),
     linear-gradient(160deg, #ffffff 0%, #fff8f9 100%);
-}
-
-html[data-theme="light"],
-html.light-mode,
-body.light-mode {
-  --card-title-color: #152b59;
 }
 
 body::before {
@@ -90,20 +82,24 @@ body::before {
   pointer-events: none;
   z-index: 0;
   opacity: 0.12;
-  background: repeating-linear-gradient(-25deg,
-      rgba(255, 255, 255, 0.08) 0,
-      rgba(255, 255, 255, 0.08) 1px,
-      transparent 1px,
-      transparent 11px);
+  background: repeating-linear-gradient(
+    -25deg,
+    rgba(255, 255, 255, 0.08) 0,
+    rgba(255, 255, 255, 0.08) 1px,
+    transparent 1px,
+    transparent 11px
+  );
 }
 
 body[data-theme="light"]::before {
   opacity: 0.08;
-  background: repeating-linear-gradient(-25deg,
-      rgba(18, 74, 182, 0.11) 0,
-      rgba(18, 74, 182, 0.11) 1px,
-      transparent 1px,
-      transparent 12px);
+  background: repeating-linear-gradient(
+    -25deg,
+    rgba(18, 74, 182, 0.11) 0,
+    rgba(18, 74, 182, 0.11) 1px,
+    transparent 1px,
+    transparent 12px
+  );
 }
 
 a {
@@ -340,12 +336,14 @@ body[data-theme="light"] .hero-visual {
 }
 
 body[data-theme="light"] .hero-visual-stage::after {
-  background: linear-gradient(to right,
-      rgba(34, 86, 196, 0),
-      rgba(34, 86, 196, 0.76),
-      rgba(207, 27, 45, 0.72),
-      rgba(34, 86, 196, 0.76),
-      rgba(34, 86, 196, 0));
+  background: linear-gradient(
+    to right,
+    rgba(34, 86, 196, 0),
+    rgba(34, 86, 196, 0.76),
+    rgba(207, 27, 45, 0.72),
+    rgba(34, 86, 196, 0.76),
+    rgba(34, 86, 196, 0)
+  );
   box-shadow: 0 0 10px rgba(34, 86, 196, 0.28);
 }
 
@@ -791,26 +789,13 @@ body[data-theme="light"] .signal-mark {
 .card h2 {
   margin: 0;
   font-size: 1.7rem;
+  color: #ffffff;
 }
 
 .card h3 {
   margin: 0;
+  color: #ffffff;
   font-size: 1.03rem;
-}
-
-html[data-theme="light"] #skills .card h3,
-html[data-theme="light"] #projects .card h3,
-html[data-theme="light"] #education .card h3,
-body[data-theme="light"] #skills .card h3,
-body[data-theme="light"] #projects .card h3,
-body[data-theme="light"] #education .card h3,
-html.light-mode #skills .card h3,
-html.light-mode #projects .card h3,
-html.light-mode #education .card h3,
-body.light-mode #skills .card h3,
-body.light-mode #projects .card h3,
-body.light-mode #education .card h3 {
-  color: #152b59 !important;
 }
 
 .card p {
@@ -968,7 +953,8 @@ body[data-theme="light"] .skills-dot {
   height: 1rem;
   flex: 0 0 auto;
   object-fit: contain;
-  filter: brightness(0) saturate(100%) invert(82%) sepia(4%) saturate(102%) hue-rotate(356deg) brightness(92%) contrast(88%);
+  filter: brightness(0) saturate(100%) invert(82%) sepia(4%) saturate(102%) hue-rotate(356deg)
+    brightness(92%) contrast(88%);
   opacity: 0.95;
 }
 
@@ -1067,35 +1053,29 @@ body[data-theme="light"] .skills-dot {
   0% {
     box-shadow: 0 0 0 0 rgba(242, 200, 75, 0.68);
   }
-
   70% {
     box-shadow: 0 0 0 11px rgba(242, 200, 75, 0);
   }
-
   100% {
     box-shadow: 0 0 0 0 rgba(242, 200, 75, 0);
   }
 }
 
 @keyframes screen-glow {
-
   0%,
   100% {
     filter: brightness(1);
   }
-
   50% {
     filter: brightness(1.14);
   }
 }
 
 @keyframes code-flicker {
-
   0%,
   100% {
     opacity: 0.95;
   }
-
   50% {
     opacity: 0.66;
   }
@@ -1105,31 +1085,26 @@ body[data-theme="light"] .skills-dot {
   from {
     stroke-dashoffset: 0;
   }
-
   to {
     stroke-dashoffset: -44;
   }
 }
 
 @keyframes project-hover {
-
   0%,
   100% {
     transform: translateY(0);
   }
-
   50% {
     transform: translateY(-6px);
   }
 }
 
 @keyframes ui-float {
-
   0%,
   100% {
     transform: translateY(0);
   }
-
   50% {
     transform: translateY(-7px);
   }
@@ -1140,12 +1115,10 @@ body[data-theme="light"] .skills-dot {
     transform: translateY(0);
     opacity: 0.05;
   }
-
   20%,
   80% {
     opacity: 1;
   }
-
   100% {
     transform: translateY(10.2rem);
     opacity: 0.08;
