@@ -969,6 +969,10 @@ body[data-theme="light"] .skills-dot {
   margin: 0;
 }
 
+.certification-card .cert-link {
+  margin-top: 0.65rem;
+}
+
 .timeline-item {
   position: relative;
   padding-left: 2rem;

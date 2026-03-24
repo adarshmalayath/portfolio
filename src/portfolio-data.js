@@ -65,6 +65,28 @@ const CV_EDUCATION_ADDITIONS = [
     detail: "Percentage: 95%"
   }
 ];
+const CERTIFICATE_FILE_MAP = [
+  {
+    test: (value) => /discrete mathematics|nptel|iit madras/i.test(value),
+    file: "DescreteMath.pdf"
+  },
+  {
+    test: (value) => /java full stack developer|niit/i.test(value),
+    file: "JavaFullStackDev.pdf"
+  },
+  {
+    test: (value) => /analytics|excel|coding ninjas/i.test(value),
+    file: "Certificate_Excel.pdf"
+  },
+  {
+    test: (value) => /power bi|data visualization/i.test(value),
+    file: "PowerBI.pdf"
+  },
+  {
+    test: (value) => /sql for data analysis|sql/i.test(value),
+    file: "SQL.pdf"
+  }
+];
 
 function wait(ms) {
   return new Promise((resolve) => {
@@ -196,6 +218,15 @@ function normalizeCvUrl(path) {
   }
 
   return normalized;
+}
+
+function resolveCertificatePath(certificateName) {
+  const value = String(certificateName || "");
+  const match = CERTIFICATE_FILE_MAP.find((item) => item.test(value));
+  if (!match) {
+    return "";
+  }
+  return `${APP_BASE_PATH}images/documents/${encodeURIComponent(match.file)}`;
 }
 
 function createCard(title, body, meta = "") {
@@ -433,6 +464,18 @@ function renderCertifications(certifications) {
     paragraph.textContent = item;
 
     card.appendChild(paragraph);
+
+    const certificateHref = resolveCertificatePath(item);
+    if (certificateHref) {
+      const link = document.createElement("a");
+      link.className = "project-link cert-link";
+      link.href = certificateHref;
+      link.target = "_blank";
+      link.rel = "noopener noreferrer";
+      link.textContent = "View Certificate";
+      card.appendChild(link);
+    }
+
     wrapper.appendChild(card);
   });
 }
