@@ -1,0 +1,620 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Adarsh Malayath | Full Stack Developer</title>
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; object-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self' https://*.supabase.co; upgrade-insecure-requests; block-all-mixed-content"
+    />
+    <meta http-equiv="Referrer-Policy" content="no-referrer" />
+    <meta name="referrer" content="no-referrer" />
+    <meta http-equiv="X-Content-Type-Options" content="nosniff" />
+    <meta
+      http-equiv="Permissions-Policy"
+      content="camera=(), microphone=(), geolocation=()"
+    />
+    <meta
+      name="description"
+      content="Portfolio website for Adarsh Malayath, full stack developer with banking technology experience in Java, PL/SQL, ReactJS, and production systems."
+    />
+    <link rel="canonical" href="https://adarshmalayath.github.io/portfolio" />
+    <link rel="icon" type="image/svg+xml" href="/portfolio/images/icons/brand/brand-icon.svg?v=20260215v22" />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="/portfolio/images/icons/brand/brand-icon-32.png?v=20260215v22"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="/portfolio/images/icons/brand/brand-icon-16.png?v=20260215v22"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="/portfolio/images/icons/brand/brand-icon-180.png?v=20260215v22"
+    />
+    <link rel="manifest" href="/portfolio/config/site.webmanifest?v=20260215v22" />
+    <link rel="stylesheet" href="/portfolio/src/styles.css?v=20260323v73" />
+  </head>
+  <body data-theme="dark">
+    <header class="site-header reveal">
+      <a class="brand" href="#top" aria-label="Back to top">
+        <img
+          class="brand-logo"
+          src="/portfolio/images/icons/brand/brand-icon-32.png?v=20260215v22"
+          alt="Brand logo"
+          width="32"
+          height="32"
+        />
+      </a>
+      <nav class="site-nav">
+        <a href="#experience" id="navExperience">Experience</a>
+        <a href="#skills" id="navSkills">Skills</a>
+        <a href="#projects" id="navProjects">Projects</a>
+        <a href="#education" id="navEducation">Education</a>
+        <button
+          class="theme-toggle"
+          id="themeToggle"
+          type="button"
+          aria-label="Switch theme mode"
+          aria-pressed="false"
+        >
+          <span class="theme-toggle-track" aria-hidden="true">
+            <span class="theme-toggle-label theme-label-light">LIGHT<br />MODE</span>
+            <span class="theme-toggle-label theme-label-dark">DARK<br />MODE</span>
+            <span class="theme-toggle-thumb"><span class="theme-toggle-icon"></span></span>
+          </span>
+        </button>
+      </nav>
+    </header>
+
+    <main id="top" class="container">
+      <section class="hero reveal">
+        <div class="hero-main">
+          <h1 class="hero-name" id="brandName">Adarsh Malayath</h1>
+          <h3 class="eyebrow" id="heroRole">Full Stack Developer</h3>
+          <div class="signal-mark" aria-hidden="true"></div>
+          <h2 id="heroHeadline">
+            Building secure, scalable products from backend to frontend.
+          </h2>
+          <p class="hero-copy" id="heroSummary">
+            Full stack developer with 2 years 10 months of banking technology
+            experience,
+            delivering backend services, frontend interfaces, and production
+            support using Java, PL/SQL, and ReactJS.
+          </p>
+        </div>
+        <aside class="hero-visual reveal" aria-hidden="true">
+          <div class="hero-visual-stage">
+            <svg
+              class="hero-computer-svg"
+              viewBox="0 0 760 520"
+              role="presentation"
+              focusable="false"
+            >
+              <defs>
+                <linearGradient id="computerFrame" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stop-color="#f2c84b" stop-opacity="0.9" />
+                  <stop offset="100%" stop-color="#7a6424" stop-opacity="0.75" />
+                </linearGradient>
+                <linearGradient id="screenTone" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stop-color="#0f141b" />
+                  <stop offset="100%" stop-color="#06080c" />
+                </linearGradient>
+                <linearGradient id="projectCard" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stop-color="#202730" stop-opacity="0.95" />
+                  <stop offset="100%" stop-color="#0d1118" stop-opacity="0.95" />
+                </linearGradient>
+              </defs>
+
+	              <ellipse class="desk-glow" cx="350" cy="482" rx="295" ry="42" />
+
+              <rect
+                class="monitor-shell"
+                x="86"
+                y="84"
+                width="448"
+                height="276"
+                rx="22"
+                fill="#101214"
+                stroke="url(#computerFrame)"
+                stroke-width="3"
+              />
+              <rect
+                class="monitor-screen"
+                x="108"
+                y="108"
+                width="404"
+                height="228"
+                rx="14"
+                fill="url(#screenTone)"
+              />
+
+              <circle cx="122" cy="122" r="4" fill="#ff6f6f" opacity="0.9" />
+              <circle cx="138" cy="122" r="4" fill="#f2c84b" opacity="0.9" />
+              <circle cx="154" cy="122" r="4" fill="#93ff8f" opacity="0.85" />
+
+              <g class="code-layer">
+                <rect class="code-line code-line-primary" x="132" y="152" width="258" height="8" rx="4" />
+                <rect class="code-line code-line-soft" x="132" y="171" width="318" height="7" rx="3.5" />
+                <rect class="code-line code-line-soft" x="132" y="189" width="266" height="7" rx="3.5" />
+                <rect class="code-line code-line-primary" x="158" y="207" width="301" height="8" rx="4" />
+                <rect class="code-line code-line-soft" x="174" y="225" width="248" height="7" rx="3.5" />
+                <rect class="code-line code-line-soft" x="132" y="243" width="333" height="7" rx="3.5" />
+                <rect class="code-line code-line-primary" x="150" y="261" width="226" height="8" rx="4" />
+              </g>
+
+              <rect
+                class="screen-pill"
+                x="132"
+                y="290"
+                width="102"
+                height="24"
+                rx="7"
+                fill="#182430"
+                stroke="#f2c84b"
+                stroke-opacity="0.6"
+              />
+              <text x="146" y="306" class="screen-label">npm run build</text>
+
+              <path class="projection-beam" d="M496 196 C560 160, 610 135, 685 124" />
+              <path class="projection-beam" d="M492 226 C566 214, 616 214, 704 216" />
+              <path class="projection-beam" d="M486 258 C556 282, 614 316, 686 352" />
+
+              <g class="projected-ui">
+                <rect class="project-card" x="604" y="92" width="124" height="70" rx="12" />
+                <rect class="project-line" x="618" y="110" width="74" height="7" rx="3.5" />
+                <rect class="project-line soft" x="618" y="126" width="92" height="6" rx="3" />
+                <rect class="project-line soft" x="618" y="140" width="58" height="6" rx="3" />
+
+                <rect class="project-card" x="598" y="186" width="138" height="82" rx="12" />
+                <rect class="project-line" x="614" y="206" width="88" height="7" rx="3.5" />
+                <rect class="project-line soft" x="614" y="223" width="106" height="6" rx="3" />
+                <rect class="project-pill" x="614" y="238" width="42" height="13" rx="6.5" />
+
+                <rect class="project-card" x="614" y="304" width="114" height="62" rx="12" />
+                <rect class="project-line" x="628" y="322" width="72" height="7" rx="3.5" />
+                <rect class="project-line soft" x="628" y="338" width="58" height="6" rx="3" />
+              </g>
+
+              <rect
+                class="monitor-neck"
+                x="276"
+                y="364"
+                width="66"
+                height="52"
+                rx="12"
+                fill="#111315"
+                stroke="#f2c84b"
+                stroke-opacity="0.4"
+              />
+	              <rect
+	                class="monitor-base"
+	                x="214"
+	                y="410"
+	                width="190"
+                height="24"
+                rx="12"
+                fill="#0f1113"
+	                stroke="#f2c84b"
+	                stroke-opacity="0.42"
+	              />
+
+	              <g class="keyboard-group">
+	                <rect class="keyboard-shadow" x="156" y="456" width="324" height="52" rx="18" />
+	                <rect class="keyboard-body" x="162" y="448" width="312" height="48" rx="16" />
+	                <rect class="keyboard-key key-soft" x="184" y="462" width="24" height="8" rx="4" />
+	                <rect class="keyboard-key key-soft" x="214" y="462" width="24" height="8" rx="4" />
+	                <rect class="keyboard-key key-soft" x="244" y="462" width="24" height="8" rx="4" />
+	                <rect class="keyboard-key key-soft" x="274" y="462" width="24" height="8" rx="4" />
+	                <rect class="keyboard-key key-primary" x="304" y="462" width="34" height="8" rx="4" />
+	                <rect class="keyboard-key key-soft" x="344" y="462" width="24" height="8" rx="4" />
+	                <rect class="keyboard-key key-soft" x="374" y="462" width="24" height="8" rx="4" />
+	                <rect class="keyboard-key key-soft" x="404" y="462" width="24" height="8" rx="4" />
+
+	                <rect class="keyboard-key key-soft" x="198" y="476" width="34" height="8" rx="4" />
+	                <rect class="keyboard-key key-soft" x="238" y="476" width="24" height="8" rx="4" />
+	                <rect class="keyboard-key key-soft" x="268" y="476" width="24" height="8" rx="4" />
+	                <rect class="keyboard-key key-primary" x="298" y="476" width="70" height="8" rx="4" />
+	                <rect class="keyboard-key key-soft" x="374" y="476" width="24" height="8" rx="4" />
+	                <rect class="keyboard-key key-soft" x="404" y="476" width="24" height="8" rx="4" />
+	              </g>
+
+	              <g class="mouse-group">
+	                <ellipse class="mouse-shadow" cx="548" cy="490" rx="31" ry="10" />
+	                <rect class="mouse-shell" x="526" y="442" width="44" height="58" rx="22" />
+	                <line class="mouse-line" x1="548" y1="452" x2="548" y2="468" />
+	                <circle class="mouse-wheel" cx="548" cy="461" r="3" />
+	              </g>
+	            </svg>
+
+            <div class="hero-ui-chip chip-a">
+              <span class="chip-title">Build</span>
+              <span class="chip-value">Deploy</span>
+            </div>
+            <div class="hero-ui-chip chip-b">
+              <span class="chip-title">API</span>
+              <span class="chip-value">Secure</span>
+            </div>
+            <div class="hero-ui-chip chip-c">
+              <span class="chip-title">UX</span>
+              <span class="chip-value">Realtime</span>
+            </div>
+          </div>
+          <p class="hero-visual-caption">
+            Secure systems. Strong APIs. Reliable delivery.
+          </p>
+        </aside>
+      </section>
+
+      <section class="stats" id="statsGrid">
+        <article class="card reveal">
+          <h2>2+ Years</h2>
+          <p>Professional full stack development experience</p>
+        </article>
+        <article class="card reveal">
+          <h2>15+</h2>
+          <p>SQL and backend modules delivered</p>
+        </article>
+        <article class="card reveal">
+          <h2>30%</h2>
+          <p>Response time improvement in production</p>
+        </article>
+        <article class="card reveal">
+          <h2>98%</h2>
+          <p>Production incidents resolved within SLA</p>
+        </article>
+      </section>
+
+	      <section id="experience" class="section reveal">
+	        <h2 id="experienceHeading">Professional Experience</h2>
+        <article class="timeline-item">
+          <div class="timeline-dot" aria-hidden="true"></div>
+          <div class="timeline-content">
+            <h3 id="experienceRole">Full Stack Developer (Channels Applications)</h3>
+            <p class="meta" id="experienceMeta">
+              CSB Bank Ltd., Chennai, India | Mar 2023 – Dec 2025
+            </p>
+            <ul id="experienceBullets">
+              <li>
+                Built and optimized backend SQL modules for fraud detection and
+                transaction processing.
+              </li>
+              <li>
+                Supported mobile and net banking migration to OBDX with 95%+
+                data accuracy.
+              </li>
+              <li>
+                Improved database and query performance, reducing response time
+                by 30%.
+              </li>
+              <li>
+                Handled 98% of L2/L3 production issues within SLA and supported
+                Oracle General Ledger integrations.
+              </li>
+              <li>Delivered features under RBI audit and governance standards.</li>
+            </ul>
+          </div>
+        </article>
+      </section>
+
+      <section id="skills" class="section reveal">
+        <h2 id="skillsHeading">Technical Skills</h2>
+        <div class="skills-carousel" id="skillsCarousel">
+          <button
+            class="carousel-nav-btn"
+            id="skillsPrev"
+            type="button"
+            aria-label="Previous skills slide"
+          >
+            <span aria-hidden="true">‹</span>
+          </button>
+          <div class="skills-viewport" id="skillsViewport">
+            <div class="skills-track" id="skillsGrid">
+              <article class="card">
+                <h3>Languages</h3>
+                <ul class="skill-list">
+                  <li class="skill-list-item">
+                    <img class="skill-item-icon" src="/portfolio/images/icons/skills/java.svg" alt="Java logo" width="16" height="16" loading="lazy" />
+                    <span>Java</span>
+                  </li>
+                  <li class="skill-list-item">
+                    <img class="skill-item-icon" src="/portfolio/images/icons/skills/python.svg" alt="Python logo" width="16" height="16" loading="lazy" />
+                    <span>Python</span>
+                  </li>
+                </ul>
+              </article>
+              <article class="card">
+                <h3>Web &amp; UI</h3>
+                <ul class="skill-list">
+                  <li class="skill-list-item">
+                    <img class="skill-item-icon" src="/portfolio/images/icons/skills/react.svg" alt="ReactJS logo" width="16" height="16" loading="lazy" />
+                    <span>JavaScript</span>
+                  </li>
+                  <li class="skill-list-item">
+                    <img class="skill-item-icon" src="/portfolio/images/icons/skills/html5.svg" alt="HTML5 logo" width="16" height="16" loading="lazy" />
+                    <span>HTML5</span>
+                  </li>
+                  <li class="skill-list-item">
+                    <img class="skill-item-icon" src="/portfolio/images/icons/skills/css3.svg" alt="CSS3 logo" width="16" height="16" loading="lazy" />
+                    <span>CSS3</span>
+                  </li>
+                  <li class="skill-list-item">
+                    <img class="skill-item-icon" src="/portfolio/images/icons/skills/bootstrap.svg" alt="Bootstrap logo" width="16" height="16" loading="lazy" />
+                    <span>Bootstrap</span>
+                  </li>
+                </ul>
+              </article>
+              <article class="card">
+                <h3>Frameworks</h3>
+                <ul class="skill-list">
+                  <li class="skill-list-item">
+                    <img class="skill-item-icon" src="/portfolio/images/icons/skills/react.svg" alt="ReactJS logo" width="16" height="16" loading="lazy" />
+                    <span>ReactJS</span>
+                  </li>
+                  <li class="skill-list-item">
+                    <img class="skill-item-icon" src="/portfolio/images/icons/skills/spring.svg" alt="Spring logo" width="16" height="16" loading="lazy" />
+                    <span>Spring</span>
+                  </li>
+                </ul>
+              </article>
+              <article class="card">
+                <h3>Databases</h3>
+                <ul class="skill-list">
+                  <li class="skill-list-item">
+                    <img class="skill-item-icon" src="/portfolio/images/icons/skills/oracle.svg" alt="Oracle logo" width="16" height="16" loading="lazy" />
+                    <span>Oracle</span>
+                  </li>
+                  <li class="skill-list-item">
+                    <img class="skill-item-icon" src="/portfolio/images/icons/skills/sqlserver.svg" alt="SQL Server logo" width="16" height="16" loading="lazy" />
+                    <span>SQL Server</span>
+                  </li>
+                  <li class="skill-list-item">
+                    <img class="skill-item-icon" src="/portfolio/images/icons/skills/mysql.svg" alt="MySQL logo" width="16" height="16" loading="lazy" />
+                    <span>MySQL</span>
+                  </li>
+                </ul>
+              </article>
+              <article class="card">
+                <h3>Tools</h3>
+                <ul class="skill-list">
+                  <li class="skill-list-item">
+                    <img class="skill-item-icon" src="/portfolio/images/icons/skills/git.svg" alt="Git logo" width="16" height="16" loading="lazy" />
+                    <span>Git</span>
+                  </li>
+                  <li class="skill-list-item">
+                    <img class="skill-item-icon" src="/portfolio/images/icons/skills/intellijidea.svg" alt="IntelliJ IDEA logo" width="16" height="16" loading="lazy" />
+                    <span>IntelliJ IDEA</span>
+                  </li>
+                  <li class="skill-list-item">
+                    <img class="skill-item-icon" src="/portfolio/images/icons/skills/vscode.svg" alt="VS Code logo" width="16" height="16" loading="lazy" />
+                    <span>VS Code</span>
+                  </li>
+                  <li class="skill-list-item">
+                    <img class="skill-item-icon" src="/portfolio/images/icons/skills/servicenow.svg" alt="ServiceNow logo" width="16" height="16" loading="lazy" />
+                    <span>ServiceNow</span>
+                  </li>
+                  <li class="skill-list-item">
+                    <img class="skill-item-icon" src="/portfolio/images/icons/skills/jira.svg" alt="JIRA logo" width="16" height="16" loading="lazy" />
+                    <span>JIRA</span>
+                  </li>
+                  <li class="skill-list-item">
+                    <img class="skill-item-icon" src="/portfolio/images/icons/skills/obdx.svg" alt="OBDX logo" width="16" height="16" loading="lazy" />
+                    <span>OBDX</span>
+                  </li>
+                  <li class="skill-list-item">
+                    <img class="skill-item-icon" src="/portfolio/images/icons/skills/react.svg" alt="ReactJS logo" width="16" height="16" loading="lazy" />
+                    <span>Power BI</span>
+                  </li>
+                  <li class="skill-list-item">
+                    <img class="skill-item-icon" src="/portfolio/images/icons/skills/react.svg" alt="ReactJS logo" width="16" height="16" loading="lazy" />
+                    <span>MS Excel</span>
+                  </li>
+                </ul>
+              </article>
+              <article class="card">
+                <h3>Domain Focus</h3>
+                <ul class="skill-list">
+                  <li class="skill-list-item">
+                    <img class="skill-item-icon" src="/portfolio/images/icons/skills/banking.svg" alt="Banking Platforms logo" width="16" height="16" loading="lazy" />
+                    <span>Banking Platforms</span>
+                  </li>
+                  <li class="skill-list-item">
+                    <img class="skill-item-icon" src="/portfolio/images/icons/skills/fraud.svg" alt="Fraud Risk logo" width="16" height="16" loading="lazy" />
+                    <span>Fraud Risk Management</span>
+                  </li>
+                  <li class="skill-list-item">
+                    <img class="skill-item-icon" src="/portfolio/images/icons/skills/api.svg" alt="API Integration logo" width="16" height="16" loading="lazy" />
+                    <span>API Integration</span>
+                  </li>
+                  <li class="skill-list-item">
+                    <img class="skill-item-icon" src="/portfolio/images/icons/skills/compliance.svg" alt="Compliance logo" width="16" height="16" loading="lazy" />
+                    <span>Compliance</span>
+                  </li>
+                </ul>
+              </article>
+            </div>
+          </div>
+          <button
+            class="carousel-nav-btn"
+            id="skillsNext"
+            type="button"
+            aria-label="Next skills slide"
+          >
+            <span aria-hidden="true">›</span>
+          </button>
+        </div>
+        <div class="skills-dots" id="skillsDots" aria-label="Skills carousel pagination"></div>
+      </section>
+
+	      <section id="projects" class="section reveal">
+	        <h2 id="projectsHeading">Selected Projects</h2>
+        <div class="grid" id="projectsGrid">
+          <article class="card reveal">
+            <h3>Core Banking Migration Platform</h3>
+            <p class="meta">PL/SQL, Data Engineering</p>
+            <p>
+              Migrated user data to OBDX with 95%+ accuracy and built control
+              reporting with 6+ bug fixes.
+            </p>
+          </article>
+          <article class="card reveal">
+            <h3>Banking Services Web App</h3>
+            <p class="meta">Java, ReactJS, PL/SQL</p>
+            <p>
+              Built a secure full stack banking portal with REST API integration and
+              improved performance by 40%.
+            </p>
+          </article>
+          <article class="card reveal">
+            <h3>Fall Detection for Epileptic Children</h3>
+            <p class="meta">Python, Machine Learning</p>
+            <p>
+              Developed an EMG-based model with 70% accuracy and real-time
+              alerts.
+            </p>
+          </article>
+          <article class="card reveal">
+            <h3>E-Governance System</h3>
+            <p class="meta">Python, ReactJS, MySQL</p>
+            <p>
+              Automated 80% of operational tasks and implemented secure
+              role-based access control.
+            </p>
+          </article>
+        </div>
+      </section>
+
+	      <section id="education" class="section split reveal">
+	        <div>
+	          <h2 id="educationHeading">Education</h2>
+          <div id="educationGrid">
+            <article class="card reveal">
+              <h3>MSc Cloud Computing with Industry</h3>
+              <p class="meta">University of Leicester | Jan 2026 – Present</p>
+            </article>
+            <article class="card reveal">
+              <h3>B.Tech in Computer Science & Engineering</h3>
+              <p class="meta">
+                Sreepathy Institute of Management and Technology | Aug 2018 –
+                Aug 2022
+              </p>
+              <p>CGPA: 8.19 / 10</p>
+            </article>
+            <article class="card reveal">
+              <h3>Higher Secondary Education (Plus Two)</h3>
+              <p class="meta">
+                Government Higher Secondary School Kuttippuram, India | Jul 2016
+                – Mar 2018
+              </p>
+              <p>Percentage: 85.25%</p>
+            </article>
+            <article class="card reveal">
+              <h3>Secondary Education (10th)</h3>
+              <p class="meta">
+                Technical Higher Secondary School Vattamkulam, India | Jun 2015 –
+                Mar 2016
+              </p>
+              <p>Percentage: 95%</p>
+            </article>
+          </div>
+        </div>
+	        <div>
+	          <h2 id="certificationsHeading">Certification Highlights</h2>
+          <div id="certificationsGrid">
+            <article class="card certification-card reveal">
+              <p>Discrete Mathematics — NPTEL, IIT Madras</p>
+            </article>
+            <article class="card certification-card reveal">
+              <p>Java Full Stack Developer — NIIT, Chennai</p>
+            </article>
+            <article class="card certification-card reveal">
+              <p>Introduction to Analytics & Excel — Coding Ninjas</p>
+            </article>
+            <article class="card certification-card reveal">
+              <p>Data Visualization with Power BI — Coding Ninjas</p>
+            </article>
+            <article class="card certification-card reveal">
+              <p>SQL for Data Analysis — Coding Ninjas</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+	      <section class="section reveal">
+	        <h2 id="profileHeading">Additional Details</h2>
+	        <article class="card reveal" id="profileCard">
+          <p>
+            Languages: Malayalam (Native), English (Advanced), Hindi
+            (Intermediate), Tamil (Intermediate)
+          </p>
+          <p>Leadership: IEEE & IEDC Core Member (2018 – 2022)</p>
+          <p>Work Preference: Open to relocation and remote work</p>
+          <p>Eligible to work in the UK</p>
+	        </article>
+	      </section>
+
+        <section id="contactSection" class="section reveal contact-section">
+          <h2>Connect</h2>
+          <article class="card contact-panel">
+            <p class="contact-location" id="contactLocation">Leicester, United Kingdom</p>
+            <div class="contact-actions">
+              <a
+                class="btn btn-primary"
+                href="mailto:adarshmalayath@gmail.com"
+                id="contactEmailButton"
+                >Contact Me</a
+              >
+              <a
+                class="btn btn-secondary"
+                href="https://adarshmalayath.github.io/portfolio/images/documents/CV%20IT.pdf"
+                id="cvButton"
+                target="_blank"
+                rel="noopener noreferrer"
+                >View CV</a
+              >
+            </div>
+            <ul class="quick-contact contact-links">
+              <li>
+                <a href="mailto:adarshmalayath@gmail.com" id="contactEmail"
+                  >adarshmalayath@gmail.com</a
+                >
+              </li>
+              <li><a href="tel:+447721445027" id="contactPhone">+44 7721 445027</a></li>
+              <li>
+                <a
+                  href="https://linkedin.com/in/adarshmalayath"
+                  id="contactLinkedin"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  >LinkedIn</a
+                >
+                /
+                <a
+                  href="https://github.com/adarshmalayath"
+                  id="contactGithub"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  >GitHub</a
+                >
+              </li>
+            </ul>
+          </article>
+        </section>
+
+	      <div id="customSectionsRoot"></div>
+	    </main>
+
+    <footer class="site-footer reveal">
+      <p>© 2026 <span id="footerName">Adarsh Malayath</span></p>
+    </footer>
+
+    <script src="/portfolio/src/script.js?v=20260216v33"></script>
+    <script type="module" src="/portfolio/src/portfolio-data.js?v=20260323v34"></script>
+  </body>
+</html>

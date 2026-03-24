@@ -1,4 +1,4 @@
-import { supabaseConfig, supabaseReady } from "./supabase-config.js?v=20260215v23";
+import { supabaseConfig, supabaseReady } from "../config/supabase-config.js?v=20260215v23";
 import {
   defaultPortfolioContent,
   normalizePortfolioContent
@@ -22,8 +22,8 @@ const REQUIRED_PROJECTS = [
       "Developed a job portal that supports job posting, search, and application workflows for candidates."
   }
 ];
-const APP_BASE_PATH = new URL(".", import.meta.url).pathname;
-const SKILL_ICON_BASE_PATH = `${APP_BASE_PATH}skill-icons/`;
+const APP_BASE_PATH = new URL("../", import.meta.url).pathname;
+const SKILL_ICON_BASE_PATH = `${APP_BASE_PATH}images/icons/skills/`;
 const SKILL_ICON_MAP = {
   java: "java.svg",
   javascript: "javascript.svg",
@@ -52,7 +52,7 @@ const SKILL_ICON_MAP = {
   apiintegration: "api.svg",
   compliance: "compliance.svg"
 };
-const PREFERRED_CV_URL = "https://adarshmalayath.github.io/portfolio/CV%20IT.pdf";
+const PREFERRED_CV_URL = "https://adarshmalayath.github.io/portfolio/images/documents/CV%20IT.pdf";
 const CV_EDUCATION_ADDITIONS = [
   {
     title: "Higher Secondary Education (Plus Two)",
@@ -549,7 +549,7 @@ function setDatabaseErrorState(error) {
 
 async function fetchRemotePortfolio() {
   if (!supabaseReady) {
-    throw new Error("Supabase is not configured. Update supabase-config.js.");
+    throw new Error("Supabase is not configured. Update config/supabase-config.js.");
   }
 
   for (let attempt = 0; attempt < MAX_FETCH_ATTEMPTS; attempt += 1) {

@@ -6,13 +6,13 @@ import {
   supabaseAdmin,
   supabaseConfig,
   supabaseReady
-} from "./supabase-config.js?v=20260215v21";
+} from "../config/supabase-config.js?v=20260215v21";
 
 const TABLE = "portfolio_content";
 const ROW_ID = 1;
 const QUERY_TIMEOUT_MS = 30000;
 const SAVE_QUERY_TIMEOUT_MS = 45000;
-const PREFERRED_CV_URL = "https://adarshmalayath.github.io/portfolio/CV%20IT.pdf";
+const PREFERRED_CV_URL = "https://adarshmalayath.github.io/portfolio/images/documents/CV%20IT.pdf";
 const CONTENT_CACHE_KEY = "portfolio_content_cache_v2";
 
 const statusBox = document.getElementById("status");
@@ -856,7 +856,7 @@ async function initAdmin() {
   if (!supabaseReady) {
     setStatus(
       "warn",
-      "Supabase SQL is not configured. Set the anon public key in supabase-config.js (Supabase Dashboard -> Project Settings -> API)."
+      "Supabase SQL is not configured. Set the anon public key in config/supabase-config.js (Supabase Dashboard -> Project Settings -> API)."
     );
     googleLoginBtn.disabled = true;
     setEditorView(false);
