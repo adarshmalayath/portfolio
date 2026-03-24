@@ -52,6 +52,7 @@ const SKILL_ICON_MAP = {
   apiintegration: "api.svg",
   compliance: "compliance.svg"
 };
+const CERTIFICATE_ICON_PATH = `${APP_BASE_PATH}images/icons/brand/certificate-icon.svg`;
 const PREFERRED_CV_URL = "https://adarshmalayath.github.io/portfolio/images/documents/CV%20IT.pdf";
 const CV_EDUCATION_ADDITIONS = [
   {
@@ -468,11 +469,21 @@ function renderCertifications(certifications) {
     const certificateHref = resolveCertificatePath(item);
     if (certificateHref) {
       const link = document.createElement("a");
-      link.className = "project-link cert-link";
+      link.className = "cert-link-icon";
       link.href = certificateHref;
       link.target = "_blank";
       link.rel = "noopener noreferrer";
-      link.textContent = "View Certificate";
+      link.title = "Open certificate PDF";
+      link.setAttribute("aria-label", `Open certificate PDF for ${item}`);
+
+      const icon = document.createElement("img");
+      icon.src = CERTIFICATE_ICON_PATH;
+      icon.alt = "";
+      icon.width = 20;
+      icon.height = 20;
+      icon.loading = "lazy";
+
+      link.appendChild(icon);
       card.appendChild(link);
     }
 

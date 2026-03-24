@@ -967,10 +967,39 @@ body[data-theme="light"] .skills-dot {
 
 .certification-card p {
   margin: 0;
+  flex: 1 1 auto;
 }
 
-.certification-card .cert-link {
-  margin-top: 0.65rem;
+.certification-card {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+.certification-card .cert-link-icon {
+  margin-left: auto;
+  width: 2.1rem;
+  height: 2.1rem;
+  border-radius: 50%;
+  border: 1px solid var(--surface-border);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--signal);
+  background: rgba(0, 0, 0, 0.12);
+  transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.certification-card .cert-link-icon:hover {
+  transform: translateY(-1px);
+  border-color: var(--popup-border-soft);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.18);
+}
+
+.certification-card .cert-link-icon img {
+  width: 1.1rem;
+  height: 1.1rem;
+  display: block;
 }
 
 .timeline-item {
