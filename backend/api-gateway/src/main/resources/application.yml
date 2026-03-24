@@ -1,0 +1,47 @@
+server:
+  port: ${GATEWAY_PORT:8080}
+
+gateway:
+  jwt-secret: ${JWT_SECRET:change-me-super-secret-key-change-me-super-secret-key}
+
+spring:
+  cloud:
+    gateway:
+      globalcors:
+        cors-configurations:
+          '[/**]':
+            allowedOriginPatterns: "*"
+            allowedMethods:
+              - GET
+              - POST
+              - PUT
+              - DELETE
+              - OPTIONS
+            allowedHeaders: "*"
+      routes:
+        - id: auth-service
+          uri: ${AUTH_SERVICE_URL:http://localhost:8081}
+          predicates:
+            - Path=/api/auth/**
+          filters:
+            - RewritePath=/api/auth/(?<segment>.*), /internal/auth/$\{segment}
+
+        - id: content-public
+          uri: ${CONTENT_SERVICE_URL:http://localhost:8082}
+          predicates:
+            - Path=/api/content/public
+          filters:
+            - RewritePath=/api/content/public, /internal/content/public
+
+        - id: content-admin
+          uri: ${CONTENT_SERVICE_URL:http://localhost:8082}
+          predicates:
+            - Path=/api/content/admin,/api/content/admin/**
+          filters:
+            - RewritePath=/api/content/admin(?<segment>/?.*), /internal/content/admin$\{segment}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info

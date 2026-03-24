@@ -791,12 +791,10 @@ body[data-theme="light"] .signal-mark {
 .card h2 {
   margin: 0;
   font-size: 1.7rem;
-  /*color: var(--card-title-color);*/
 }
 
 .card h3 {
   margin: 0;
-  /*color: var(--card-title-color);*/
   font-size: 1.03rem;
 }
 
