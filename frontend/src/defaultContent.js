@@ -10,7 +10,7 @@ export const defaultContent = {
     phone: "+44 7721 445027",
     linkedin: "https://linkedin.com/in/adarshmalayath",
     github: "https://github.com/adarshmalayath",
-    cvUrl: "/assets/documents/CV%20IT.pdf"
+    cvUrl: "assets/documents/CV%20IT.pdf"
   },
   stats: [
     { label: "Professional full stack development experience", value: "2+ Years" },

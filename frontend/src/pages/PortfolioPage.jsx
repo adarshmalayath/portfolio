@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { fetchPublicContent } from "../api";
 import { defaultContent, normalizeContent } from "../defaultContent";
+import { withBaseUrl } from "../utils/url";
 
 const CERTIFICATE_FILES = [
   {
@@ -28,7 +29,7 @@ const CERTIFICATE_FILES = [
 function resolveCertificatePath(certificateName) {
   const text = String(certificateName || "");
   const match = CERTIFICATE_FILES.find((item) => item.test(text));
-  return match ? `/legacy/documents/${encodeURIComponent(match.file)}` : "";
+  return match ? withBaseUrl(`legacy/documents/${encodeURIComponent(match.file)}`) : "";
 }
 
 function SkillIcon({ name }) {
@@ -66,7 +67,7 @@ function SkillIcon({ name }) {
     compliance: "compliance.svg"
   };
 
-  const src = `/assets/icons/skills/${map[normalized] || "generic.svg"}`;
+  const src = withBaseUrl(`assets/icons/skills/${map[normalized] || "generic.svg"}`);
   return <img src={src} alt="" className="skill-icon" loading="lazy" />;
 }
 
@@ -118,7 +119,12 @@ export default function PortfolioPage() {
           <a href={`mailto:${content.profile.email}`} className="btn btn-primary">
             Contact Me
           </a>
-          <a href={content.profile.cvUrl} target="_blank" rel="noopener noreferrer" className="btn btn-secondary">
+          <a
+            href={withBaseUrl(content.profile.cvUrl)}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="btn btn-secondary"
+          >
             View CV
           </a>
         </div>
