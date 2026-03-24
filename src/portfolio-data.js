@@ -76,16 +76,16 @@ const CERTIFICATE_FILE_MAP = [
     file: "JavaFullStackDev.pdf"
   },
   {
-    test: (value) => /analytics|excel|coding ninjas/i.test(value),
-    file: "Certificate_Excel.pdf"
-  },
-  {
     test: (value) => /power bi|data visualization/i.test(value),
     file: "PowerBI.pdf"
   },
   {
-    test: (value) => /sql for data analysis|sql/i.test(value),
+    test: (value) => /sql for data analysis/i.test(value),
     file: "SQL.pdf"
+  },
+  {
+    test: (value) => /introduction to analytics|analytics\s*&\s*excel|analytics|excel/i.test(value),
+    file: "Certificate_Excel.pdf"
   }
 ];
 
