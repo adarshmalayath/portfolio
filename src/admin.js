@@ -12,7 +12,8 @@ const TABLE = "portfolio_content";
 const ROW_ID = 1;
 const QUERY_TIMEOUT_MS = 30000;
 const SAVE_QUERY_TIMEOUT_MS = 45000;
-const PREFERRED_CV_URL = "https://adarshmalayath.github.io/portfolio/images/documents/CV%20IT.pdf";
+const APP_BASE_PATH = new URL("../", import.meta.url).pathname;
+const PREFERRED_CV_URL = `${APP_BASE_PATH}images/documents/CV%20IT.pdf`;
 const CONTENT_CACHE_KEY = "portfolio_content_cache_v2";
 
 const statusBox = document.getElementById("status");
@@ -166,7 +167,7 @@ function lockDownPage(message) {
           <p class="eyebrow">Access Restricted</p>
           <h1>404</h1>
           <p class="subtext">${message}</p>
-          <p class="back-link"><a href="/portfolio">Back to Portfolio</a></p>
+          <p class="back-link"><a href="${APP_BASE_PATH}">Back to Portfolio</a></p>
         </header>
       </section>
     </main>
@@ -200,14 +201,24 @@ function sanitizeCvUrl(value) {
   }
 
   if (
+    normalized === "https://adarshmalayath.me/images/documents/CV%20IT.pdf" ||
+    normalized === "https://adarshmalayath.me/images/documents/CV IT.pdf" ||
     normalized === "https://adarshmalayath.github.io/CV%20IT.pdf" ||
     normalized === "https://adarshmalayath.github.io/CV IT.pdf" ||
+    normalized === "https://adarshmalayath.github.io/portfolio/images/documents/CV%20IT.pdf" ||
+    normalized === "https://adarshmalayath.github.io/portfolio/images/documents/CV IT.pdf" ||
     normalized === "/CV%20IT.pdf" ||
     normalized === "/CV IT.pdf" ||
+    normalized === "/images/documents/CV%20IT.pdf" ||
+    normalized === "/images/documents/CV IT.pdf" ||
+    normalized === "images/documents/CV%20IT.pdf" ||
+    normalized === "images/documents/CV IT.pdf" ||
     normalized === "CV%20IT.pdf" ||
     normalized === "CV IT.pdf" ||
     normalized === "/portfolio/CV%20IT.pdf" ||
-    normalized === "/portfolio/CV IT.pdf"
+    normalized === "/portfolio/CV IT.pdf" ||
+    normalized === "/portfolio/images/documents/CV%20IT.pdf" ||
+    normalized === "/portfolio/images/documents/CV IT.pdf"
   ) {
     return PREFERRED_CV_URL;
   }

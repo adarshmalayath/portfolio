@@ -53,7 +53,7 @@ const SKILL_ICON_MAP = {
   compliance: "compliance.svg"
 };
 const CERTIFICATE_ICON_PATH = `${APP_BASE_PATH}images/icons/brand/certificate-icon.svg`;
-const PREFERRED_CV_URL = "https://adarshmalayath.github.io/portfolio/images/documents/CV%20IT.pdf";
+const PREFERRED_CV_URL = `${APP_BASE_PATH}images/documents/CV%20IT.pdf`;
 const CV_EDUCATION_ADDITIONS = [
   {
     title: "Higher Secondary Education (Plus Two)",
@@ -198,10 +198,18 @@ function normalizeCvUrl(path) {
   }
 
   if (
+    value === "https://adarshmalayath.me/images/documents/CV%20IT.pdf" ||
+    value === "https://adarshmalayath.me/images/documents/CV IT.pdf" ||
     value === "https://adarshmalayath.github.io/CV%20IT.pdf" ||
     value === "https://adarshmalayath.github.io/CV IT.pdf" ||
+    value === "https://adarshmalayath.github.io/portfolio/images/documents/CV%20IT.pdf" ||
+    value === "https://adarshmalayath.github.io/portfolio/images/documents/CV IT.pdf" ||
     value === "/CV%20IT.pdf" ||
     value === "/CV IT.pdf" ||
+    value === "/images/documents/CV%20IT.pdf" ||
+    value === "/images/documents/CV IT.pdf" ||
+    value === "images/documents/CV%20IT.pdf" ||
+    value === "images/documents/CV IT.pdf" ||
     value === "CV%20IT.pdf" ||
     value === "CV IT.pdf"
   ) {
@@ -212,8 +220,12 @@ function normalizeCvUrl(path) {
   if (
     normalized === "/CV%20IT.pdf" ||
     normalized === "/CV IT.pdf" ||
+    normalized === "/images/documents/CV%20IT.pdf" ||
+    normalized === "/images/documents/CV IT.pdf" ||
     normalized === "/portfolio/CV%20IT.pdf" ||
-    normalized === "/portfolio/CV IT.pdf"
+    normalized === "/portfolio/CV IT.pdf" ||
+    normalized === "/portfolio/images/documents/CV%20IT.pdf" ||
+    normalized === "/portfolio/images/documents/CV IT.pdf"
   ) {
     return PREFERRED_CV_URL;
   }
